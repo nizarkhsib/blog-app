@@ -1,0 +1,29 @@
+:host {
+    font-size: 12px;
+
+    mat-card {
+        padding: 8px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        background-color: #f0f2f5;
+    }
+
+    .example-header-image {
+        background-image: url('https://scontent.flyn1-1.fna.fbcdn.net/v/t1.6435-9/67358611_2303585116569660_5598240431520350208_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=I8huf5R7v5sAX-cL_UZ&tn=R9gmIHMvj_QzcQCe&_nc_ht=scontent.flyn1-1.fna&oh=00_AT8JzxmGNZnpIUmBewri-K6EfeuyU8MRyFLzDvkBSIAspQ&oe=625D0AC7');
+        background-size: cover;
+    }
+
+    .comment-content {
+        margin-left: 10px;
+    }
+
+}
+
+.view-more {
+    font-size: 12px;
+}
+
+.view-more:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

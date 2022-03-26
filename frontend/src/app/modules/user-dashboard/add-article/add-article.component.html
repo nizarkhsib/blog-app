@@ -1,0 +1,79 @@
+<mat-card class="card-container">
+  <h4 class="card-header">Write an article</h4>
+  <section>
+    <form [formGroup]="articleForm">
+      <mat-form-field
+        class="row"
+        appearance="outline"
+      >
+        <mat-label for="Title">Title</mat-label>
+        <input
+          matInput
+          required
+          appearance="outline"
+          placeholder="Title"
+          type="text"
+          formControlName="title"
+        >
+        <div
+          *ngIf="f.title.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.title.errors.required && f.title?.touched">Title is required</div>
+        </div>
+      </mat-form-field>
+      <div class="editor-container editor NgxEditor__Wrapper">
+
+        <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+        <ngx-editor
+          required
+          formControlName="content"
+          [editor]="editor"
+          [disabled]="false"
+          [placeholder]="'Type here...'"
+        >
+        </ngx-editor>
+      </div>
+
+      <div
+        class="custom-dropzone"
+        ngx-dropzone
+        [accept]="'image/*'"
+        (change)="onSelect($event)"
+        [multiple]="false"
+      >
+
+        <div class="custom-preview">
+          <ngx-dropzone-label *ngIf="!file">
+            <div>
+              <h2>Choose or drop an image</h2>
+            </div>
+          </ngx-dropzone-label>
+
+          <ngx-dropzone-image-preview
+            *ngIf="file "
+            ngProjectAs="ngx-dropzone-preview"
+            [removable]="true"
+            [file]="file"
+            (removed)="onRemove(file)"
+          >
+            <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
+          </ngx-dropzone-image-preview>
+        </div>
+
+      </div>
+
+      <button
+        (click)="saveArticle()"
+        [disabled]="loading || !file || articleForm.invalid"
+        class="button"
+        mat-raised-button
+        color="primary"
+      >
+        <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
+        Save
+      </button>
+    </form>
+
+  </section>
+</mat-card>

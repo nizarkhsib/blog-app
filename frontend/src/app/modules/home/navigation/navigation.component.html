@@ -1,0 +1,119 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        href="#"
+      >
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+        <mat-divider></mat-divider>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="wrapper">
+      <mat-toolbar-row class="box header">
+        <button
+          type=" button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+
+        <span class="spacer"></span>
+
+        <button
+          *ngIf="!isLogged"
+          mat-raised-button
+          color="basic"
+          (click)="navigateToLogin()"
+        >
+          Login
+        </button>
+
+        <section
+          fxFlex="row"
+          fxLayoutAlign="end end"
+          [ngClass]="{ 'user-logged': !(isHandset$ | async)  }"
+        >
+          <button
+            *ngIf="isLogged"
+            mat-raised-button
+            (click)="navigateToWriteArticle()"
+          >
+            Write article
+          </button>
+          <!-- #docregion mat-menu-trigger-for -->
+          <button
+            mat-mini-fab
+            [matMenuTriggerFor]="profileMenu"
+            *ngIf="isLogged"
+            color="basic"
+            [style.marginLeft.px]="10"
+          >
+            <mat-icon>person</mat-icon>
+          </button>
+          <!-- #enddocregion mat-menu-trigger-for -->
+          <mat-menu #profileMenu="matMenu">
+
+            <button
+              (click)="navigateToProfile()"
+              mat-menu-item
+            >
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+
+            <button
+              mat-menu-item
+              (click)="logout()"
+            >
+              <mat-icon>power_settings_new</mat-icon>
+              <span>Logout</span>
+            </button>
+
+          </mat-menu>
+
+        </section>
+
+      </mat-toolbar-row>
+      <section class="box content">
+        <router-outlet></router-outlet>
+      </section>
+
+    </div>
+
+    <!-- <app-list [itemTemplate]="customItemTemplate" [data]="[{ id: 4, name: 'Laptop', rating: 3 },
+    { id: 5, name: 'Phone', rating: 4 },
+    { id: 6, name: 'Mice', rating: 4 }]">
+			<ng-template #customItemTemplate let-item>
+				<div style="display: flex; justify-content: space-between;">
+					<span> {{ item.id }} - <b>{{ item.name }}</b> </span>
+					<mark> Stars: {{ item.rating }} </mark>
+				</div>
+			</ng-template>
+		</app-list>
+
+		<app-list [itemTemplate]="customItemTemplate2" [data]="[{ id: 4, name: 'Laptop', rating: 3 },
+    { id: 5, name: 'Phone', rating: 4 },
+    { id: 6, name: 'Mice', rating: 4 }]">
+			<ng-template #customItemTemplate2 let-item>
+				<div style="display: flex; justify-content: space-between;">
+					<span> {{ item.id }} - <b>{{ item.name }}</b> </span>
+				</div>
+			</ng-template>
+		</app-list> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

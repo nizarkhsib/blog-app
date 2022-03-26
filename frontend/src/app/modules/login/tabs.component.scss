@@ -1,0 +1,26 @@
+:host {
+
+    .tab-group {
+        max-width: 500px;
+        background-color: revert;
+        margin: 0 auto;
+        margin-top: 50px;
+        margin-bottom: 100px;
+        height: 370px;
+    }
+
+    ::ng-deep .mat-form-field {
+        display: block !important;
+    }
+
+    .register-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    ::ng-deep .mat-tab-link {
+        width: 50%;
+    }
+
+}

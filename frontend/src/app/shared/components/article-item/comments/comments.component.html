@@ -1,0 +1,46 @@
+<section>
+
+  <div
+    fxLayout="row"
+    fxLayoutGap="10px"
+    *ngFor="let comment of comments"
+  >
+    <mat-card *ngIf="comment.author">
+
+      <div
+        mat-card-avatar
+        class="example-header-image"
+      >
+      </div>
+
+      <div
+        fxFlex="80"
+        fxLayoutGap="10px"
+        class="comment-content"
+      >
+        <div fxLayout="row">
+          <span>
+            <b>
+              {{comment.author.firstname}} {{comment.author.lastname}}
+            </b>
+          </span>
+        </div>
+
+        <div fxLayout="row">
+          <div>{{comment.content}}</div>
+        </div>
+
+      </div>
+    </mat-card>
+
+  </div>
+
+  <span
+    class="view-more"
+    (click)="viewMoreClicked()"
+    *ngIf="comments.length < commentsCount"
+  >
+    <b>View more</b>
+  </span>
+
+</section>

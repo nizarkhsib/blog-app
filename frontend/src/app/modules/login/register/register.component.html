@@ -1,0 +1,106 @@
+<div class="container form-container">
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label for="firstname">Firstname</mat-label>
+      <input
+        matInput
+        required
+        placeholder="Firstname"
+        type="text"
+        formControlName="firstname"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      >
+      <div
+        *ngIf="submitted && f.firstname.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.firstname.errors.required">Firstname is required</div>
+      </div>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label for="lastname">Lastname</mat-label>
+      <input
+        matInput
+        required
+        placeholder="Lastname"
+        type="text"
+        formControlName="lastname"
+        [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }"
+      >
+      <div
+        *ngIf="submitted && f.lastname.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.lastname.errors.required">Lastname is required</div>
+      </div>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="outline" >
+				<mat-label for="username">Username *</mat-label>
+				<input placeholder="Username" matInput type="text" formControlName="username"
+					[ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+				<div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+					<div *ngIf="f.username.errors.required">Username Name is required</div>
+				</div>
+			</mat-form-field>
+
+		</div> -->
+
+    <mat-form-field appearance="outline">
+      <mat-label for="firstName">Email</mat-label>
+      <input
+        placeholder="Email"
+        required
+        matInput
+        type="email"
+        formControlName="email"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+      >
+
+      <ng-container>
+        <mat-error *ngIf="f.email.errors && f.email.value !== ''">Email is not valid.</mat-error>
+      </ng-container>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label for="firstName">Password</mat-label>
+      <input
+        placeholder="Password"
+        required
+        matInput
+        type="password"
+        formControlName="password"
+        [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+      >
+      <ng-container *ngIf="f.password.errors ">
+        <mat-error *ngIf="f.password.errors.required && f.password.value !== ''">Password is required</mat-error>
+        <mat-error *ngIf="f.password.errors.minlength && f.password.value !== ''">Password must be at least 6 characters</mat-error>
+      </ng-container>
+    </mat-form-field>
+
+    <mat-error *ngIf="registerError">{{errorMessage}}</mat-error>
+
+    <button
+      mat-raised-button
+      [disabled]="loading || registerForm.invalid"
+      color="primary"
+    >
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span>
+      Register
+    </button>
+    <a
+      routerLink="../"
+      class="btn btn-link"
+    >
+      Cancel
+    </a>
+
+  </form>
+</div>

@@ -1,0 +1,49 @@
+:host {
+    ::ng-deep .NgxEditor {
+        height: 50vh !important;
+    }
+
+    ::ng-deep .NgxEditor .NgxEditor__Content {
+        height: 50vh !important;
+    }
+
+    ::ng-deep .NgxEditor .NgxEditor__Wrapper {
+        height: 50vh !important;
+    }
+}
+
+.card-container {
+    margin: 10px;
+
+    .button {
+        margin-top: 24px !important;
+    }
+}
+
+.card-header {
+    position: sticky;
+    // overflow-y: none;
+    color: black;
+    background-color: skyblue;
+    justify-content: center;
+    display: flex;
+}
+
+.custom-dropzone {
+    margin-top: 24px !important;
+    height: 250px !important;
+    background: whitesmoke !important;
+    color: black !important;
+    border: 5px dashed rgb(235, 79, 79);
+    border-radius: 5px;
+    font-size: 20px !important;
+}
+
+.custom-dropzone.ngx-dz-hovered {
+    border: 5px solid rgb(235, 79, 79) !important;
+}
+
+.custom-preview {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,0 +1,40 @@
+<!-- <mat-toolbar color="primary">
+  <span>Card view demo</span>
+  <div fxHide.lt-md>
+    <span class="column-label">Columns</span>
+    <mat-slider
+      [max]="6"
+      [min]="3"
+      [value]="gridColumns"
+      [thumbLabel]="true"
+      (change)="sliderChange($event)"
+    >
+    </mat-slider>
+  </div>
+</mat-toolbar> -->
+
+<div class="content">
+  <div
+    fxLayout="row wrap"
+    fxLayoutGap="16px grid"
+  >
+    <div
+      [fxFlex]="(100/gridColumns) + '%'"
+      fxFlex.xs="100%"
+      fxLayoutAlign="center center"
+      *ngFor="let article of articles"
+    >
+      <article-card [article]="article"></article-card>
+    </div>
+  </div>
+</div>
+
+<mat-paginator
+  class="paginator"
+  (page)="onPageChange($event)"
+  [length]="count"
+  [pageSize]="4"
+  [pageSizeOptions]="[4]"
+  aria-label="Select page"
+>
+</mat-paginator>

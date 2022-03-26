@@ -1,0 +1,49 @@
+// Shared
+@import 'theme';
+
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav {
+    width: 200px;
+}
+
+.sidenav .mat-toolbar {
+    background: inherit;
+
+    .flexExpand {
+        flex: 1 1 auto;
+    }
+}
+
+// .spacer {
+//     flex: 0.8 1 auto;
+// }
+
+.content {
+    grid-area: content;
+    margin-top: 50px;
+}
+
+.header {
+    grid-area: header;
+    position: fixed;
+    width: 100vw;
+    background-color: $base-color;
+    z-index: 1000;
+
+}
+
+.wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "content";
+}
+
+.user-logged {
+    margin-right: 200px;
+}
