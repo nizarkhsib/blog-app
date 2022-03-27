@@ -12,32 +12,25 @@ import { Profile } from 'passport';
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) { }
 
-  @ApiOperation({ summary: 'getProfile' })
-  @Get(':id')
-  async getProfileByArticleId(
-    @Param('id') articleId: string,
-    @Query() { skip, limit }: PaginationParams) {
-    return await this.profileService.getProfileByArticleId(articleId, Number(skip), Number(limit));
-  }
-
   @ApiOperation({ summary: 'getPaginatedProfile' })
   @Get()
   async getPaginatedProfile(@Query() { skip, limit }: PaginationParams) {
     return this.profileService.findAll(Number(skip), Number(limit));
   }
 
-  @ApiOperation({ summary: 'getProfileById' })
+  @ApiOperation({ summary: 'getProfileByUserId' })
   @Get(':id')
-  getProfile(@Param('id') ProfileId: string) {
-    return this.profileService.getProfileById(ProfileId);
+  getProfile(@Param('id') userId: string) {
+    console.log('userId', userId);
+    return this.profileService.getProfileByUserId(userId);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'updateCategory' })
-  @Put(':id')
-  async updateCategory(@Param('id') ProfileId: string, @Body() category: Profile): Promise<Profile> {
-    return this.profileService.updateProfile(ProfileId, category);
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @ApiOperation({ summary: 'updateCategory' })
+  // @Put(':id')
+  // async updateCategory(@Param('id') ProfileId: string, @Body() category: Profile): Promise<Profile> {
+  //   return this.profileService.updateProfile(ProfileId, category);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'deleteProfile' })

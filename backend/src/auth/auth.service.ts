@@ -37,24 +37,25 @@ export class AuthService {
       });
 
       const createWithTransaction = await session.withTransaction(async () => {
-        let newProfile;
+
         const createdUser = await this.userModel
           .create([newUser], { session: session });
 
-        newProfile = await this.profileModel.create(
-          [{ user: createdUser._id }],
+        const newProfile = await this.profileModel.create(
+          [{ user: createdUser[0]._id }],
           { session: session });
 
-        const newTokenVerifyEmail = await new this.tokenVerifyEmailModel.create(
-          [{
-            userId: createdUser._id,
-            tokenVerifyEmail: uuidv1()
-          }],
-          { session: session }
-        );
+        const tokenVerifyEmailModel = await this.tokenVerifyEmailModel
+          .create(
+            [{
+              userId: createdUser[0]._id,
+              tokenVerifyEmail: uuidv1()
+            }],
+            { session: session }
+          );
         //     this.sendEmailMiddleware.sendEmail(user.email, newTokenVerifyEmail.tokenVerifyEmail, []);
 
-        return await Promise.all([createdUser, newProfile]);
+        return await Promise.all([createdUser, newProfile, tokenVerifyEmailModel]);
       });
 
       if (!createWithTransaction) {

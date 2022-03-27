@@ -5,12 +5,12 @@ import { from, Observable, of } from 'rxjs';
 import { AppLogger } from '../core/services/logger.service';
 import * as mongoose from 'mongoose';
 import { User } from 'src/auth/user.model';
-import { Profile } from 'passport';
+import { Profile } from './profile.model';
 
 @Injectable()
 export class ProfileService implements OnModuleInit {
   constructor(
-    @InjectModel('Profile') private readonly ProfileModel: Model<Profile>,
+    @InjectModel('Profile') private readonly profileModel: Model<Profile>,
     @InjectModel('Profile') private readonly userModel: Model<User>,
     private appLogger: AppLogger
   ) { }
@@ -23,7 +23,7 @@ export class ProfileService implements OnModuleInit {
     this.appLogger.warn(' getProfile ')
     this.appLogger.error(' getProfile ', 'test')
     this.appLogger.log(' getProfile ')
-    return await this.ProfileModel.find();
+    return await this.profileModel.find();
   }
 
   async getProfileByArticleId(
@@ -37,7 +37,7 @@ export class ProfileService implements OnModuleInit {
 
     const id = mongoose.Types.ObjectId(articleId);
 
-    const findQuery = this.ProfileModel
+    const findQuery = this.profileModel
       .find({ article: id })
       .sort([['updatedAt', 'descending']])
       // .sort({ _id: 1 })
@@ -48,13 +48,13 @@ export class ProfileService implements OnModuleInit {
       findQuery.limit(limitOfDocuments);
     }
     const results = await findQuery;
-    const count = await this.ProfileModel.countDocuments({ article: id });
+    const count = await this.profileModel.countDocuments({ article: id });
 
     return { results, count };
   }
 
   async findAll(documentsToSkip = 0, limitOfDocuments?: number) {
-    const findQuery = this.ProfileModel
+    const findQuery = this.profileModel
       .find()
       .sort([['updatedAt', 'descending']])
       // .sort({ _id: 1 })
@@ -64,21 +64,25 @@ export class ProfileService implements OnModuleInit {
       findQuery.limit(limitOfDocuments);
     }
     const results = await findQuery;
-    const count = await this.ProfileModel.count();
+    const count = await this.profileModel.count();
 
     return { results, count };
   }
 
-  async getProfileById(profileId: string): Promise<Profile> {
-    return await this.ProfileModel.findById({ _id: profileId });
+  async getProfileByUserId(userId: string): Promise<Profile> {
+
+    const id = mongoose.Types.ObjectId(userId);
+
+    return await this.profileModel.findOne({ user: id })
+      .populate('user', ['firstname', 'lastname', 'email']);
   }
 
   async updateProfile(profileId: string, Profile: Partial<Profile>): Promise<Profile> {
-    return this.ProfileModel.findByIdAndUpdate({ _id: profileId }, Profile, { new: true });
+    return this.profileModel.findByIdAndUpdate({ _id: profileId }, Profile, { new: true });
   }
 
   async deleteProfile(prodId: string): Promise<void> {
-    return await this.ProfileModel.deleteOne({ _id: prodId })
+    return await this.profileModel.deleteOne({ _id: prodId })
   }
 
 }

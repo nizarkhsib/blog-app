@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Comment } from 'src/app/shared/models/comment.dto';
 
 @Component({
   selector: 'comments',

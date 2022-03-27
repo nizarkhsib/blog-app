@@ -7,6 +7,10 @@ import { NgxEditorModule } from 'ngx-editor';
 import { MatButtonModule } from '@angular/material/button';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
@@ -22,7 +26,11 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
     ReactiveFormsModule,
     NgxEditorModule,
     MatButtonModule,
-    ComponentsModule
+    MatInputModule,
+    ComponentsModule,
+    MatDialogModule,
+    FlexLayoutModule,
+    NgxDropzoneModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

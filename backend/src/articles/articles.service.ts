@@ -7,7 +7,8 @@ import { Article } from './article.model';
 
 @Injectable()
 export class ArticlesService implements OnModuleInit {
-  constructor(@InjectModel('Article') private readonly ArticleModel: Model<Article>, private appLogger: AppLogger
+  constructor(@InjectModel('Article') private readonly articleModel: Model<Article>,
+    private appLogger: AppLogger
   ) { }
 
   onModuleInit() {
@@ -17,7 +18,7 @@ export class ArticlesService implements OnModuleInit {
   // addProduct with file "photo"
 
   async addArticleWithPhoto(file, articleDto: ArticleDto): Promise<Article> {
-    const newArticle = new this.ArticleModel(articleDto);
+    const newArticle = new this.articleModel(articleDto);
     if (file) {
       newArticle.filePath = file.path;
     }
@@ -33,7 +34,7 @@ export class ArticlesService implements OnModuleInit {
    * @returns 
    */
   async addArticle(ArticleDto: ArticleDto): Promise<Article> {
-    const newArticle = new this.ArticleModel(ArticleDto);
+    const newArticle = new this.articleModel(ArticleDto);
     await newArticle.save();
     return newArticle.toObject({ versionKey: false });
   }
@@ -42,11 +43,11 @@ export class ArticlesService implements OnModuleInit {
     this.appLogger.warn(' getArticles ')
     this.appLogger.error(' getArticles ', 'test')
     this.appLogger.log(' getArticles ')
-    return await this.ArticleModel.find();
+    return await this.articleModel.find();
   }
 
   async findAll(documentsToSkip = 0, limitOfDocuments?: number) {
-    const findQuery = this.ArticleModel
+    const findQuery = this.articleModel
       .find()
       .sort([['updatedAt', 'descending']])
       // .sort({ _id: 1 })
@@ -58,21 +59,21 @@ export class ArticlesService implements OnModuleInit {
       findQuery.limit(limitOfDocuments);
     }
     const results = await findQuery;
-    const count = await this.ArticleModel.count();
+    const count = await this.articleModel.count();
 
     return { results, count };
   }
 
   async getArticleById(ArticleId: string): Promise<Article> {
-    return await this.ArticleModel.findById({ _id: ArticleId });
+    return await this.articleModel.findById({ _id: ArticleId });
   }
 
   async updateArticle(ArticleId: string, Article: Partial<Article>): Promise<Article> {
-    return this.ArticleModel.findByIdAndUpdate({ _id: ArticleId }, Article, { new: true });
+    return this.articleModel.findByIdAndUpdate({ _id: ArticleId }, Article, { new: true });
   }
 
   async deleteArticle(prodId: string): Promise<void> {
-    return await this.ArticleModel.deleteOne({ _id: prodId })
+    return await this.articleModel.deleteOne({ _id: prodId })
   }
 
 }

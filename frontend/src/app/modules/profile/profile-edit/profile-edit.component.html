@@ -1,1 +1,91 @@
-<p>profile-edit works!</p>
+<div
+  fxLayout="row"
+  fxLayoutAlign="center stretch"
+>
+  <h1 mat-dialog-title>Edit profile info</h1>
+</div>
+
+<section
+  fxLayout="column"
+  fxLayoutAlign="space-evenly stretch"
+>
+
+  <div
+    class="custom-dropzone"
+    ngx-dropzone
+    [accept]="'image/*'"
+    (change)="onSelect($event)"
+    [multiple]="false"
+  >
+
+    <div class="custom-preview">
+      <ngx-dropzone-label *ngIf="!file">
+        <div>
+          <h2>Choose or drop an image</h2>
+        </div>
+      </ngx-dropzone-label>
+
+      <ngx-dropzone-image-preview
+        *ngIf="file "
+        ngProjectAs="ngx-dropzone-preview"
+        [removable]="true"
+        [file]="file"
+        (removed)="onRemove(file)"
+      >
+        <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
+      </ngx-dropzone-image-preview>
+    </div>
+
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label for="firstname">Firstname</mat-label>
+    <input
+      matInput
+      required
+      placeholder="Firstname"
+      type="text"
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label for="lastname">Lastname</mat-label>
+    <input
+      matInput
+      required
+      placeholder="Lastname"
+      type="text"
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label for="firstName">Email</mat-label>
+    <input
+      placeholder="Email"
+      required
+      matInput
+      type="email"
+    >
+  </mat-form-field>
+</section>
+
+<div mat-dialog-actions>
+  <div fxLayout="row">
+    <button
+      mat-raised-button
+      color="primary"
+      fxFlex="50"
+    >
+      Save
+    </button>
+    <button
+      mat-raised-button
+      fxFlex="50"
+      color="primary"
+      (click)="close()"
+    >
+      Cancel
+    </button>
+  </div>
+
+</div>

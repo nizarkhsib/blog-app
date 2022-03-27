@@ -8,6 +8,7 @@ import * as winston from 'winston';
 import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
 import { ArticlesModule } from './articles/articles.module';
 import { CommentsModule } from './comments/comments.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { CommentsModule } from './comments/comments.module';
     WinstonModule,
     ArticlesModule,
     CommentsModule,
-
+    ProfileModule
   ],
   controllers: [],
   providers: [],

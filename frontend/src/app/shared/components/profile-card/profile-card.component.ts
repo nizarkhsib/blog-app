@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'profile-card',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileCardComponent implements OnInit {
 
+  @Output() onEdit = new EventEmitter<boolean>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  onEditClicked() {
+    this.onEdit.next(true);
+  }
+
 
 }

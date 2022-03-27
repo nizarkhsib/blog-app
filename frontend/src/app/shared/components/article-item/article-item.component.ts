@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../models/article';
-import { CommentDto, Comment } from '../../models/comment.dto';
-import { LoggedUserDto } from '../../models/logged-user-dto';
+import { CommentDto } from '../../models/comment';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CommentsService } from '../../services/comments.service';
 import { PaginatedResult } from '../../services/paginated-result';

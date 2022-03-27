@@ -1,0 +1,21 @@
+.custom-dropzone {
+    margin-bottom: 24px !important;
+    height: 250px !important;
+    background: whitesmoke !important;
+    color: black !important;
+    border-radius: 5px;
+    font-size: 20px !important;
+}
+
+.custom-dropzone.ngx-dz-hovered {
+    border: 5px solid rgb(235, 79, 79) !important;
+}
+
+.custom-preview {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mat-dialog-actions {
+    display: block;
+}

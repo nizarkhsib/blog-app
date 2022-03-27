@@ -26,5 +26,5 @@ export interface Profile extends Document {
   photoPath: string;
   followers: Partial<User[]>;
   following: Partial<User[]>;
-  user: Partial<User[]>;
+  user: Partial<User>;
 }
