@@ -10,7 +10,8 @@ import { PaginatedResult } from "./paginated-result";
 @Injectable({
   providedIn: 'root'
 })
-export class ArticlesService extends ResourceService<Article>{
+export class ArticlesService extends ResourceService<Article> {
+
   private readonly API = environment.apiUrl + this.getResourceUrl();
 
   constructor(protected httpClient: HttpClient) {

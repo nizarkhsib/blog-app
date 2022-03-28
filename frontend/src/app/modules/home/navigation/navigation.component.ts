@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay, takeUntil, takeWhile } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { LoggedUserDto } from 'src/app/shared/models/logged-user-dto';
+import { LoggedUser } from 'src/app/shared/models/logged-user';
 
 @Component({
   selector: 'app-navigation',
@@ -13,7 +13,7 @@ import { LoggedUserDto } from 'src/app/shared/models/logged-user-dto';
 })
 export class NavigationComponent implements OnDestroy {
 
-  loggedUser: LoggedUserDto = null;
+  loggedUser: LoggedUser = null;
   isLogged = false;
   alive = true;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

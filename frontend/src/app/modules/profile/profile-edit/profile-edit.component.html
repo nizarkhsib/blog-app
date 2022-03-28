@@ -5,9 +5,10 @@
   <h1 mat-dialog-title>Edit profile info</h1>
 </div>
 
-<section
+<form
   fxLayout="column"
   fxLayoutAlign="space-evenly stretch"
+  [formGroup]="profileForm"
 >
 
   <div
@@ -32,7 +33,6 @@
         [file]="file"
         (removed)="onRemove(file)"
       >
-        <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
       </ngx-dropzone-image-preview>
     </div>
 
@@ -45,6 +45,7 @@
       required
       placeholder="Firstname"
       type="text"
+      formControlName="firstname"
     >
   </mat-form-field>
 
@@ -54,6 +55,7 @@
       matInput
       required
       placeholder="Lastname"
+      formControlName="lastname"
       type="text"
     >
   </mat-form-field>
@@ -65,9 +67,11 @@
       required
       matInput
       type="email"
+      [readonly]="true"
+      formControlName="email"
     >
   </mat-form-field>
-</section>
+</form>
 
 <div mat-dialog-actions>
   <div fxLayout="row">
@@ -75,6 +79,8 @@
       mat-raised-button
       color="primary"
       fxFlex="50"
+      (click)="save()"
+      [disabled]="loading || !file || profileForm.invalid"
     >
       Save
     </button>

@@ -1,1 +1,4 @@
-<profile-card (onEdit)="onEditClicked($event)"></profile-card>
+<profile-card
+  [profile]="userProfile"
+  (onEdit)="onEditClicked($event)"
+></profile-card>

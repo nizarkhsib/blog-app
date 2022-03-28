@@ -47,11 +47,6 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    const register = {
-      email: this.registerForm.controls.email.value,
-      username: this.registerForm.controls.email.value,
-      password: this.registerForm.controls.email.value,
-    };
 
     this.loading = true;
     this.authenticationService

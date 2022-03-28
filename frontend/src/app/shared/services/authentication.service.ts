@@ -5,13 +5,15 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { UserSignupDto } from '../models/user.signup';
-import { LoggedUserDto } from '../models/logged-user-dto';
+import { LoggedUser } from '../models/logged-user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private readonly url = 'http://localhost:3000';
-  currentUserSubject: BehaviorSubject<LoggedUserDto> = new BehaviorSubject(null);
-  public currentUser: Observable<LoggedUserDto | null>;
+
+  private readonly url = environment.apiUrl;
+  currentUserSubject: BehaviorSubject<LoggedUser> = new BehaviorSubject(null);
+  public currentUser: Observable<LoggedUser | null>;
 
   constructor(private router: Router, private http: HttpClient) {
     const currentUser = JSON.parse(localStorage.getItem('token'));
@@ -20,13 +22,13 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): LoggedUserDto {
+  public get currentUserValue(): LoggedUser {
     return this.currentUserSubject.value;
   }
 
-  signIn(email: string, password: string): Observable<LoggedUserDto> {
+  signIn(email: string, password: string): Observable<LoggedUser> {
     return this.http
-      .post<LoggedUserDto>(`${this.url}/auth/signin`, { email, password })
+      .post<LoggedUser>(`${this.url}auth/signin`, { email, password })
       .pipe(
         map(user => {
           // store user details and jwt token in local storage 
@@ -39,7 +41,7 @@ export class AuthenticationService {
   }
 
   signUp(user: UserSignupDto): Observable<UserSignupDto> {
-    return this.http.post<User>(`${this.url}/auth/signup`, user);
+    return this.http.post<User>(`${this.url}auth/signup`, user);
   }
 
   logout(): void {

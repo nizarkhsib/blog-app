@@ -1,4 +1,4 @@
-export class LoggedUserDto {
+export class LoggedUser {
   _id: string;
   firstname: string;
   lastname: string;

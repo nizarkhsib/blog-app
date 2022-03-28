@@ -1,10 +1,13 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { from, Observable, of } from 'rxjs';
 import { PaginationParams } from 'src/pagination-params';
 import { ProfileService } from './profile.service';
-import { Profile } from 'passport';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from 'src/core/middleware/file-management.middleware';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Profile } from './profile.model';
+import { ProfileDto } from './dto/profile.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('Profile')
@@ -21,16 +24,27 @@ export class ProfileController {
   @ApiOperation({ summary: 'getProfileByUserId' })
   @Get(':id')
   getProfile(@Param('id') userId: string) {
-    console.log('userId', userId);
     return this.profileService.getProfileByUserId(userId);
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @ApiOperation({ summary: 'updateCategory' })
-  // @Put(':id')
-  // async updateCategory(@Param('id') ProfileId: string, @Body() category: Profile): Promise<Profile> {
-  //   return this.profileService.updateProfile(ProfileId, category);
-  // }
+  @Put(':id')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads/profile',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'updateProfile' })
+  async updateProfile(
+    @Param('id') profileId: string,
+    @UploadedFile() file,
+    @Body() profileDto: ProfileDto): Promise<Profile> {
+    return await this.profileService.updateProfile(profileId, file, profileDto);
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'deleteProfile' })
@@ -39,4 +53,5 @@ export class ProfileController {
     await this.profileService.deleteProfile(ProfileId);
     return null;
   }
+
 }

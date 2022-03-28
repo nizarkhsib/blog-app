@@ -1,20 +1,19 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CommentDto {
+export class ProfileDto {
 
   @IsString()
   @ApiProperty()
-  description: string;
+  firstname: string;
+
+  @IsString()
+  @ApiProperty()
+  lastname: string;
 
   @IsString()
   @ApiProperty()
   email: string;
-
-
-  @IsString()
-  @ApiProperty()
-  userId: string;
 
   // For Image
   filePath?: string;

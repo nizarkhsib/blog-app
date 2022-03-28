@@ -7,7 +7,7 @@ export const ProfileSchema = new Schema({
   followersCount: { type: Number, default: 0 },
   followingCount: { type: Number, default: 0 },
   articlesCount: { type: Number, default: 0 },
-  photoPath: { type: String },
+  photoPath: { type: String, default: '' },
   profilePhoto:
   {
     data: Buffer,

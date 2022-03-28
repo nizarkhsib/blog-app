@@ -6,4 +6,3 @@ export class UserSignupDto {
   lastName: string;
   token?: string;
 }
-

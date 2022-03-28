@@ -1,3 +1,4 @@
+import { LoggedUser } from "./logged-user";
 
 export interface ProfileDto {
   description: string;
@@ -7,11 +8,13 @@ export interface ProfileDto {
 }
 
 export interface Profile {
+  _id: string;
   description: string;
   followersCount: number;
   followingCount: number;
   articlesCount: number;
   photoPath: string;
+  user: LoggedUser;
   // followers: Partial<User[]>;
   // following: Partial<User[]>;
   // user: Partial<User>;

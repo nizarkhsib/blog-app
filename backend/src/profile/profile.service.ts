@@ -1,17 +1,20 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { from, Observable, of } from 'rxjs';
 import { AppLogger } from '../core/services/logger.service';
 import * as mongoose from 'mongoose';
 import { User } from 'src/auth/user.model';
 import { Profile } from './profile.model';
+import { ProfileDto } from './dto/profile.dto';
 
 @Injectable()
 export class ProfileService implements OnModuleInit {
+
+  private readonly populateUser = ['firstname', 'lastname', 'email'];
+
   constructor(
     @InjectModel('Profile') private readonly profileModel: Model<Profile>,
-    @InjectModel('Profile') private readonly userModel: Model<User>,
+    @InjectModel('User') private readonly userModel: Model<User>,
     private appLogger: AppLogger
   ) { }
 
@@ -24,33 +27,6 @@ export class ProfileService implements OnModuleInit {
     this.appLogger.error(' getProfile ', 'test')
     this.appLogger.log(' getProfile ')
     return await this.profileModel.find();
-  }
-
-  async getProfileByArticleId(
-    articleId: string,
-    documentsToSkip = 0,
-    limitOfDocuments?: number) {
-
-    this.appLogger.warn(' getProfile ');
-    this.appLogger.error(' getProfile ', 'test');
-    this.appLogger.log(' getProfile ');
-
-    const id = mongoose.Types.ObjectId(articleId);
-
-    const findQuery = this.profileModel
-      .find({ article: id })
-      .sort([['updatedAt', 'descending']])
-      // .sort({ _id: 1 })
-      .skip(documentsToSkip)
-      .populate('author', ['firstname', 'lastname']);
-
-    if (limitOfDocuments) {
-      findQuery.limit(limitOfDocuments);
-    }
-    const results = await findQuery;
-    const count = await this.profileModel.countDocuments({ article: id });
-
-    return { results, count };
   }
 
   async findAll(documentsToSkip = 0, limitOfDocuments?: number) {
@@ -74,11 +50,38 @@ export class ProfileService implements OnModuleInit {
     const id = mongoose.Types.ObjectId(userId);
 
     return await this.profileModel.findOne({ user: id })
-      .populate('user', ['firstname', 'lastname', 'email']);
+      .populate('user', this.populateUser);
   }
 
-  async updateProfile(profileId: string, Profile: Partial<Profile>): Promise<Profile> {
-    return this.profileModel.findByIdAndUpdate({ _id: profileId }, Profile, { new: true });
+  async updateProfile(profileId: string, file, profileDto: ProfileDto): Promise<Profile> {
+    try {
+
+      const profileModel = await this.profileModel.findByIdAndUpdate(
+        { _id: profileId },
+        {
+          photoPath: file.path
+        },
+        { useFindAndModify: false, new: true }
+      );
+
+      const x = await this.userModel.findByIdAndUpdate(
+        { _id: profileModel.user },
+        {
+          'firstname': profileDto.firstname,
+          'lastname': profileDto.lastname,
+        }
+        // @TODO later 
+        //implement email edit ('email': profileDto.email)
+        ,
+        { useFindAndModify: false }
+      );
+
+      return await profileModel.populate('user', this.populateUser).execPopulate();
+
+    } catch (error) {
+      console.log('error', error);
+    }
+
   }
 
   async deleteProfile(prodId: string): Promise<void> {
