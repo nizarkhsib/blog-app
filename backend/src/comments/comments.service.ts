@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { from, Observable, of } from 'rxjs';
 import { AppLogger } from '../core/services/logger.service';
-import { Comment } from './Comment.model';
+import { Comment } from './comment.model';
 import { CommentDto } from './dto/comment.dto';
 import * as mongoose from 'mongoose';
 import { User } from 'src/auth/user.model';
@@ -103,6 +103,7 @@ export class CommentsService implements OnModuleInit {
   }
 
 }
+
 function documentsToSkip(documentsToSkip: any) {
   throw new Error('Function not implemented.');
 }

@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query } from '@nestjs/common';
-import { Comment } from './Comment.model';
+import { Comment } from './comment.model';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { from, Observable, of } from 'rxjs';
