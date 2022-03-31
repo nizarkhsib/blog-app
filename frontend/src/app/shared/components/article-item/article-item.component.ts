@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Article } from '../../models/article';
 import { CommentDto } from '../../models/comment';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -13,7 +14,7 @@ import { PaginatedResult } from '../../services/paginated-result';
 export class ArticleItemComponent implements OnInit {
 
   @Input() article: Article;
-  isReadMore = true;
+  isReadMoreDisplayed = true;
   isCommentInputHidden = true;
   isLogged = false;
 
@@ -26,7 +27,8 @@ export class ArticleItemComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private commentsBackendService: CommentsService) {
+    private commentsBackendService: CommentsService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -34,6 +36,27 @@ export class ArticleItemComponent implements OnInit {
     loggedUser ? this.isLogged = true : this.isLogged = false;
     this.fetchComments();
   }
+
+  firstParagraph() {
+    const paragraphs = this.article.content.split("</p>")
+    return paragraphs[0] + '</p>';
+  }
+
+  getArticleContent() {
+
+    if (!this.isReadMoreDisplayed) {
+      return this.article.content;
+    } else {
+      return this.firstParagraph();
+    }
+
+  }
+
+  stringToHTML = (str: string) => {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body;
+  };
 
   fetchComments() {
     this.commentsBackendService
@@ -51,7 +74,7 @@ export class ArticleItemComponent implements OnInit {
   }
 
   showText() {
-    this.isReadMore = !this.isReadMore
+    this.isReadMoreDisplayed = !this.isReadMoreDisplayed
   }
 
   onSendComment() {
@@ -68,6 +91,7 @@ export class ArticleItemComponent implements OnInit {
         (newComment) => {
           this.commentInput = '';
           this.commentsList.splice(0, 0, newComment);
+          this.commentsCount = this.commentsCount + 1;
         }
       );
   }
@@ -75,6 +99,10 @@ export class ArticleItemComponent implements OnInit {
   onViewMore() {
     this.skip = this.skip + this.pageSize;
     this.fetchComments();
+  }
+
+  navigateToResgiter() {
+    this.router.navigate(['auth/register']);
   }
 
 }

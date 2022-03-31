@@ -1,3 +1,5 @@
+@import 'theme';
+
 :host {
     .mat-card {
         max-width: 500px;
@@ -54,4 +56,32 @@
 .comments:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.content {
+    position: relative;
+    max-width: 928px;
+    --artdeco-reset-typography_getLineHeight: 1.42857;
+    display: block;
+    line-height: 2rem !important;
+    margin: 0 16px;
+    overflow: hidden;
+
+    .see-more-box {
+        background-color: white;
+        line-height: inherit;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-bottom: 0;
+        padding-left: 8px;
+    }
+}
+
+.not-all-content {
+    height: 6rem;
+}
+
+.all-content {
+    max-height: auto;
 }

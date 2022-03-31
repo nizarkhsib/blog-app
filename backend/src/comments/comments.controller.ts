@@ -7,7 +7,6 @@ import { PaginationParams } from 'src/pagination-params';
 import { CommentDto } from './dto/comment.dto';
 import { CommentsService } from './comments.service';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('Comments')
 @ApiTags('Comment')
 export class CommentsController {
@@ -21,7 +20,7 @@ export class CommentsController {
     return from(this.commentsService.addComment(CommentDto));
   }
 
-  @ApiOperation({ summary: 'getComments' })
+  @ApiOperation({ summary: 'getComments by article ID' })
   @Get(':id')
   async getCommentsByArticleId(
     @Param('id') articleId: string,
@@ -34,18 +33,6 @@ export class CommentsController {
   async getPaginatedComments(@Query() { skip, limit }: PaginationParams) {
     return this.commentsService.findAll(Number(skip), Number(limit));
   }
-
-  @ApiOperation({ summary: 'getComments' })
-  @Get()
-  async getComments(): Promise<Comment[]> {
-    return await this.commentsService.getComments();
-  }
-
-  // @ApiOperation({ summary: 'getCommentById' })
-  // @Get(':id')
-  // getComment(@Param('id') CommentId: string) {
-  //   return this.commentsService.getCommentById(CommentId);
-  // }
 
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'updateCategory' })

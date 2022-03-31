@@ -1,11 +1,15 @@
 <mat-card class="mat-elevation-z4">
 
   <mat-card-content>
-    <div>
+    <div
+      [ngClass]="{ 'not-all-content': isReadMoreDisplayed ,'all-content': !isReadMoreDisplayed}"
+      class="content"
+    >
       <span
-        *ngIf="isReadMore; else readAll"
-        [innerHtml]="article.content | slice:0:131"
+        *ngIf="isReadMoreDisplayed; else readAll"
+        [innerHtml]="getArticleContent()"
       ></span>
+      <!-- | slice:0:131 -->
       <ng-template #readAll>
         <span
           *ngIf="!isReadMore"
@@ -13,13 +17,21 @@
         ></span>
       </ng-template>
 
-      <button
+      <span
+        (click)="showText()"
+        mat-raised-button
+        *ngIf="isReadMoreDisplayed"
+        class="text-underlined see-more-box"
+      >
+        ...Read more
+      </span>
+      <!-- <button
         (click)="showText()"
         mat-raised-button
         *ngIf="isReadMore"
       >
         {{ isReadMore ? 'Read More': 'Read Less' }}
-      </button>
+      </button> -->
     </div>
 
   </mat-card-content>
@@ -84,12 +96,12 @@
     </section>
 
   </mat-card-actions>
-  <mat-divider *ngIf="!isCommentInputHidden"></mat-divider>
+  <mat-divider *ngIf="!isCommentInputHidden && isLogged"></mat-divider>
 
   <section
     class="comment-box full-width"
     appearance="outline"
-    *ngIf="!isCommentInputHidden"
+    *ngIf="!isCommentInputHidden && isLogged"
   >
     <textarea
       fxFlex="90"
@@ -108,7 +120,17 @@
     </button>
   </section>
 
-  <section *ngIf="!isCommentInputHidden">
+  <section *ngIf="!isCommentInputHidden && commentsList.length > 0">
+    <section *ngIf="!isLogged">
+      <span class="info">You can't comment this post.</span>
+      <span
+        class="text-underlined"
+        (click)="navigateToResgiter()"
+      >
+        Click here to register.
+      </span>
+    </section>
+
     <comments
       (onViewMore)="onViewMore()"
       [comments]="commentsList"
