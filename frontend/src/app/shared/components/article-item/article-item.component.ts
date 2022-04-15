@@ -16,6 +16,7 @@ export class ArticleItemComponent implements OnInit {
   @Input() article: Article;
   isReadMoreDisplayed = true;
   isCommentInputHidden = true;
+  hasMoreContent = false;
   isLogged = false;
 
   skip = 0; // how many elements to skip
@@ -34,12 +35,33 @@ export class ArticleItemComponent implements OnInit {
   ngOnInit(): void {
     const loggedUser = this.authenticationService.currentUserSubject.getValue();
     loggedUser ? this.isLogged = true : this.isLogged = false;
+    this.isShowMoreDisplayed();
     this.fetchComments();
+  }
+
+  isShowMoreDisplayed() {
+    const paragraphs = this.article.content.split("</p>");
+
+    const content = new DOMParser()
+      .parseFromString(paragraphs[0], "text/html")
+      .documentElement.textContent;
+
+    if (content.length > 193) {
+      this.hasMoreContent = true;
+    } else {
+      this.hasMoreContent = false;
+    }
   }
 
   firstParagraph() {
     const paragraphs = this.article.content.split("</p>")
     return paragraphs[0] + '</p>';
+  }
+
+  hasOnlyOneParagraph(): boolean {
+    const paragraphs = this.article.content.split("</p>");
+    console.log(paragraphs.length)
+    return paragraphs.length > 1;
   }
 
   getArticleContent() {

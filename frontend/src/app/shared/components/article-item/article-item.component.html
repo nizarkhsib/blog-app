@@ -9,29 +9,18 @@
         *ngIf="isReadMoreDisplayed; else readAll"
         [innerHtml]="getArticleContent()"
       ></span>
-      <!-- | slice:0:131 -->
       <ng-template #readAll>
-        <span
-          *ngIf="!isReadMore"
-          [innerHtml]="article.content"
-        ></span>
+        <span [innerHtml]="article.content"></span>
       </ng-template>
 
       <span
         (click)="showText()"
         mat-raised-button
-        *ngIf="isReadMoreDisplayed"
+        *ngIf="isReadMoreDisplayed && hasMoreContent"
         class="text-underlined see-more-box"
       >
         ...Read more
       </span>
-      <!-- <button
-        (click)="showText()"
-        mat-raised-button
-        *ngIf="isReadMore"
-      >
-        {{ isReadMore ? 'Read More': 'Read Less' }}
-      </button> -->
     </div>
 
   </mat-card-content>
