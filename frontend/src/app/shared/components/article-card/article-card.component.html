@@ -1,0 +1,43 @@
+<div
+  class="blog-card"
+  [ngClass]="{ 'alt': index % 2 === 0  }"
+>
+  <div class="meta">
+    <div
+      class="photo"
+      style="background-image: url({{article.filePath}})"
+    ></div>
+    <ul class="details">
+      <li class="author">
+        <a href="#">
+          {{article.author.firstname}}&nbsp;{{article.author.lastname}}
+        </a>
+      </li>
+      <li class="date">{{article.createdAt | date}}</li>
+      <!-- <li class="tags">
+        <ul>
+          <li>
+            <a href="#">Learn</a>
+          </li>
+          <li>
+            <a href="#">Code</a>
+          </li>
+          <li>
+            <a href="#">HTML</a>
+          </li>
+          <li>
+            <a href="#">CSS</a>
+          </li>
+        </ul>
+      </li> -->
+    </ul>
+  </div>
+  <div class="description">
+    <h1>{{article.title}}</h1>
+    <h2>{{article?.description}}</h2>
+    <span>{{previewText}}</span>
+    <p class="read-more">
+      <a href="#">Read More</a>
+    </p>
+  </div>
+</div>

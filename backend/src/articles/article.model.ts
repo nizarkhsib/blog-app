@@ -1,5 +1,5 @@
 
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, SchemaTypes } from 'mongoose';
 
 export const ArticleSchema = new Schema({
   title: { type: String },
@@ -9,6 +9,7 @@ export const ArticleSchema = new Schema({
   userId: { type: String },
   filePath: { type: String },
   likes: { type: Number },
+  author: { type: SchemaTypes.ObjectId, ref: 'User', required: false },
   image:
   {
     data: Buffer,

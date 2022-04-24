@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { ArticleDto } from './dto/article.dto';
 import { AppLogger } from '../core/services/logger.service';
 import { Article } from './article.model';
+import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class ArticlesService implements OnModuleInit {
@@ -18,14 +19,24 @@ export class ArticlesService implements OnModuleInit {
   // addProduct with file "photo"
 
   async addArticleWithPhoto(file, articleDto: ArticleDto): Promise<Article> {
-    const newArticle = new this.articleModel(articleDto);
+
+    let result;
+
+    const newArticle = new this.articleModel({
+      ...articleDto,
+      author: { _id: articleDto.userId }
+    });
     if (file) {
       newArticle.filePath = file.path;
     }
 
-    await newArticle.save();
+    const createdArticle: Promise<Article> = newArticle
+      .save()
+      .then(
+        (res) => result = res.populate('author', ['firstname', 'lastname']).execPopulate()
+      );
 
-    return newArticle.toObject({ versionKey: false });
+    return await createdArticle;
   }
 
   /**
@@ -52,7 +63,7 @@ export class ArticlesService implements OnModuleInit {
       .sort([['updatedAt', 'descending']])
       // .sort({ _id: 1 })
       .skip(documentsToSkip)
-      .populate('author')
+      .populate('author', ['firstname', 'lastname'])
       .populate('categories');
 
     if (limitOfDocuments) {

@@ -22,14 +22,19 @@
       [fxFlex]="(100/gridColumns) + '%'"
       fxFlex.xs="100%"
       fxLayoutAlign="center center"
-      *ngFor="let article of articles"
+      *ngFor="let article of articles; let index = index;"
     >
-      <article-card [article]="article"></article-card>
+      <article-card
+        class="article-card"
+        [article]="article"
+        [index]="index"
+      ></article-card>
     </div>
   </div>
 </div>
 
 <mat-paginator
+  *ngIf="articles.length >= 4"
   class="paginator"
   (page)="onPageChange($event)"
   [length]="count"

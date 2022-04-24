@@ -8,12 +8,13 @@ import { PaginatedResult } from '../../services/paginated-result';
 import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'article-card',
-  templateUrl: './article-item.component.html',
-  styleUrls: ['./article-item.component.scss']
+  templateUrl: './article-card.component.html',
+  styleUrls: ['./article-card.component.scss']
 })
-export class ArticleItemComponent implements OnInit {
+export class ArticleCardComponent implements OnInit {
 
   @Input() article: Article;
+  @Input() index: number;
   public sanitizer: DomSanitizer
   isReadMoreDisplayed = true;
   isCommentInputHidden = true;
@@ -26,7 +27,7 @@ export class ArticleItemComponent implements OnInit {
 
   commentInput: string = '';
   commentsList: Comment[];
-
+  previewText = '';
   constructor(
     private authenticationService: AuthenticationService,
     private commentsBackendService: CommentsService,
@@ -36,6 +37,10 @@ export class ArticleItemComponent implements OnInit {
   ngOnInit(): void {
     const loggedUser = this.authenticationService.currentUserSubject.getValue();
     loggedUser ? this.isLogged = true : this.isLogged = false;
+    this.previewText = new DOMParser()
+      .parseFromString(this.article.content, "text/html")
+      .documentElement.textContent.slice(0, 130);
+
     this.isShowMoreDisplayed();
     this.fetchComments();
   }
@@ -61,6 +66,7 @@ export class ArticleItemComponent implements OnInit {
   }
 
   textFromHtml(htmlContent) {
+
     return new DOMParser()
       .parseFromString(htmlContent, "text/html")
       .documentElement.textContent;
