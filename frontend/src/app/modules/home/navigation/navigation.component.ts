@@ -1,8 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Event, Router, Scroll } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { LoggedUser } from 'src/app/shared/models/logged-user';
 
@@ -11,7 +11,7 @@ import { LoggedUser } from 'src/app/shared/models/logged-user';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnDestroy {
+export class NavigationComponent implements OnDestroy, AfterViewInit {
 
   loggedUser: LoggedUser = null;
   isLogged = false;
@@ -29,6 +29,9 @@ export class NavigationComponent implements OnDestroy {
 
     this.loggedUser = this.authenticationService.currentUserSubject.getValue();
     this.loggedUser ? this.isLogged = true : this.isLogged = false;
+  }
+  ngAfterViewInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -50,4 +53,5 @@ export class NavigationComponent implements OnDestroy {
   navigateToProfile() {
     this.router.navigate(['profile']);
   }
+
 }

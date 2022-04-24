@@ -5,22 +5,22 @@
       [ngClass]="{ 'not-all-content': isReadMoreDisplayed ,'all-content': !isReadMoreDisplayed}"
       class="content"
     >
-      <span
-        *ngIf="isReadMoreDisplayed; else readAll"
-        [innerHtml]="getArticleContent()"
-      ></span>
+      <section *ngIf="isReadMoreDisplayed; else readAll">
+        <span [innerHtml]="getArticleContent()"></span>
+        <span
+          (click)="showText()"
+          mat-raised-button
+          *ngIf="isReadMoreDisplayed && hasMoreContent"
+          class="text-underlined see-more-box"
+        >
+          ...Read more
+        </span>
+      </section>
+
       <ng-template #readAll>
         <span [innerHtml]="article.content"></span>
       </ng-template>
 
-      <span
-        (click)="showText()"
-        mat-raised-button
-        *ngIf="isReadMoreDisplayed && hasMoreContent"
-        class="text-underlined see-more-box"
-      >
-        ...Read more
-      </span>
     </div>
 
   </mat-card-content>
@@ -59,6 +59,7 @@
     </div>
 
   </section>
+  <mat-divider></mat-divider>
 
   <mat-card-actions>
     <section
@@ -109,16 +110,18 @@
     </button>
   </section>
 
+  <section *ngIf="!isLogged && !isCommentInputHidden">
+
+    <span class="info">You can't comment this post.</span>
+    <span
+      class="text-underlined"
+      (click)="navigateToResgiter()"
+    >
+      Click here to register.
+    </span>
+  </section>
+
   <section *ngIf="!isCommentInputHidden && commentsList.length > 0">
-    <section *ngIf="!isLogged">
-      <span class="info">You can't comment this post.</span>
-      <span
-        class="text-underlined"
-        (click)="navigateToResgiter()"
-      >
-        Click here to register.
-      </span>
-    </section>
 
     <comments
       (onViewMore)="onViewMore()"

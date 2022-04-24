@@ -1,6 +1,10 @@
 @import 'theme';
 
 :host {
+    .mat-divider {
+        margin-top: 6px;
+    }
+
     .mat-card {
         max-width: 500px;
     }

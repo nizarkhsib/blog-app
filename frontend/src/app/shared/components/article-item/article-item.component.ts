@@ -5,7 +5,7 @@ import { CommentDto } from '../../models/comment';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CommentsService } from '../../services/comments.service';
 import { PaginatedResult } from '../../services/paginated-result';
-
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'article-card',
   templateUrl: './article-item.component.html',
@@ -14,6 +14,7 @@ import { PaginatedResult } from '../../services/paginated-result';
 export class ArticleItemComponent implements OnInit {
 
   @Input() article: Article;
+  public sanitizer: DomSanitizer
   isReadMoreDisplayed = true;
   isCommentInputHidden = true;
   hasMoreContent = false;
@@ -40,28 +41,34 @@ export class ArticleItemComponent implements OnInit {
   }
 
   isShowMoreDisplayed() {
+
     const paragraphs = this.article.content.split("</p>");
 
-    const content = new DOMParser()
-      .parseFromString(paragraphs[0], "text/html")
-      .documentElement.textContent;
+    const filteredParagraphs = paragraphs.filter(p => p.length > 0);
 
-    if (content.length > 193) {
-      this.hasMoreContent = true;
+    if (filteredParagraphs.length === 1) {
+
+      const firstParagraphContent = this.textFromHtml(paragraphs[0]);
+
+      if (firstParagraphContent.length > 193) {
+        this.hasMoreContent = true;
+      } else {
+        this.hasMoreContent = false;
+      }
     } else {
-      this.hasMoreContent = false;
+      this.hasMoreContent = true;
     }
+  }
+
+  textFromHtml(htmlContent) {
+    return new DOMParser()
+      .parseFromString(htmlContent, "text/html")
+      .documentElement.textContent;
   }
 
   firstParagraph() {
     const paragraphs = this.article.content.split("</p>")
     return paragraphs[0] + '</p>';
-  }
-
-  hasOnlyOneParagraph(): boolean {
-    const paragraphs = this.article.content.split("</p>");
-    console.log(paragraphs.length)
-    return paragraphs.length > 1;
   }
 
   getArticleContent() {
