@@ -4,6 +4,10 @@ mat-toolbar {
 
 .content {
     padding: 16px;
+    margin-top: 5px;
+    overflow: auto !important;
+    height: 100vh;
+    padding-bottom: 200px;
 }
 
 .content>mat-card {
@@ -21,4 +25,10 @@ mat-toolbar {
 
 .article-card {
     width: 100%;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

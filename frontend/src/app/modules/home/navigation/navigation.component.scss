@@ -1,6 +1,17 @@
 // Shared
 @import 'theme';
 
+:host {
+    ::ng-deep .mat-sidenav-container {
+        position: absolute;
+        overflow: hidden !important;
+    }
+
+    ::ng-deep .mat-sidenav-content {
+        overflow: hidden !important;
+    }
+}
+
 .sidenav-container {
     height: 100%;
 }
