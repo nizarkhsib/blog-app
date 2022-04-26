@@ -13,13 +13,15 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CommentsComponent } from './article-card/comments/comments.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   declarations: [
     ListComponent,
     ArticleCardComponent,
     CommentsComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    AvatarComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   exports: [
     ListComponent,
     ArticleCardComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    AvatarComponent
   ]
 })
 export class ComponentsModule { }

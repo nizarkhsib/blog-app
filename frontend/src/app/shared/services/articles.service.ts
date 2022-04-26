@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Article } from "../models/article";
 import { ResourceService } from "./backend.service";
@@ -46,6 +46,18 @@ export class ArticlesService extends ResourceService<Article> {
           return paginatedResult;
         })
       )
+
+
+  }
+
+  get(id: string | number): Observable<Article> {
+    return this.httpClient.get<Article>(`${this.API}/${id}`)
+      .pipe(
+        map((article: Article) => {
+          article.filePath = `${environment.apiUrl}${article.filePath}`
+          return article;
+        })
+      );
   }
 
 }

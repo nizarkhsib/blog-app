@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { ArticleDto } from './dto/article.dto';
 import { AppLogger } from '../core/services/logger.service';
 import { Article } from './article.model';
-import { from, Observable } from 'rxjs';
 
 @Injectable()
 export class ArticlesService implements OnModuleInit {
@@ -76,7 +75,7 @@ export class ArticlesService implements OnModuleInit {
   }
 
   async getArticleById(ArticleId: string): Promise<Article> {
-    return await this.articleModel.findById({ _id: ArticleId });
+    return await this.articleModel.findById({ _id: ArticleId }).populate('author', ['firstname', 'lastname']);
   }
 
   async updateArticle(ArticleId: string, Article: Partial<Article>): Promise<Article> {

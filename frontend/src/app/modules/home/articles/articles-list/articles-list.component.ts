@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import { finalize, tap } from 'rxjs/operators';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { Article } from 'src/app/shared/models/article';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { PaginatedResult } from 'src/app/shared/services/paginated-result';
@@ -24,7 +25,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private articlesBackendService: ArticlesService,
-    private renderer2: Renderer2) { }
+    private router: Router) { }
 
   ngAfterViewInit(): void {
 
@@ -67,6 +68,11 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fetchArticlesList();
     }
 
+  }
+
+  articleClicked(article: Article) {
+    console.log('article', article);
+    this.router.navigate([article._id], { state: { article: article } });
   }
 
 }

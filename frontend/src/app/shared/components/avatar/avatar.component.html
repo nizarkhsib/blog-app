@@ -1,0 +1,25 @@
+<div fxFlex="row">
+  <div
+    class="circle"
+    [ngStyle]="{'background-color':  circleColor }"
+  >
+    <img
+      *ngIf="!showInitials"
+      src="{{photoUrl}}"
+    >
+
+    <div
+      *ngIf="showInitials"
+      class="initials"
+    >
+      {{ initials }}
+    </div>
+  </div>
+  <div
+    class="fullname"
+    fxFlex="col"
+  >
+    {{name}}
+  </div>
+
+</div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticlesListComponent } from './navigation/articles-list/articles-list.component';
+import { ArticlesListComponent } from './articles/articles-list/articles-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
@@ -10,7 +10,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ArticlesListComponent
+        loadChildren: () => import('./articles/articles.module')
+          .then(m => m.UserDashboardModule)
       },
       {
         path: 'user-dashboard',

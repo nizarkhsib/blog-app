@@ -35,7 +35,7 @@ export abstract class ResourceService<T> {
   }
 
   get(id: string | number): Observable<T> {
-    return this.httpClient.get<T>(`/${this.APIUrl}}/${id}`)
+    return this.httpClient.get<T>(`${this.APIUrl}/${id}`)
       .pipe(
         catchError(this.handleError)
       );

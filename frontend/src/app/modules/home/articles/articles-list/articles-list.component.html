@@ -14,6 +14,7 @@
       *ngFor="let article of articles; let index = index;"
     >
       <article-card
+        (click)="articleClicked(article)"
         class="article-card"
         [article]="article"
         [index]="index"

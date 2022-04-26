@@ -1,0 +1,35 @@
+.circle {
+    border-radius: 50%;
+    width: 50px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .initials {
+        color: #FFFFFF;
+        font-size: 20px;
+        line-height: 19px;
+        letter-spacing: 0.2625px;
+
+    }
+}
+
+.fullname {
+
+    margin: auto auto auto 10px;
+    font-family: sohne,
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+    font-style: normal;
+    color: rgb(82, 82, 82);
+    font-size: 16px;
+}

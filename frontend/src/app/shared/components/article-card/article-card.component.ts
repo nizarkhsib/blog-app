@@ -15,7 +15,9 @@ export class ArticleCardComponent implements OnInit {
 
   @Input() article: Article;
   @Input() index: number;
-  public sanitizer: DomSanitizer
+
+  public sanitizer: DomSanitizer;
+
   isReadMoreDisplayed = true;
   isCommentInputHidden = true;
   hasMoreContent = false;
@@ -28,6 +30,7 @@ export class ArticleCardComponent implements OnInit {
   commentInput: string = '';
   commentsList: Comment[];
   previewText = '';
+
   constructor(
     private authenticationService: AuthenticationService,
     private commentsBackendService: CommentsService,
@@ -66,7 +69,6 @@ export class ArticleCardComponent implements OnInit {
   }
 
   textFromHtml(htmlContent) {
-
     return new DOMParser()
       .parseFromString(htmlContent, "text/html")
       .documentElement.textContent;

@@ -1,0 +1,32 @@
+.content-container {
+    margin-top: 5px;
+    overflow: auto !important;
+    height: 100vh;
+    padding: 20px;
+
+    .avatar {
+        margin-bottom: 20px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .article-content {
+        font-size: 20px;
+        color: rgb(82, 82, 82);
+        margin-top: 24px;
+        margin-bottom: 100px;
+        font-family: charter,
+            Georgia,
+            Cambria,
+            "Times New Roman",
+            Times,
+            serif;
+        font-style: normal;
+        letter-spacing: -0.004em;
+        line-height: 1.6;
+    }
+
+}
