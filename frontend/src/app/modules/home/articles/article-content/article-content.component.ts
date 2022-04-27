@@ -29,7 +29,10 @@ export class ArticleContentComponent implements OnInit {
             return this.articleService.get(params.id)
           })
         ).subscribe(
-          (article) => this.article = article
+          (article) => this.article = article,
+          (error) => {
+            this.router.navigate(['']);
+          }
         );
     }
 

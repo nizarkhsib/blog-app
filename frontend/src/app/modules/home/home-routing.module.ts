@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ArticlesListComponent } from './articles/articles-list/articles-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'articles',
+  },
+  {
+    path: '',
     component: NavigationComponent,
     children: [
       {
-        path: '',
+        path: 'articles',
         loadChildren: () => import('./articles/articles.module')
-          .then(m => m.UserDashboardModule)
+          .then(m => m.ArticlesModule)
       },
       {
         path: 'user-dashboard',
@@ -28,8 +32,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('../login/login.module').then(m => m.LoginModule)
-  },
-
+  }
 ];
 
 @NgModule({

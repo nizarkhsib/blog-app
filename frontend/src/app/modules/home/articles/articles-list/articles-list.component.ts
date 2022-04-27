@@ -71,8 +71,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   articleClicked(article: Article) {
-    console.log('article', article);
-    this.router.navigate([article._id], { state: { article: article } });
+    this.router.navigate(['articles/' + article._id], { state: { article: article } });
   }
 
 }

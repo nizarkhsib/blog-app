@@ -59,4 +59,4 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ]
 
 })
-export class UserDashboardModule { }
+export class ArticlesModule { }

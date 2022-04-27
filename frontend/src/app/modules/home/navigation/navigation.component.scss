@@ -10,6 +10,22 @@
     ::ng-deep .mat-sidenav-content {
         overflow: hidden !important;
     }
+
+    ::ng-deep .mat-sidenav {
+        width: 56px !important;
+    }
+
+    ::ng-deep .mat-raised-button {
+        border-radius: 55px;
+    }
+
+
+}
+
+::ng-deep .my-menu {
+    width: 150px !important;
+    margin-right: 20px !important;
+    border-radius: 0px;
 }
 
 .sidenav-container {
@@ -28,13 +44,16 @@
     }
 }
 
-// .spacer {
-//     flex: 0.8 1 auto;
-// }
+.spacer {
+    flex: 1 1 auto;
+}
 
 .content {
     grid-area: content;
     margin-top: 50px;
+    height: 100vh;
+    overflow-y: auto !important;
+    padding-bottom: 100px;
 }
 
 .header {
@@ -43,7 +62,6 @@
     width: 100vw;
     background-color: $base-color;
     z-index: 1000;
-
 }
 
 .wrapper {
@@ -56,5 +74,5 @@
 }
 
 .user-logged {
-    margin-right: 200px;
+    margin-right: 55px;
 }
