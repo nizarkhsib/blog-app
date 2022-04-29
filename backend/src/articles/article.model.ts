@@ -10,6 +10,7 @@ export const ArticleSchema = new Schema({
   filePath: { type: String },
   likes: { type: Number },
   author: { type: SchemaTypes.ObjectId, ref: 'User', required: false },
+  tags: { type: Array<String>(), default: [] },
   image:
   {
     data: Buffer,
@@ -27,4 +28,5 @@ export interface Article extends Document {
   filePath: string;
   image: File;
   likes: number;
+  tags: string[];
 }

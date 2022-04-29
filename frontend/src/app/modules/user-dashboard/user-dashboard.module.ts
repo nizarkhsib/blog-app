@@ -8,7 +8,12 @@ import { NgxEditorModule } from 'ngx-editor';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -23,7 +28,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     MatButtonModule,
     MatInputModule,
     MatCardModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    LayoutModule,
+    FlexLayoutModule,
+    MatChipsModule,
+    MatIconModule,
+    MatAutocompleteModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

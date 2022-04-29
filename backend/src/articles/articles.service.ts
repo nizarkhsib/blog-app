@@ -19,6 +19,8 @@ export class ArticlesService implements OnModuleInit {
 
   async addArticleWithPhoto(file, articleDto: ArticleDto): Promise<Article> {
 
+    articleDto.tags = String(articleDto.tags).split(',');
+
     let result;
 
     const newArticle = new this.articleModel({

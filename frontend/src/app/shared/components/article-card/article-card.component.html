@@ -14,22 +14,17 @@
         </a>
       </li>
       <li class="date">{{article.createdAt | date}}</li>
-      <!-- <li class="tags">
+      <li
+        *ngIf="article?.tags.length > 0"
+        class="tags"
+      >
+
         <ul>
-          <li>
-            <a href="#">Learn</a>
-          </li>
-          <li>
-            <a href="#">Code</a>
-          </li>
-          <li>
-            <a href="#">HTML</a>
-          </li>
-          <li>
-            <a href="#">CSS</a>
+          <li *ngFor="let tag of article.tags;">
+            <a href="#">#{{tag}}</a>
           </li>
         </ul>
-      </li> -->
+      </li>
     </ul>
   </div>
   <div class="description">
@@ -37,7 +32,7 @@
     <h2>{{article?.description}}</h2>
     <span>{{previewText}}</span>
     <p class="read-more">
-      <a href="#">Read More</a>
+      <a>Read More</a>
     </p>
   </div>
 </div>

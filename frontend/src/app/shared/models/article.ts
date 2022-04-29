@@ -9,6 +9,7 @@ export interface Article {
   filePath?: string;
   createdAt?: string;
   author?: Author;
+  tags?: string[];
 }
 
 export interface Author {

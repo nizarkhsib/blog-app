@@ -22,6 +22,10 @@ export class ArticleDto {
   @ApiProperty()
   userId: string;
 
+  @IsString()
+  @ApiProperty()
+  tags: string[];
+
   // For Image
   filePath?: string;
 }

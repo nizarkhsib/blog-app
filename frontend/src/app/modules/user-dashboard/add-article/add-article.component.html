@@ -1,9 +1,9 @@
 <mat-card class="card-container">
   <h4 class="card-header">Write an article</h4>
-  <section>
+  <section class="card-content">
     <form [formGroup]="articleForm">
       <mat-form-field
-        class="row"
+        class="full-width"
         appearance="outline"
       >
         <mat-label for="Title">Title</mat-label>
@@ -22,6 +22,35 @@
           <div *ngIf="f.title.errors.required && f.title?.touched">Title is required</div>
         </div>
       </mat-form-field>
+      <mat-form-field
+        class="full-width"
+        appearance="outline"
+      >
+        <mat-label>Article tags</mat-label>
+        <mat-chip-list
+          #chipList
+          aria-label="Tags"
+        >
+          <mat-chip
+            *ngFor="let tag of tags"
+            (removed)="remove(tag)"
+          >
+            {{tag}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Add tag..."
+            #tagsInput
+            [formControl]="tagsCtrl"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"
+          >
+        </mat-chip-list>
+      </mat-form-field>
+
       <div class="editor-container editor NgxEditor__Wrapper">
 
         <ngx-editor-menu

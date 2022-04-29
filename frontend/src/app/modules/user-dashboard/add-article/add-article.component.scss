@@ -1,24 +1,27 @@
 :host {
-    ::ng-deep .NgxEditor {
-        height: 50vh !important;
-    }
 
     ::ng-deep .NgxEditor .NgxEditor__Content {
         height: 50vh !important;
     }
 
-    ::ng-deep .NgxEditor .NgxEditor__Wrapper {
-        height: 50vh !important;
-    }
 }
 
 .card-container {
-    margin: 10px;
+    display: flex;
+    flex-flow: column;
+    min-width: calc(100vw - 100px);
+    margin: 20px;
+
+    .card-content {
+        flex: 0 1 auto;
+    }
 
     .button {
         margin-top: 24px !important;
     }
 }
+
+
 
 .card-header {
     position: sticky;
@@ -31,7 +34,7 @@
 
 .custom-dropzone {
     margin-top: 24px !important;
-    height: 250px !important;
+    height: 150px !important;
     background: whitesmoke !important;
     color: black !important;
     border: 5px dashed rgb(235, 79, 79);
