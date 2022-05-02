@@ -1,5 +1,5 @@
 <mat-card class="card-container">
-  <h4 class="card-header">Write an article</h4>
+  <h2 class="card-header">Write an article</h2>
   <section class="card-content">
     <form [formGroup]="articleForm">
       <mat-form-field
@@ -50,23 +50,6 @@
           >
         </mat-chip-list>
       </mat-form-field>
-
-      <div class="editor-container editor NgxEditor__Wrapper">
-
-        <ngx-editor-menu
-          [editor]="editor"
-          [toolbar]="toolbar"
-        ></ngx-editor-menu>
-        <ngx-editor
-          required
-          formControlName="content"
-          [editor]="editor"
-          [disabled]="false"
-          [placeholder]="'Type here...'"
-        >
-        </ngx-editor>
-      </div>
-
       <div
         class="custom-dropzone"
         ngx-dropzone
@@ -95,6 +78,21 @@
 
       </div>
 
+      <div class="editor-container editor NgxEditor__Wrapper">
+
+        <ngx-editor-menu
+          [editor]="editor"
+          [toolbar]="toolbar"
+        ></ngx-editor-menu>
+        <ngx-editor
+          required
+          formControlName="content"
+          [editor]="editor"
+          [disabled]="false"
+          [placeholder]="'Type the content here...'"
+        >
+        </ngx-editor>
+      </div>
       <button
         (click)="saveArticle()"
         [disabled]="loading || !file || articleForm.invalid"

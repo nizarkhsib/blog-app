@@ -42,7 +42,7 @@ export class ArticleCardComponent implements OnInit {
     loggedUser ? this.isLogged = true : this.isLogged = false;
     this.previewText = new DOMParser()
       .parseFromString(this.article.content, "text/html")
-      .documentElement.textContent.slice(0, 130);
+      .documentElement.textContent.slice(0, 170).concat('...');
 
     this.isShowMoreDisplayed();
     this.fetchComments();
