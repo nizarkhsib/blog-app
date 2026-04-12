@@ -1,4 +1,4 @@
 export class PaginatedResult<T> {
-  results: T[];
-  count: number;
+  results!: T[];
+  count!: number;
 }

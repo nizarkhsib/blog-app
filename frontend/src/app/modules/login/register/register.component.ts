@@ -7,10 +7,11 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  standalone: false
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm!: FormGroup;
   loading = false;
   submitted = false;
   registerError = false;

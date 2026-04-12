@@ -76,12 +76,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "articles:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "articles:build:production"
+              "buildTarget": "articles:build:production"
             },
             "development": {
-              "browserTarget": "articles:build:development"
+              "buildTarget": "articles:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -132,8 +135,8 @@
       }
     }
   },
-  "defaultProject": "articles",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "@angular-eslint/schematics",
+    "analytics": false
   }
 }

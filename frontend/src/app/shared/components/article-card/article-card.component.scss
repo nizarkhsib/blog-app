@@ -115,6 +115,8 @@ $color_grey_dark: #a2a2a2;
         background: $color_white;
         position: relative;
         z-index: 1;
+        display: flex;
+        flex-direction: column;
 
         h1,
         h2 {
@@ -122,9 +124,13 @@ $color_grey_dark: #a2a2a2;
         }
 
         h1 {
-            line-height: 1;
+            line-height: 1.2;
             margin: 0;
             font-size: 1.7rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         h2 {
@@ -133,6 +139,10 @@ $color_grey_dark: #a2a2a2;
             text-transform: uppercase;
             color: $color_grey_dark;
             margin-top: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .read-more {
@@ -226,6 +236,163 @@ $color_grey_dark: #a2a2a2;
                 padding-left: 25px;
             }
         }
+    }
+}
+
+/* Article meta row (when no cover image) */
+.article-meta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    color: #888;
+
+    .author-name { font-weight: 600; color: #444; }
+}
+
+.preview-text {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+.tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+
+    .tag {
+        font-size: 0.8rem;
+        color: $color_prime;
+        background: lighten($color_prime, 40%);
+        padding: 2px 8px;
+        border-radius: 12px;
+    }
+}
+
+/* Action Bar */
+.action-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 4px;
+    border-top: 1px solid #eee;
+    margin-top: 12px;
+
+    .like-btn, .comment-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.9rem;
+        color: #777;
+
+        mat-icon { font-size: 20px; height: 20px; width: 20px; }
+    }
+
+    .like-btn.liked {
+        color: #e53935;
+        mat-icon { color: #e53935; }
+    }
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 12px;
+
+    .comment-input-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+
+        .comment-field {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+    }
+
+    .login-prompt {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 12px;
+        a { color: $color_prime; cursor: pointer; font-weight: 600; }
+    }
+
+    .comments-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .comment-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+
+        .comment-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: $color_prime;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .comment-body {
+            background: #f7f7f7;
+            border-radius: 8px;
+            padding: 8px 12px;
+            flex: 1;
+
+            .comment-author {
+                font-weight: 600;
+                font-size: 0.85rem;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .comment-text {
+                font-size: 0.9rem;
+                color: #444;
+                margin: 0;
+            }
+        }
+    }
+
+    .view-more-btn {
+        color: $color_prime;
+        font-size: 0.85rem;
+        margin-top: 6px;
+    }
+
+    .no-comments {
+        font-size: 0.9rem;
+        color: #aaa;
+        text-align: center;
+        padding: 8px 0;
     }
 }
 

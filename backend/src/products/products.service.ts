@@ -52,7 +52,6 @@ export class ProductsService implements OnModuleInit {
   }
 
   async deleteProduct(prodId: string): Promise<void> {
-    return await this.productModel.deleteOne({ _id: prodId })
+    await this.productModel.deleteOne({ _id: prodId })
   }
-
 }

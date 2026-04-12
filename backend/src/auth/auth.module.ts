@@ -7,7 +7,8 @@ import { ConfigModule } from '../core/config/config.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
-import { MailerModule } from '@nest-modules/mailer';
+import { FacebookStrategy } from './strategies/facebook.strategy';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '../core/config/config.service';
 import { SendEmailMiddleware } from '../core/middleware/send-email.middleware';
 import { ProfileSchema } from 'src/profile/profile.model';
@@ -22,10 +23,10 @@ import { ProfileSchema } from 'src/profile/profile.model';
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secretOrPrivateKey: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('EXPIRES_IN')
+          expiresIn: parseInt(configService.get('EXPIRES_IN')) || 3600
         }
       }),
       inject: [ConfigService],
@@ -43,7 +44,7 @@ import { ProfileSchema } from 'src/profile/profile.model';
     }),
     ConfigModule,
   ],
-  providers: [AuthService, JwtStrategy, SendEmailMiddleware],
+  providers: [AuthService, JwtStrategy, FacebookStrategy, SendEmailMiddleware],
   controllers: [AuthController]
 })
 export class AuthModule { }

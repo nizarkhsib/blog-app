@@ -6,6 +6,11 @@ import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'me',
+    pathMatch: 'full'
+  },
+  {
+    path: ':userId',
     component: ProfileComponent,
     children: [
       {

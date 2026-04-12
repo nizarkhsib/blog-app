@@ -2,15 +2,14 @@ import { Injectable, UnauthorizedException, BadRequestException, ArgumentsHost }
 import { JwtService } from '@nestjs/jwt';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { JwtPayload } from './jwt-payload.interface';
-import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { TokenVerifyEmail, User, UserSchema, } from './user.model';
+import { TokenVerifyEmail, User } from './user.model';
 import { v1 as uuidv1 } from 'uuid';
 import { SendEmailMiddleware } from './../core/middleware/send-email.middleware';
 import { RegisterDto } from './dto/register.dto';
 import { LoggedUserDto } from './dto/logged-user.dto';
-import * as mongoose from 'mongoose';
-import { Profile, ProfileSchema } from 'src/profile/profile.model';
+import { Profile } from 'src/profile/profile.model';
 
 @Injectable()
 export class AuthService {
@@ -20,51 +19,33 @@ export class AuthService {
     @InjectModel('Profile') private profileModel: Model<Profile>,
     private jwtService: JwtService,
     private sendEmailMiddleware: SendEmailMiddleware,
-    @InjectConnection() private readonly connection: mongoose.Connection
   ) { }
 
   async createUser(authCredentialsDto: RegisterDto) {
-    let userToAttempt = await this.findOneByEmail(authCredentialsDto.email);
+    const userToAttempt = await this.findOneByEmail(authCredentialsDto.email);
 
-    if (!userToAttempt) {
-      const session = await this.userModel.startSession();
-
-      const newUser = new this.userModel({
-        firstname: authCredentialsDto.firstname,
-        lastname: authCredentialsDto.lastname,
-        email: authCredentialsDto.email,
-        password: authCredentialsDto.password,
-      });
-
-      const createWithTransaction = await session.withTransaction(async () => {
-
-        const createdUser = await this.userModel
-          .create([newUser], { session: session });
-
-        const newProfile = await this.profileModel.create(
-          [{ user: createdUser[0]._id }],
-          { session: session });
-
-        const tokenVerifyEmailModel = await this.tokenVerifyEmailModel
-          .create(
-            [{
-              userId: createdUser[0]._id,
-              tokenVerifyEmail: uuidv1()
-            }],
-            { session: session }
-          );
-        //     this.sendEmailMiddleware.sendEmail(user.email, newTokenVerifyEmail.tokenVerifyEmail, []);
-
-        return await Promise.all([createdUser, newProfile, tokenVerifyEmailModel]);
-      });
-
-      if (!createWithTransaction) {
-        await session.abortTransaction();
-        session.endSession();
-      }
-    } else {
+    if (userToAttempt) {
       throw new BadRequestException('Email already exists !');
     }
+
+    const newUser = new this.userModel({
+      firstname: authCredentialsDto.firstname,
+      lastname: authCredentialsDto.lastname,
+      email: authCredentialsDto.email,
+      password: authCredentialsDto.password,
+    });
+
+    const createdUser = await newUser.save();
+
+    await this.profileModel.create({ user: createdUser._id });
+
+    await this.tokenVerifyEmailModel.create({
+      userId: createdUser._id,
+      tokenVerifyEmail: uuidv1(),
+    });
+
+    // Optionally send verification email here
+    // this.sendEmailMiddleware.sendEmail(createdUser.email, tokenVerifyEmail.tokenVerifyEmail, []);
   }
 
   async validateUserByPassword(authCredentialsDto: AuthCredentialsDto) {
@@ -136,5 +117,76 @@ export class AuthService {
     }
   }
 
+  /**
+   * Handle Google OAuth callback
+   */
+  async validateOrCreateGoogleUser(profile: any): Promise<LoggedUserDto> {
+    let user = await this.userModel.findOne({ googleId: profile.id });
+
+    if (!user) {
+      // Create new user
+      user = new this.userModel({
+        firstname: profile.displayName?.split(' ')[0] || profile.given_name || 'User',
+        lastname: profile.displayName?.split(' ')[1] || profile.family_name || '',
+        email: profile.emails?.[0]?.value || profile.email,
+        googleId: profile.id,
+        profileImage: profile.photos?.[0]?.value || null,
+        emailVerified: true,
+        role: 'user'
+      });
+
+      await user.save();
+
+      // Create profile
+      await this.profileModel.create({ user: user._id });
+    }
+
+    const payload: LoggedUserDto = {
+      _id: user._id.toString(),
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      token: this.createJwtPayload(user)
+    };
+
+    return payload;
+  }
+
+  /**
+   * Handle Facebook OAuth callback
+   */
+  async validateOrCreateFacebookUser(profile: any): Promise<LoggedUserDto> {
+    let user = await this.userModel.findOne({ facebookId: profile.id });
+
+    if (!user) {
+      // Create new user
+      user = new this.userModel({
+        firstname: profile.displayName?.split(' ')[0] || 'User',
+        lastname: profile.displayName?.split(' ')[1] || '',
+        email: profile.emails?.[0]?.value || `${profile.id}@facebook.com`,
+        facebookId: profile.id,
+        profileImage: profile.photos?.[0]?.value || null,
+        emailVerified: true,
+        role: 'user'
+      });
+
+      await user.save();
+
+      // Create profile
+      await this.profileModel.create({ user: user._id });
+    }
+
+    const payload: LoggedUserDto = {
+      _id: user._id.toString(),
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      token: this.createJwtPayload(user)
+    };
+
+    return payload;
+  }
+
 }
+
 

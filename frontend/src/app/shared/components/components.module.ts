@@ -5,9 +5,9 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CommentsComponent } from './article-card/comments/comments.component';
@@ -28,8 +28,8 @@ import { AvatarComponent } from './avatar/avatar.component';
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
-    FlexLayoutModule,
     MatInputModule,
+    MatFormFieldModule,
     MatIconModule,
     FormsModule,
     MatBadgeModule,

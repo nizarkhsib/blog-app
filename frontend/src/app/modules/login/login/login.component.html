@@ -59,16 +59,47 @@
       Login
     </button>
 
-    <!-- <hr>
-		<button type="button" (click)="navigateToRegister()" class="button" mat-raised-button color="basic">
-			Register
-		</button> -->
-
     <mat-error
       *ngIf="error"
       style="text-align: center;"
     >
       <b>Bad email or password !</b>
     </mat-error>
+
+    <hr style="margin: 20px 0;">
+
+    <div class="social-auth-section">
+      <p style="text-align: center; margin-bottom: 15px;">Or continue with</p>
+      
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="loginWithGoogle()"
+        style="width: 100%; margin-bottom: 10px;"
+      >
+        <mat-icon style="margin-right: 10px;">mail</mat-icon>
+        Google
+      </button>
+
+      <button
+        type="button"
+        mat-raised-button
+        style="width: 100%;"
+        (click)="loginWithFacebook()"
+      >
+        <mat-icon style="margin-right: 10px;">facebook</mat-icon>
+        Facebook
+      </button>
+    </div>
+
+    <hr style="margin: 20px 0;">
+
+    <p style="text-align: center;">
+      Don't have an account?
+      <a (click)="navigateToRegister()" style="cursor: pointer; color: #1976d2;">
+        Register here
+      </a>
+    </p>
   </form>
 </div>

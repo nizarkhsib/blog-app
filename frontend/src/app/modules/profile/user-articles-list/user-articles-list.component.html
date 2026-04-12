@@ -1,0 +1,65 @@
+<div class="articles-section">
+  <h2>Your Articles</h2>
+
+  <div class="loading-container" *ngIf="articlesLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading articles...</p>
+  </div>
+
+  <div class="error-message" *ngIf="articlesError">
+    <p>{{ articlesError }}</p>
+  </div>
+
+  <div class="articles-list" *ngIf="!articlesLoading && userArticles.length > 0">
+    <mat-card class="article-card" *ngFor="let article of userArticles">
+      <mat-card-header>
+        <mat-card-title>{{ article.title }}</mat-card-title>
+        <mat-card-subtitle>
+          {{ article.createdAt | date: 'MMM d, yyyy' }}
+          <span class="status-badge" [ngClass]="article.status">{{ article.status }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="article-description">{{ article.description }}</p>
+        <div class="article-meta">
+          <span class="article-views">
+            <mat-icon>visibility</mat-icon>
+            {{ article.views || 0 }} views
+          </span>
+          <span class="article-likes">
+            <mat-icon>favorite</mat-icon>
+            {{ article.likes || 0 }} likes
+          </span>
+          <span *ngIf="article.chapters && article.chapters.length > 0" class="article-chapters">
+            <mat-icon>book</mat-icon>
+            {{ article.chapters.length }} chapters
+          </span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="viewArticle(article._id)">Read Article</button>
+
+        <ng-container *ngIf="isOwnProfile">
+          <button mat-icon-button color="accent" title="Edit" (click)="$event.stopPropagation(); editArticle(article._id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button title="Unpublish" *ngIf="article.status === 'published'" (click)="$event.stopPropagation(); unpublishArticle(article)">
+            <mat-icon>unpublished</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" title="Publish" *ngIf="article.status === 'draft'" (click)="$event.stopPropagation(); publishArticle(article)">
+            <mat-icon>publish</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" title="Delete" (click)="$event.stopPropagation(); deleteArticle(article)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-container>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="no-articles" *ngIf="!articlesLoading && userArticles.length === 0">
+    <p>You haven't created any articles yet</p>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Article } from 'src/app/shared/models/article';
@@ -8,37 +8,53 @@ import { PaginatedResult } from 'src/app/shared/services/paginated-result';
 @Component({
   selector: 'articles-list',
   templateUrl: './articles-list.component.html',
-  styleUrls: ['./articles-list.component.scss']
+  styleUrls: ['./articles-list.component.scss'],
+  standalone: false
 })
 export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Output() rendered;
+  @Output() rendered: EventEmitter<void> = new EventEmitter<void>();
   skip = 0; // how many elements to skip
   pageSize = 4; // page size
   count = 0; // all articles number
   articles: Article[] = [];
   gridColumns = 1;
-  isReadMore = true;
   isLoading = true;
 
-  @ViewChild('content', { read: ElementRef, static: false }) element: ElementRef;
+  @ViewChild('sentinel', { read: ElementRef, static: false }) sentinel!: ElementRef;
+
+  private observer!: IntersectionObserver;
 
   constructor(
     private articlesBackendService: ArticlesService,
     private router: Router) { }
 
-  ngAfterViewInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-  }
-
   ngOnInit(): void {
     this.fetchArticlesList();
   }
 
-  sliderChange(event) {
+  ngAfterViewInit(): void {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && this.articles.length < this.count && !this.isLoading) {
+          this.skip += this.pageSize;
+          this.fetchArticlesList();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (this.sentinel) {
+      this.observer.observe(this.sentinel.nativeElement);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  sliderChange(event: any) {
     this.gridColumns = event.value;
   }
 
@@ -51,23 +67,10 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
       )
       .subscribe(
         (res: PaginatedResult<Article>) => {
-          this.articles.push(...res.results)
+          this.articles.push(...res.results);
           this.count = res.count;
         }
       );
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event) {
-
-    const isOnBottom = event.target.offsetHeight + event.target.scrollTop >=
-      event.target.scrollHeight - 50;
-
-    if (isOnBottom && this.articles.length < this.count && !this.isLoading) {
-      this.skip = this.skip + this.pageSize;
-      this.fetchArticlesList();
-    }
-
   }
 
   articleClicked(article: Article) {

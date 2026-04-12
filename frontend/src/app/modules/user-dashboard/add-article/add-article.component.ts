@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Editor, Toolbar, Validators } from 'ngx-editor';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Editor, Toolbar } from 'ngx-editor';
 import { Article } from 'src/app/shared/models/article';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
@@ -15,116 +15,214 @@ import { MatChipInputEvent } from '@angular/material/chips';
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class AddArticleComponent implements OnInit, OnDestroy {
-  html: '';
+  html: string = '';
   loading = false;
   alive = true;
-  editor: Editor;
-  articleForm: FormGroup;
-  file: File;
+  editor!: Editor;
+  articleForm!: FormGroup;
+  coverImage: File | null = null;
+  coverImagePreviewUrl: string | null = null;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
     ['code', 'blockquote'],
     ['ordered_list', 'bullet_list'],
-    // [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['link', 'image'],
     ['text_color', 'background_color'],
-    // ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagsCtrl = new FormControl();
   tags: string[] = [];
+  isEditMode = false;
+  articleId: string = '';
 
-  @ViewChild('tagsInput') tagsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('tagsInput') tagsInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private articlesService: ArticlesService) {
-
-  }
+    private articlesService: ArticlesService
+  ) {}
 
   ngOnInit(): void {
-
     this.articleForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required]
+      title: ['', [Validators.required, Validators.minLength(5)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      content: ['', [Validators.required, Validators.minLength(50)]],
+      status: ['draft', Validators.required]
     });
 
     this.editor = new Editor();
 
+    // Check if we're in edit mode
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.articleId = params['id'];
+        this.loadArticle(this.articleId);
+      }
+    });
   }
 
-  // convenience getter for easy access to form fields
-  get f(): any { return this.articleForm.controls; }
-
-  // make sure to destory the editor
   ngOnDestroy(): void {
     this.alive = false;
     this.editor.destroy();
   }
 
-  saveArticle() {
-    console.log('ctrl', this.tagsCtrl.value);
-    console.log('tags array', this.tags);
+  get f(): any {
+    return this.articleForm.controls;
+  }
+
+  /**
+   * Load article for editing
+   */
+  loadArticle(articleId: string): void {
+    this.articlesService.getArticleById(articleId).subscribe(
+      (article: Article) => {
+        this.articleForm.patchValue({
+          title: article.title,
+          description: article.description,
+          content: article.content,
+          status: article.status
+        });
+        this.tags = article.tags || [];
+      },
+      error => console.error('Error loading article', error)
+    );
+  }
+
+  /**
+   * Save article (as draft or publish)
+   */
+  saveArticle(): void {
+    if (this.articleForm.invalid) {
+      alert('Please fill all required fields and ensure content is at least 50 characters');
+      return;
+    }
+
+    this.loading = true;
     const loggedUser = this.authenticationService.currentUserSubject.getValue();
 
-    const article: Article = {
-      tags: this.tags,
+    const article: Partial<Article> = {
       title: this.formValue.title,
-      // description: string,
+      description: this.formValue.description,
       content: this.formValue.content,
-      // datePublished: number,
-      userId: loggedUser._id
+      status: this.formValue.status,
+      tags: this.tags
     };
-    this.articlesService.postWithPhoto(article, this.file).subscribe(
+
+    const request = this.isEditMode
+      ? this.articlesService.updateArticle(this.articleId, article, this.coverImage)
+      : this.articlesService.createArticle(article, this.coverImage);
+
+    request.subscribe(
       () => {
-        this.router.navigate(['../']);
+        this.loading = false;
+        alert('Article saved successfully!');
+        this.router.navigate(['/user-dashboard/articles']);
+      },
+      error => {
+        this.loading = false;
+        console.error('Error saving article', error);
+        alert('Error saving article');
       }
-    )
+    );
+  }
+
+  /**
+   * Save as draft and continue editing
+   */
+  saveDraft(): void {
+    const statusControl = this.articleForm.get('status');
+    if (statusControl) {
+      statusControl.setValue('draft');
+    }
+    this.saveArticle();
+  }
+
+  /**
+   * Publish article
+   */
+  publishArticle(): void {
+    const statusControl = this.articleForm.get('status');
+    if (statusControl) {
+      statusControl.setValue('published');
+    }
+    this.saveArticle();
   }
 
   private get formValue() {
     return this.articleForm.value;
   }
 
-  onSelect(event) {
-    this.file = event.addedFiles[0];
+  /**
+   * Handle cover image upload
+   */
+  onSelectCoverImage(event: any): void {
+    const file: File | undefined = event.target.files?.[0];
+    if (file) {
+      this.coverImage = file;
+      const reader = new FileReader();
+      reader.onload = () => this.coverImagePreviewUrl = reader.result as string;
+      reader.readAsDataURL(file);
+    }
   }
 
-  onRemove(event) {
-    this.file = null;
+  onRemoveCoverImage(): void {
+    this.coverImage = null;
+    this.coverImagePreviewUrl = null;
   }
 
+  /**
+   * Add tag from chip input
+   */
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add tag
     if (value) {
-      this.tags.push(value);
+      if (this.tags.indexOf(value) === -1) {
+        this.tags.push(value);
+      }
+      // Clear the input value
+      if (event.chipInput) {
+        event.chipInput.clear();
+      }
     }
-
-    // Clear the input value
-    event.chipInput!.clear();
-
-    this.tagsCtrl.setValue(null);
   }
 
+  /**
+   * Remove tag
+   */
   remove(tag: string): void {
     const index = this.tags.indexOf(tag);
-
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
   }
 
+  /**
+   * Handle tag autocomplete selection
+   */
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.tags.push(event.option.viewValue);
+    if (this.tags.indexOf(event.option.viewValue) === -1) {
+      this.tags.push(event.option.viewValue);
+    }
     this.tagsInput.nativeElement.value = '';
     this.tagsCtrl.setValue(null);
   }
 
+  /**
+   * Navigate back to articles list
+   */
+  goBack(): void {
+    this.router.navigate(['user-dashboard/articles']);
+  }
 }

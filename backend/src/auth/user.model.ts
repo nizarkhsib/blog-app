@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 export const UserSchema = new mongoose.Schema({
   firstname: {
@@ -17,11 +17,32 @@ export const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: false
   },
   emailVerified: {
     type: Boolean,
     default: false
+  },
+  role: {
+    type: String,
+    enum: ['superadmin', 'user'],
+    default: 'user'
+  },
+  profileImage: {
+    type: String,
+    default: null
+  },
+  bio: {
+    type: String,
+    default: ''
+  },
+  googleId: {
+    type: String,
+    default: null
+  },
+  facebookId: {
+    type: String,
+    default: null
   }
 }, { timestamps: true });
 
@@ -59,7 +80,7 @@ UserSchema.methods.checkPassword = function (attempt, callback) {
 };
 
 export interface User extends mongoose.Document {
-  _id: string;
+  _id: mongoose.Types.ObjectId;
   firstname: string;
   lastname: string;
   email: string;

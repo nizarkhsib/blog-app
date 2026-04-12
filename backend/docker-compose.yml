@@ -1,0 +1,20 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: blogapp-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: blogapp
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - blogapp-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  blogapp-network:
+    driver: bridge

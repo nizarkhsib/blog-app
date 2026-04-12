@@ -8,12 +8,14 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.scss']
+  styleUrls: ['./profile-edit.component.scss'],
+  standalone: false
 })
 export class ProfileEditComponent implements OnInit {
-  file: File;
-  userProfile: Profile = null;
-  profileForm: FormGroup;
+  file: File | null = null;
+  filePreviewUrl: string | ArrayBuffer | null = null;
+  userProfile: Profile | null = null;
+  profileForm!: FormGroup;
   loading = false;
 
   constructor(
@@ -41,6 +43,11 @@ export class ProfileEditComponent implements OnInit {
 
     this.userProfile = this.data;
 
+    // Show existing photo immediately
+    if (this.data.photoPath) {
+      this.filePreviewUrl = this.data.photoPath;
+    }
+
     this.fileService.getFile(this.data.photoPath)
       .subscribe(
         res => this.file = res
@@ -54,12 +61,19 @@ export class ProfileEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSelect(event) {
-    this.file = event.addedFiles[0];
+  onSelect(event: any) {
+    const file: File | undefined = event.target.files?.[0];
+    if (file) {
+      this.file = file;
+      const reader = new FileReader();
+      reader.onload = () => this.filePreviewUrl = reader.result ?? null;
+      reader.readAsDataURL(file);
+    }
   }
 
-  onRemove(event) {
+  onRemove() {
     this.file = null;
+    this.filePreviewUrl = null;
   }
 
   close() {
@@ -68,6 +82,7 @@ export class ProfileEditComponent implements OnInit {
 
   save() {
     console.log('save clicked');
+    if (!this.userProfile?._id || !this.file) return;
     this.profileService
       .updateWithPhoto(this.userProfile._id, this.profileForm.value, this.file)
       .subscribe(

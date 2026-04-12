@@ -1,4 +1,4 @@
-// import * as mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Document, Schema, SchemaTypes } from 'mongoose';
 import { User } from 'src/auth/user.model';
 
@@ -19,12 +19,13 @@ export const ProfileSchema = new Schema({
 }, { timestamps: true });
 
 export interface Profile extends Document {
-  description: { type: String, },
-  followersCount: { type: Number },
-  followingCount: { type: Number },
-  articlesCount: { type: Number },
+  description: string;
+  followersCount: number;
+  followingCount: number;
+  articlesCount: number;
   photoPath: string;
-  followers: Partial<User[]>;
-  following: Partial<User[]>;
-  user: Partial<User>;
+  profilePhoto?: { data: Buffer; contentType: string };
+  followers: mongoose.Types.ObjectId[];
+  following: mongoose.Types.ObjectId[];
+  user: mongoose.Types.ObjectId;
 }

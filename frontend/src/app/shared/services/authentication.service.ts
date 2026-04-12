@@ -12,17 +12,18 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
 
   private readonly url = environment.apiUrl;
-  currentUserSubject: BehaviorSubject<LoggedUser> = new BehaviorSubject(null);
+  currentUserSubject: BehaviorSubject<LoggedUser | null> = new BehaviorSubject<LoggedUser | null>(null);
   public currentUser: Observable<LoggedUser | null>;
 
   constructor(private router: Router, private http: HttpClient) {
-    const currentUser = JSON.parse(localStorage.getItem('token'));
+    const currentUserData = localStorage.getItem('token');
+    const currentUser = currentUserData ? JSON.parse(currentUserData) : null;
     if (currentUser)
       this.currentUserSubject.next(currentUser);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): LoggedUser {
+  public get currentUserValue(): LoggedUser | null {
     return this.currentUserSubject.value;
   }
 
@@ -42,6 +43,55 @@ export class AuthenticationService {
 
   signUp(user: UserSignupDto): Observable<UserSignupDto> {
     return this.http.post<User>(`${this.url}auth/signup`, user);
+  }
+
+  /**
+   * Handle OAuth callback and token storage
+   */
+  handleOAuthCallback(token: string): void {
+    if (token) {
+      // Decode token and store user info
+      const user = this.decodeToken(token);
+      const loggedUser: LoggedUser = {
+        ...user,
+        token
+      };
+      localStorage.setItem('token', JSON.stringify(loggedUser));
+      this.currentUserSubject.next(loggedUser);
+    }
+  }
+
+  /**
+   * Decode JWT token
+   */
+  private decodeToken(token: string): any {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
+  }
+
+  /**
+   * Initiate Google OAuth login
+   */
+  loginWithGoogle(): void {
+    const backendUrl = environment.apiUrl.replace('/api/', '');
+    window.location.href = `${backendUrl}auth/google`;
+  }
+
+  /**
+   * Initiate Facebook OAuth login
+   */
+  loginWithFacebook(): void {
+    const backendUrl = environment.apiUrl.replace('/api/', '');
+    window.location.href = `${backendUrl}auth/facebook`;
   }
 
   logout(): void {

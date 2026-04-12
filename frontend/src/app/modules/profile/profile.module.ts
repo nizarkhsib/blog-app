@@ -5,18 +5,21 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxEditorModule } from 'ngx-editor';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { UserArticlesListComponent } from './user-articles-list/user-articles-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    UserArticlesListComponent
   ],
   imports: [
     CommonModule,
@@ -26,11 +29,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ReactiveFormsModule,
     NgxEditorModule,
     MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     MatInputModule,
     ComponentsModule,
-    MatDialogModule,
-    FlexLayoutModule,
-    NgxDropzoneModule
+    MatDialogModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

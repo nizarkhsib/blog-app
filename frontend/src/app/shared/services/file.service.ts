@@ -9,7 +9,7 @@ export class FileService {
 
   constructor(protected httpClient: HttpClient) { }
 
-  getFile(url): Observable<File> {
+  getFile(url: string): Observable<File> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'

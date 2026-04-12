@@ -7,14 +7,15 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  standalone: false
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
+  returnUrl: string = '';
   error = '';
 
   constructor(
@@ -67,5 +68,19 @@ export class LoginComponent implements OnInit {
 
   navigateToRegister() {
     this.router.navigate(['auth/register']);
+  }
+
+  /**
+   * Login with Google
+   */
+  loginWithGoogle(): void {
+    this.authenticationService.loginWithGoogle();
+  }
+
+  /**
+   * Login with Facebook
+   */
+  loginWithFacebook(): void {
+    this.authenticationService.loginWithFacebook();
   }
 }

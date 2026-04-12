@@ -3,91 +3,62 @@
   class="container"
 >
   <div class="main-body">
-    <section class="content">
-      <mat-card class="card">
-
-        <div fxFlex="row">
-          <div
-            fxFlex="col"
-            fxLayoutAlign="center center"
+    <mat-card class="profile-card">
+      <div class="profile-card-content">
+        <!-- Profile Image -->
+        <div class="profile-image-section">
+          <img
+            [src]="photoPath"
+            alt="Admin"
+            class="profile-image"
           >
-            <b>{{profile.articlesCount}}</b>
-          </div>
-          <div
-            fxLayoutAlign="center center"
-            fxFlex="col"
-          >
-            <b>{{profile.followersCount}}</b>
-          </div>
-          <div
-            fxLayoutAlign="center center"
-            fxFlex="col"
-          >
-            <b>{{profile.followingCount}}</b>
-          </div>
-        </div>
-        <div fxFlex="row">
-          <div
-            fxFlex="col"
-            fxLayoutAlign="center center"
-          >
-            Articles
-          </div>
-          <div
-            fxLayoutAlign="center center"
-            fxFlex="col"
-          >
-            Followers
-          </div>
-          <div
-            fxLayoutAlign="center center"
-            fxFlex="col"
-          >
-            Following
-          </div>
         </div>
 
-      </mat-card>
-
-    </section>
-
-    <div class>
-      <section
-        fxLayoutGap="10px"
-        fxLayout="row"
-        fxLayout.xs="column"
-      >
-        <mat-card>
-
-          <div class="d-flex flex-column align-items-center text-center">
-            <img
-              [src]="photoPath"
-              alt="Admin"
-              width="auto"
-              height="auto"
-              class="profile-image"
-            >
-            <div>
-              <span>
-                {{profile.user.firstname}} {{profile.user.lastname}}
-              </span>
-              <div class="text-secondary">{{profile.user.email}}</div>
-            </div>
-
+        <!-- Name and Email -->
+        <div class="profile-info-section">
+          <span class="profile-name">
+            {{profile.user.firstname}} {{profile.user.lastname}}
+          </span>
+          <div class="text-secondary" *ngIf="isOwnProfile">{{profile.user.email}}</div>
+          <div class="button-group">
             <button
+              *ngIf="isOwnProfile"
               mat-stroked-button
               color="primary"
               (click)="onEditClicked()"
+              class="edit-button"
             >
               Edit profile
             </button>
+            <button
+              *ngIf="!isOwnProfile && isLoggedIn"
+              mat-raised-button
+              [color]="isFollowing ? 'warn' : 'primary'"
+              (click)="toggleFollow()"
+              [disabled]="followButtonLoading"
+              class="follow-button"
+            >
+              {{ isFollowing ? 'Unfollow' : 'Follow' }}
+            </button>
           </div>
+        </div>
 
-        </mat-card>
-
-      </section>
-
-    </div>
-
+        <!-- Stats -->
+        <div class="profile-stats-section">
+          <div class="stat-item">
+            <div class="stat-value"><b>{{articlesCount}}</b></div>
+            <div class="stat-label">Articles</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value"><b>{{followersCount}}</b></div>
+            <div class="stat-label">Followers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value"><b>{{followingCount}}</b></div>
+            <div class="stat-label">Following</div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
   </div>
 </div>

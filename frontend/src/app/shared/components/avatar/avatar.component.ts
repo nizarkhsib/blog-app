@@ -1,21 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'avatar',
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.scss'],
+  standalone: false
 })
-export class AvatarComponent implements OnInit {
+export class AvatarComponent implements OnInit, OnChanges {
 
   @Input()
-  public photoUrl: string;
+  public photoUrl!: string;
 
   @Input()
-  public name: string;
+  public name!: string;
 
   public showInitials = false;
-  public initials: string;
-  public circleColor: string;
+  public initials!: string;
+  public circleColor!: string;
 
   private colors = [
     '#EB7181', // red
@@ -25,16 +26,28 @@ export class AvatarComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.updateDisplay();
+  }
 
-    console.log('name', this.name);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['photoUrl'] || changes['name']) {
+      this.updateDisplay();
+    }
+  }
+
+  private updateDisplay(): void {
     if (!this.photoUrl) {
       this.showInitials = true;
-      this.createInititals();
-
-      const randomIndex = Math.floor(Math.random() * Math.floor(this.colors.length));
-      this.circleColor = this.colors[randomIndex];
+      if (this.name) {
+        this.createInititals();
+      }
+      if (!this.circleColor) {
+        const randomIndex = Math.floor(Math.random() * Math.floor(this.colors.length));
+        this.circleColor = this.colors[randomIndex];
+      }
+    } else {
+      this.showInitials = false;
     }
-
   }
 
   private createInititals(): void {

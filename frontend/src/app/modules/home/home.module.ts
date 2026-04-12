@@ -12,7 +12,6 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -34,7 +33,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     MatPaginatorModule,
     MatCardModule,
-    FlexLayoutModule,
     MatSliderModule,
     MatMenuModule,
     MatProgressSpinnerModule

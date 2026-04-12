@@ -1,16 +1,11 @@
-<div
-  class="content"
-  (scroll)="onScroll($event)"
->
+<div class="content">
   <div
-    fxLayout="row wrap"
-    fxLayoutGap="16px grid"
+    class="articles-grid"
     *ngIf="articles.length > 0"
+    [ngStyle]="{'grid-template-columns': 'repeat(' + gridColumns + ', minmax(0, 1fr))'}"
   >
     <div
-      [fxFlex]="(100/gridColumns) + '%'"
-      fxFlex.xs="100%"
-      fxLayoutAlign="center center"
+      class="article-grid-item d-flex justify-content-center"
       *ngFor="let article of articles; let index = index;"
     >
       <article-card
@@ -20,12 +15,18 @@
         [index]="index"
       ></article-card>
     </div>
-    <div
-      class="center"
-      *ngIf="isLoading"
-    >
-      <mat-spinner></mat-spinner>
-    </div>
   </div>
 
+  <!-- Loading spinner -->
+  <div class="center" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- End-of-list message -->
+  <div class="end-of-list" *ngIf="!isLoading && articles.length >= count && articles.length > 0">
+    You've reached the end
+  </div>
+
+  <!-- Sentinel element observed for infinite scroll -->
+  <div #sentinel class="sentinel"></div>
 </div>

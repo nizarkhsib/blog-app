@@ -1,53 +1,292 @@
+/* Host / editor */
 :host {
-
     ::ng-deep .NgxEditor .NgxEditor__Content {
-        height: 50vh !important;
+        min-height: 45vh;
     }
 
+    ::ng-deep .NgxEditor__Wrapper {
+        border: 1px solid #e0e0e0;
+        border-radius: 0 0 8px 8px;
+        overflow: hidden;
+    }
+
+    ::ng-deep .NgxEditor__MenuBar {
+        border-bottom: 1px solid #e0e0e0;
+        background: #fafafa;
+        border-radius: 8px 8px 0 0;
+    }
 }
 
-.card-container {
+/* Page layout */
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.page-header {
     display: flex;
-    flex-flow: column;
-    min-width: calc(100vw - 100px);
-    margin: 20px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
 
-    .card-content {
-        flex: 0 1 auto;
+    .page-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .back-btn {
+            color: #555;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .page-subtitle {
+            margin: 2px 0 0;
+            font-size: 13px;
+            color: #888;
+        }
     }
 
-    .button {
-        margin-top: 24px !important;
+    .page-header-actions {
+        display: flex;
+        gap: 10px;
+
+        @media (max-width: 640px) {
+            display: none;
+        }
     }
 }
 
+/* Two-column form layout */
+.article-form {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
 
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
 
-.card-header {
+.form-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Sidebar */
+.form-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     position: sticky;
-    // overflow-y: none;
-    color: black;
-    background-color: skyblue;
-    justify-content: center;
+    top: 80px;
+}
+
+.sidebar-card {
+    background: #fff;
+    border: 1px solid #e8eaf6;
+    border-radius: 12px;
+    padding: 16px;
+
+    .sidebar-card-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 14px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #3949ab;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+.sidebar-actions {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @media (min-width: 641px) {
+        display: none;
+    }
 }
 
-.custom-dropzone {
-    margin-top: 4px !important;
-    margin-bottom: 24px !important;
-    height: 150px !important;
-    background: whitesmoke !important;
-    color: black !important;
-    border: 5px dashed rgb(235, 79, 79);
-    border-radius: 5px;
-    font-size: 20px !important;
+/* Buttons */
+.draft-btn {
+    border-color: #5c6bc0 !important;
+    color: #3949ab !important;
+    border-radius: 8px !important;
 }
 
-.custom-dropzone.ngx-dz-hovered {
-    border: 5px solid rgb(235, 79, 79) !important;
+.publish-btn {
+    background: linear-gradient(135deg, #1a237e, #3949ab) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
 }
 
-.custom-preview {
-    margin-left: auto;
-    margin-right: auto;
+/* Cover image */
+.cover-dropzone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 120px;
+    border: 2px dashed #c5cae9;
+    border-radius: 10px;
+    background: #f8f9ff;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+
+    &:hover {
+        border-color: #3949ab;
+        background: #f0f2ff;
+    }
+
+    &.has-preview {
+        min-height: 160px;
+        border-style: solid;
+    }
+
+    .cover-placeholder-icon {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+        color: #9fa8da;
+    }
+
+    .cover-hint {
+        font-size: 12px;
+        color: #7986cb;
+        text-align: center;
+    }
+
+    .cover-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .cover-remove-btn {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: rgba(0,0,0,0.55);
+        color: #fff;
+        width: 28px !important;
+        height: 28px !important;
+
+        mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+        }
+    }
+}
+
+/* Fields */
+.full-width {
+    width: 100%;
+}
+
+.field-group {
+    margin-bottom: 16px;
+
+    .field-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(0,0,0,0.6);
+        margin-bottom: 8px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+    }
+
+    .field-error {
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+}
+
+/* Tags */
+.tags-chip-list {
+    padding: 8px;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 8px;
+    background: #fff;
+    min-height: 52px;
+
+    &:focus-within {
+        border-color: #3949ab;
+        box-shadow: 0 0 0 2px rgba(57, 73, 171, 0.1);
+    }
+}
+
+.tags-input-element {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    font-size: 14px;
+    padding: 8px;
+    flex: 1;
+    min-width: 150px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    &::placeholder {
+        color: rgba(0,0,0,0.4);
+        opacity: 1;
+    }
+}
+
+::ng-deep {
+    .tags-chip-list {
+        .mat-mdc-chip {
+            background-color: #e8eaf6 !important;
+            color: #3949ab !important;
+        }
+
+        .mat-mdc-chip-remove {
+            color: #3949ab !important;
+        }
+
+        .mat-mdc-chip mat-icon {
+            color: #3949ab !important;
+        }
+
+        .mdc-evolution-chip-set__chips {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+    }
+}
+
+/* Editor wrapper */
+.editor-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
 }

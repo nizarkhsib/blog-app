@@ -14,7 +14,6 @@ import { RegisterComponent } from './register/register.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabsComponent } from './tabs.component';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -37,8 +36,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CommonModule,
     RouterModule,
     LoginRoutingModule,
-    MatIconModule,
-    FlexLayoutModule
+    MatIconModule
   ],
   providers: [
   ],

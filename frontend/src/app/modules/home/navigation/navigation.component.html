@@ -33,8 +33,7 @@
         </button>
 
         <section
-          fxFlex="row"
-          fxLayoutAlign="end end"
+          class="d-flex align-items-center gap-2"
           [ngClass]="{ 'user-logged': !(isHandset$ | async)  }"
         >
           <button
@@ -61,28 +60,56 @@
             *ngIf="isLogged"
             color="basic"
             [style.marginLeft.px]="10"
+            class="profile-fab"
           >
-            <mat-icon>person</mat-icon>
+            <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="profile-fab-img" alt="Profile" />
+            <mat-icon *ngIf="!profilePhotoUrl">person</mat-icon>
           </button>
           <!-- #enddocregion mat-menu-trigger-for -->
           <mat-menu
-            class="my-menu"
+            class="profile-menu"
             #profileMenu="matMenu"
           >
+            <!-- User info header -->
+            <div class="menu-user-header" (click)="$event.stopPropagation()">
+              <div class="menu-avatar">
+                <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="menu-avatar-img" alt="Profile" />
+                <span *ngIf="!profilePhotoUrl" class="menu-avatar-initials">{{ getUserInitials() }}</span>
+              </div>
+              <div class="menu-user-info">
+                <span class="menu-user-name">{{ loggedUser?.firstname }} {{ loggedUser?.lastname }}</span>
+                <span class="menu-user-email">{{ loggedUser?.email }}</span>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
 
             <button
               (click)="navigateToProfile()"
               mat-menu-item
+              class="menu-item"
             >
-              <mat-icon>person</mat-icon>
-              <span>Profile</span>
+              <mat-icon>account_circle</mat-icon>
+              <span>My Profile</span>
             </button>
+
+            <button
+              (click)="navigateToWriteArticle()"
+              mat-menu-item
+              class="menu-item"
+            >
+              <mat-icon>edit_note</mat-icon>
+              <span>Write</span>
+            </button>
+
+            <mat-divider></mat-divider>
 
             <button
               mat-menu-item
               (click)="logout()"
+              class="menu-item logout-item"
             >
-              <mat-icon>power_settings_new</mat-icon>
+              <mat-icon>logout</mat-icon>
               <span>Logout</span>
             </button>
 
@@ -97,25 +124,5 @@
 
     </div>
 
-    <!-- <app-list [itemTemplate]="customItemTemplate" [data]="[{ id: 4, name: 'Laptop', rating: 3 },
-    { id: 5, name: 'Phone', rating: 4 },
-    { id: 6, name: 'Mice', rating: 4 }]">
-			<ng-template #customItemTemplate let-item>
-				<div style="display: flex; justify-content: space-between;">
-					<span> {{ item.id }} - <b>{{ item.name }}</b> </span>
-					<mark> Stars: {{ item.rating }} </mark>
-				</div>
-			</ng-template>
-		</app-list>
-
-		<app-list [itemTemplate]="customItemTemplate2" [data]="[{ id: 4, name: 'Laptop', rating: 3 },
-    { id: 5, name: 'Phone', rating: 4 },
-    { id: 6, name: 'Mice', rating: 4 }]">
-			<ng-template #customItemTemplate2 let-item>
-				<div style="display: flex; justify-content: space-between;">
-					<span> {{ item.id }} - <b>{{ item.name }}</b> </span>
-				</div>
-			</ng-template>
-		</app-list> -->
   </mat-sidenav-content>
 </mat-sidenav-container>

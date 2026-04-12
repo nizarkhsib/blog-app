@@ -34,7 +34,7 @@ export class CommentsService implements OnModuleInit {
       author: { _id: commentDto.authorId },
     })
       .then(
-        (res) => result = res.populate('author', ['firstname', 'lastname']).execPopulate()
+        (res) => result = res.populate('author', ['firstname', 'lastname'])
       );
 
     return from(createComment);
@@ -56,7 +56,7 @@ export class CommentsService implements OnModuleInit {
     this.appLogger.error(' getComments ', 'test');
     this.appLogger.log(' getComments ');
 
-    const id = mongoose.Types.ObjectId(articleId);
+    const id = new mongoose.Types.ObjectId(articleId);
 
     const findQuery = this.commentModel
       .find({ article: id })
@@ -85,7 +85,7 @@ export class CommentsService implements OnModuleInit {
       findQuery.limit(limitOfDocuments);
     }
     const results = await findQuery;
-    const count = await this.commentModel.count();
+    const count = await this.commentModel.countDocuments();
 
     return { results, count };
   }
@@ -99,7 +99,7 @@ export class CommentsService implements OnModuleInit {
   }
 
   async deleteComment(prodId: string): Promise<void> {
-    return await this.commentModel.deleteOne({ _id: prodId })
+    await this.commentModel.deleteOne({ _id: prodId })
   }
 
 }

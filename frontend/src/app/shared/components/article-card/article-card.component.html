@@ -1,38 +1,28 @@
-<div
-  class="blog-card"
-  [ngClass]="{ 'alt': index % 2 === 0  }"
->
-  <div class="meta">
+<div class="blog-card" [ngClass]="{ 'alt': index % 2 === 0 }" *ngIf="article">
+  <div class="meta" *ngIf="article.coverImage || article.filePath">
     <div
       class="photo"
-      style="background-image: url({{article.filePath}})"
+      [style.background-image]="'url(' + (article.coverImage || article.filePath || '') + ')'"
     ></div>
     <ul class="details">
-      <li class="author">
-        <a href="#">
-          {{article.author.firstname}}&nbsp;{{article.author.lastname}}
-        </a>
-      </li>
+      <li class="author"><a>{{article?.author?.firstname}}&nbsp;{{article?.author?.lastname}}</a></li>
       <li class="date">{{article.createdAt | date}}</li>
-      <li
-        *ngIf="article?.tags.length > 0"
-        class="tags"
-      >
-
-        <ul>
-          <li *ngFor="let tag of article.tags;">
-            <a href="#">#{{tag}}</a>
-          </li>
-        </ul>
+      <li *ngIf="article?.tags?.length > 0" class="tags">
+        <ul><li *ngFor="let tag of article.tags"><a>#{{tag}}</a></li></ul>
       </li>
     </ul>
   </div>
   <div class="description">
+    <div class="article-meta-row" *ngIf="!article.coverImage && !article.filePath">
+      <span class="author-name">{{article?.author?.firstname}}&nbsp;{{article?.author?.lastname}}</span>
+      <span class="article-date">{{article.createdAt | date}}</span>
+    </div>
     <h1>{{article.title}}</h1>
     <h2>{{article?.description}}</h2>
-    <span>{{previewText}}</span>
-    <p class="read-more">
-      <a>Read More</a>
-    </p>
+    <p class="preview-text">{{previewText}}</p>
+    <div class="card-footer">
+      <span class="likes-hint"><mat-icon class="hint-icon">favorite_border</mat-icon> {{article.likes || 0}}</span>
+      <p class="read-more"><a>Read More</a></p>
+    </div>
   </div>
 </div>

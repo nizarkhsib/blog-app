@@ -39,4 +39,44 @@ export class AuthController {
     return await this.authService.verifyTokenByEmail(token);
   }
 
+  /**
+   * Google OAuth login (disabled)
+   */
+  @ApiOperation({ summary: 'Google OAuth (disabled)' })
+  @Get('/google')
+  async googleAuth() {
+    return { message: 'Google OAuth is currently disabled' };
+  }
+
+  /**
+   * Google OAuth callback (disabled)
+   */
+  @Get('/google/callback')
+  googleAuthRedirect(@Req() req, @Res() res) {
+    return res.status(404).json({ message: 'Google OAuth is currently disabled' });
+  }
+
+  /**
+   * Facebook OAuth login
+   */
+  @ApiOperation({ summary: 'Facebook OAuth' })
+  @Get('/facebook')
+  @UseGuards(AuthGuard('facebook'))
+  async facebookAuth() {
+    // Guard redirects to Facebook
+  }
+
+  /**
+   * Facebook OAuth callback
+   */
+  @Get('/facebook/callback')
+  @UseGuards(AuthGuard('facebook'))
+  facebookAuthRedirect(@Req() req, @Res() res) {
+    const { user } = req;
+    // Redirect to frontend with token
+    const token = user.token;
+    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:4200'}/auth/callback?token=${token}`;
+    res.redirect(redirectUrl);
+  }
+
 }

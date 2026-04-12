@@ -1,109 +1,137 @@
-<mat-card class="card-container">
-  <h2 class="card-header">Write an article</h2>
-  <section class="card-content">
-    <form [formGroup]="articleForm">
-      <mat-form-field
-        class="full-width"
-        appearance="outline"
-      >
-        <mat-label for="Title">Title</mat-label>
-        <input
-          matInput
-          required
-          appearance="outline"
-          placeholder="Title"
-          type="text"
-          formControlName="title"
-        >
-        <div
-          *ngIf="f.title.errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="f.title.errors.required && f.title?.touched">Title is required</div>
-        </div>
+<div class="page-container">
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <button mat-icon-button class="back-btn" type="button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h1 class="page-title">{{ isEditMode ? 'Edit Article' : 'New Article' }}</h1>
+        <p class="page-subtitle">{{ isEditMode ? 'Update your article details below' : 'Share your ideas with the world' }}</p>
+      </div>
+    </div>
+    <div class="page-header-actions">
+      <button type="button" mat-stroked-button (click)="saveDraft()" [disabled]="loading || articleForm.invalid" class="draft-btn">
+        <mat-icon>save_as</mat-icon> Save Draft
+      </button>
+      <button type="button" mat-raised-button color="primary" (click)="publishArticle()" [disabled]="loading || articleForm.invalid" class="publish-btn">
+        <mat-icon>rocket_launch</mat-icon> Publish
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="articleForm" class="article-form">
+
+    <div class="form-main">
+
+      <!-- Title -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput required placeholder="Give your article a compelling title..." type="text" formControlName="title">
+        <mat-hint align="end">Min. 5 characters</mat-hint>
+        <mat-error *ngIf="f.title.errors?.required">Title is required</mat-error>
+        <mat-error *ngIf="f.title.errors?.minlength">Title must be at least 5 characters</mat-error>
       </mat-form-field>
-      <mat-form-field
-        class="full-width"
-        appearance="outline"
-      >
-        <mat-label>Article tags</mat-label>
-        <mat-chip-list
-          #chipList
-          aria-label="Tags"
-        >
-          <mat-chip
-            *ngFor="let tag of tags"
-            (removed)="remove(tag)"
-          >
-            {{tag}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
+
+      <!-- Description -->
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput required rows="2" placeholder="A short summary of your article..." formControlName="description"></textarea>
+        <mat-error *ngIf="f.description.errors?.required">Description is required</mat-error>
+        <mat-error *ngIf="f.description.errors?.minlength">Description must be at least 10 characters</mat-error>
+      </mat-form-field>
+
+      <!-- Tags -->
+      <div class="field-group">
+        <label class="field-label">Tags</label>
+        <mat-chip-grid #chipList aria-label="Article tags" class="tags-chip-list">
+          <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
+            {{ tag }}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip-row>
           <input
-            placeholder="Add tag..."
             #tagsInput
-            [formControl]="tagsCtrl"
+            placeholder="Add tag and press Enter..."
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="true"
             (matChipInputTokenEnd)="add($event)"
-          >
-        </mat-chip-list>
-      </mat-form-field>
-      <div
-        class="custom-dropzone"
-        ngx-dropzone
-        [accept]="'image/*'"
-        (change)="onSelect($event)"
-        [multiple]="false"
-      >
+            class="tags-input-element"
+          />
+        </mat-chip-grid>
+      </div>
 
-        <div class="custom-preview">
-          <ngx-dropzone-label *ngIf="!file">
-            <div>
-              <h2>Choose or drop an image</h2>
-            </div>
-          </ngx-dropzone-label>
-
-          <ngx-dropzone-image-preview
-            *ngIf="file "
-            ngProjectAs="ngx-dropzone-preview"
-            [removable]="true"
-            [file]="file"
-            (removed)="onRemove(file)"
-          >
-            <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
-          </ngx-dropzone-image-preview>
+      <!-- Editor -->
+      <div class="field-group">
+        <label class="field-label">Content</label>
+        <div class="editor-wrapper NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+          <ngx-editor
+            required
+            formControlName="content"
+            [editor]="editor"
+            [disabled]="false"
+            [placeholder]="'Write your article content here (minimum 50 characters)...'"
+          ></ngx-editor>
         </div>
-
+        <div *ngIf="f.content.errors && f.content?.touched" class="field-error">
+          <span *ngIf="f.content.errors.required">Content is required</span>
+          <span *ngIf="f.content.errors.minlength">Content must be at least 50 characters</span>
+        </div>
       </div>
 
-      <div class="editor-container editor NgxEditor__Wrapper">
+    </div>
 
-        <ngx-editor-menu
-          [editor]="editor"
-          [toolbar]="toolbar"
-        ></ngx-editor-menu>
-        <ngx-editor
-          required
-          formControlName="content"
-          [editor]="editor"
-          [disabled]="false"
-          [placeholder]="'Type the content here...'"
-        >
-        </ngx-editor>
+    <!-- Sidebar -->
+    <div class="form-sidebar">
+
+      <!-- Status -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-card-title">
+          <mat-icon>tune</mat-icon> Settings
+        </h3>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="draft">Draft</mat-option>
+            <mat-option value="published">Published</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-      <button
-        (click)="saveArticle()"
-        [disabled]="loading || !file || articleForm.invalid"
-        class="button"
-        mat-raised-button
-        color="primary"
-      >
-        <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> -->
-        Save
-      </button>
-    </form>
 
-  </section>
-</mat-card>
+      <!-- Cover image -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-card-title">
+          <mat-icon>image</mat-icon> Cover Image
+        </h3>
+        <div class="cover-dropzone" [class.has-preview]="!!coverImagePreviewUrl" (click)="coverInput.click()">
+          <input type="file" hidden #coverInput accept="image/*" (change)="onSelectCoverImage($event)" />
+          <ng-container *ngIf="!coverImagePreviewUrl">
+            <mat-icon class="cover-placeholder-icon">add_photo_alternate</mat-icon>
+            <span class="cover-hint">Click to upload a cover image</span>
+          </ng-container>
+          <ng-container *ngIf="coverImagePreviewUrl">
+            <img [src]="coverImagePreviewUrl" alt="Cover preview" class="cover-preview" />
+            <button mat-icon-button class="cover-remove-btn" type="button" (click)="onRemoveCoverImage(); $event.stopPropagation()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Mobile actions -->
+      <div class="sidebar-actions">
+        <button type="button" mat-stroked-button (click)="saveDraft()" [disabled]="loading || articleForm.invalid" class="full-width draft-btn">
+          <mat-icon>save_as</mat-icon> Save Draft
+        </button>
+        <button type="button" mat-raised-button color="primary" (click)="publishArticle()" [disabled]="loading || articleForm.invalid" class="full-width publish-btn">
+          <mat-icon>rocket_launch</mat-icon> Publish
+        </button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

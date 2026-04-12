@@ -5,8 +5,7 @@ mat-toolbar {
 .content {
     padding: 16px;
     margin-top: 5px;
-    height: 100vh;
-    overflow: auto !important;
+    width: 100%;
 }
 
 .content>mat-card {
@@ -26,8 +25,39 @@ mat-toolbar {
     width: 100%;
 }
 
+.articles-grid {
+    display: grid;
+    gap: 16px;
+    align-items: start;
+    width: 100%;
+}
+
+.article-grid-item {
+    min-width: 0;
+}
+
+@media (max-width: 576px) {
+  .articles-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    padding: 24px 0;
+    text-align: center;
+}
+
+.sentinel {
+    height: 1px;
+}
+
+.end-of-list {
+    text-align: center;
+    padding: 24px 0 16px;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    letter-spacing: 0.5px;
 }

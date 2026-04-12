@@ -1,4 +1,10 @@
-<profile-card
-  [profile]="userProfile"
-  (onEdit)="onEditClicked($event)"
-></profile-card>
+<div class="profile-wrapper">
+  <profile-card
+    [profile]="userProfile"
+    [isOwnProfile]="isOwnProfile"
+    (onEdit)="onEditClicked($event)"
+  ></profile-card>
+
+  <app-user-articles-list [userId]="userProfile?.user._id" [isOwnProfile]="isOwnProfile"></app-user-articles-list>
+</div>
+

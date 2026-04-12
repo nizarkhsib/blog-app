@@ -4,16 +4,17 @@ import { UserDashboardRoutingModule } from './user-dashboard-routing.module';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AddArticleComponent } from './add-article/add-article.component';
+import { UserArticlesComponent } from './user-articles/user-articles.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { LayoutModule } from '@angular/cdk/layout';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -28,12 +29,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonModule,
     MatInputModule,
     MatCardModule,
-    NgxDropzoneModule,
+    MatFormFieldModule,
     LayoutModule,
-    FlexLayoutModule,
     MatChipsModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSelectModule,
+    UserArticlesComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

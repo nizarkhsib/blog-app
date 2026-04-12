@@ -18,7 +18,7 @@ export class CommentsService extends ResourceService<CommentDto> {
   }
 
   getResourceUrl(): string {
-    return 'comments';
+    return 'Comments';
   }
 
   getCommentsByArticleId(articleId: string, pageSize: number, skip: number):

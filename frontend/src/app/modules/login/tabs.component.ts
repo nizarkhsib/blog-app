@@ -4,7 +4,8 @@ import { TabItem } from './tab-item';
 @Component({
   selector: 'tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
+  styleUrls: ['./tabs.component.scss'],
+  standalone: false
 })
 export class TabsComponent implements OnInit {
 

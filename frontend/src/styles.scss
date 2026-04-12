@@ -19,3 +19,17 @@ body {
 .full-width {
     width: 100%;
 }
+
+.box {
+    width: 100%;
+}
+
+.modern-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 16px !important;
+    overflow: hidden;
+    padding: 0 !important;
+}
+
+.modern-dialog .mat-mdc-dialog-container {
+    padding: 0 !important;
+}

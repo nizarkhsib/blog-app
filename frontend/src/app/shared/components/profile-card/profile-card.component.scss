@@ -18,6 +18,98 @@ body {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
 
+.profile-card {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+    background-color: whitesmoke;
+}
+
+.profile-card-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.profile-image-section {
+    flex-shrink: 0;
+}
+
+.profile-info-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 0 1 200px;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.text-secondary {
+    color: #718096;
+    font-size: 14px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.edit-button {
+    min-width: 120px;
+}
+
+.follow-button {
+    min-width: 120px;
+}
+
+.profile-stats-section {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #718096;
+}
+
+@media (max-width: 768px) {
+    .profile-card-content {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .profile-info-section {
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-stats-section {
+        justify-content: center;
+    }
+}
+
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;

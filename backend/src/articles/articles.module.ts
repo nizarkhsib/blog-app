@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ArticlesController } from './articles.controller';
 import { ArticlesService } from './articles.service';
 import { MulterModule } from '@nestjs/platform-express';
-import { WinstonModule, } from 'nest-winston';
 import { AppLogger } from '../core/services/logger.service';
 import { ArticleSchema } from './article.model';
 
@@ -12,8 +11,7 @@ import { ArticleSchema } from './article.model';
     MulterModule.register({
       dest: './uploads',
     }),
-    MongooseModule.forFeature([{ name: 'Article', schema: ArticleSchema }]),
-    WinstonModule
+    MongooseModule.forFeature([{ name: 'Article', schema: ArticleSchema }])
   ],
   controllers: [ArticlesController],
   providers: [ArticlesService, AppLogger],

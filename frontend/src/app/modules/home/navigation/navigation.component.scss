@@ -28,8 +28,94 @@
     border-radius: 0px;
 }
 
+::ng-deep .profile-menu {
+    width: 260px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+
+    .mat-mdc-menu-content {
+        padding: 0 !important;
+    }
+}
+
+.menu-user-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    cursor: default;
+}
+
+.menu-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.menu-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-avatar-initials {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.menu-user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.menu-user-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-user-email {
+    color: rgba(255,255,255,0.75);
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+}
+
+.menu-item {
+    font-size: 14px !important;
+
+    mat-icon {
+        color: #3949ab;
+    }
+}
+
+.logout-item {
+    mat-icon {
+        color: #e53935 !important;
+    }
+    color: #e53935 !important;
+}
+
 .sidenav-container {
     height: 100%;
+    width: 100%;
 }
 
 .sidenav {
@@ -51,17 +137,19 @@
 .content {
     grid-area: content;
     margin-top: 50px;
-    height: 100vh;
-    overflow-y: auto !important;
+    width: 100%;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
     padding-bottom: 100px;
 }
 
 .header {
     grid-area: header;
     position: fixed;
-    width: 100vw;
+    width: 100%;
     background-color: $base-color;
     z-index: 1000;
+    justify-content: flex-end !important;
 }
 
 .wrapper {
@@ -71,8 +159,16 @@
     grid-template-areas:
         "header"
         "content";
+    width: 100%;
 }
 
 .user-logged {
     margin-right: 55px;
+}
+
+.profile-fab-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }

@@ -1,23 +1,27 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query, Req, BadRequestException } from '@nestjs/common';
 import { Comment } from './comment.model';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { PaginationParams } from 'src/pagination-params';
 import { CommentDto } from './dto/comment.dto';
 import { CommentsService } from './comments.service';
+import { Request } from 'express';
 
 @Controller('Comments')
 @ApiTags('Comment')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) { }
 
-  // addComment without file "photo" data sent as json 
   @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'addComment' })
   @Post()
-  addComment(@Body() CommentDto: CommentDto): Observable<Comment> {
-    return from(this.commentsService.addComment(CommentDto));
+  addComment(@Body() commentDto: CommentDto, @Req() req: Request): Observable<Comment> {
+    const authUser = req.user['user'] || req.user;
+    const authorId = authUser['id'] || authUser['_id'];
+    if (!authorId) throw new BadRequestException('User not authenticated');
+    return from(this.commentsService.addComment({ ...commentDto, authorId }));
   }
 
   @ApiOperation({ summary: 'getComments by article ID' })

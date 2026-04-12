@@ -5,7 +5,6 @@ import { ConfigService } from './core/config/config.service';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import * as winston from 'winston';
-import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
 import { ArticlesModule } from './articles/articles.module';
 import { CommentsModule } from './comments/comments.module';
 import { ProfileModule } from './profile/profile.module';
@@ -16,14 +15,12 @@ import { ProfileModule } from './profile/profile.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000`,
-        useNewUrlParser: true
+        uri: `mongodb://127.0.0.1:27017/${configService.get('DB_NAME')}`
       }),
       inject: [ConfigService]
     }),
     AuthModule,
     ProductsModule,
-    WinstonModule,
     ArticlesModule,
     CommentsModule,
     ProfileModule

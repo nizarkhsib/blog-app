@@ -1,97 +1,65 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="center stretch"
->
-  <h1 mat-dialog-title>Edit profile info</h1>
+<div class="modal-header">
+  <h2 class="modal-title">Edit Profile</h2>
+  <button mat-icon-button class="close-btn" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
 
-<form
-  fxLayout="column"
-  fxLayoutAlign="space-evenly stretch"
-  [formGroup]="profileForm"
->
+<form [formGroup]="profileForm" class="modal-body">
 
-  <div
-    class="custom-dropzone"
-    ngx-dropzone
-    [accept]="'image/*'"
-    (change)="onSelect($event)"
-    [multiple]="false"
-  >
-
-    <div class="custom-preview">
-      <ngx-dropzone-label *ngIf="!file">
-        <div>
-          <h2>Choose or drop an image</h2>
-        </div>
-      </ngx-dropzone-label>
-
-      <ngx-dropzone-image-preview
-        *ngIf="file "
-        ngProjectAs="ngx-dropzone-preview"
-        [removable]="true"
-        [file]="file"
-        (removed)="onRemove(file)"
-      >
-      </ngx-dropzone-image-preview>
+  <!-- Avatar upload -->
+  <div class="avatar-upload-section" (click)="fileInput.click()">
+    <input type="file" hidden #fileInput accept="image/*" (change)="onSelect($event)" />
+    <div class="avatar-circle">
+      <img *ngIf="filePreviewUrl" [src]="filePreviewUrl" class="avatar-preview" alt="Profile preview" />
+      <mat-icon *ngIf="!filePreviewUrl" class="avatar-placeholder-icon">person</mat-icon>
     </div>
-
+    <div class="avatar-upload-hint">
+      <mat-icon>photo_camera</mat-icon>
+      <span>{{ filePreviewUrl ? 'Change photo' : 'Upload photo' }}</span>
+    </div>
+    <button
+      *ngIf="filePreviewUrl"
+      mat-icon-button
+      class="avatar-remove-btn"
+      type="button"
+      (click)="onRemove(); $event.stopPropagation()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label for="firstname">Firstname</mat-label>
-    <input
-      matInput
-      required
-      placeholder="Firstname"
-      type="text"
-      formControlName="firstname"
-    >
+  <!-- Form fields -->
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="half-field">
+      <mat-label>First name</mat-label>
+      <input matInput required placeholder="First name" type="text" formControlName="firstname">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-field">
+      <mat-label>Last name</mat-label>
+      <input matInput required placeholder="Last name" type="text" formControlName="lastname">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-field">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" type="email" [readonly]="true" formControlName="email">
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label for="lastname">Lastname</mat-label>
-    <input
-      matInput
-      required
-      placeholder="Lastname"
-      formControlName="lastname"
-      type="text"
-    >
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label for="firstName">Email</mat-label>
-    <input
-      placeholder="Email"
-      required
-      matInput
-      type="email"
-      [readonly]="true"
-      formControlName="email"
-    >
-  </mat-form-field>
 </form>
 
-<div mat-dialog-actions>
-  <div fxLayout="row">
-    <button
-      mat-raised-button
-      color="primary"
-      fxFlex="50"
-      (click)="save()"
-      [disabled]="loading || !file || profileForm.invalid"
-    >
-      Save
-    </button>
-    <button
-      mat-raised-button
-      fxFlex="50"
-      color="primary"
-      (click)="close()"
-    >
-      Cancel
-    </button>
-  </div>
-
+<div class="modal-footer">
+  <button mat-stroked-button class="cancel-btn" (click)="close()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="save-btn"
+    (click)="save()"
+    [disabled]="loading || !file || profileForm.invalid"
+  >
+    <mat-icon>save</mat-icon>
+    Save changes
+  </button>
 </div>
+

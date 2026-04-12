@@ -1,8 +1,8 @@
 <section>
 
   <div
-    fxLayout="row"
-    fxLayoutGap="10px"
+    class="d-flex flex-row"
+    style="gap: 10px;"
     *ngFor="let comment of comments"
   >
     <mat-card *ngIf="comment.author">
@@ -14,11 +14,10 @@
       </div>
 
       <div
-        fxFlex="80"
-        fxLayoutGap="10px"
         class="comment-content"
+        style="flex: 0 0 80%; gap: 10px; display: flex; flex-direction: column;"
       >
-        <div fxLayout="row">
+        <div class="d-flex flex-row">
           <span>
             <b>
               {{comment.author.firstname}} {{comment.author.lastname}}
@@ -26,7 +25,7 @@
           </span>
         </div>
 
-        <div fxLayout="row">
+        <div class="d-flex flex-row">
           <div>{{comment.content}}</div>
         </div>
 

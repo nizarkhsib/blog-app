@@ -1,0 +1,232 @@
+
+> articles@0.0.0 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+[1m[33m
+./src/app/modules/home/navigation/navigation.component.scss?ngResource - Warning: Module Warning (from ./node_modules/sass-loader/dist/cjs.js):
+Deprecation Warning on line 1, column 8 of file:///D:/Code/dev/blog-app/frontend/src/app/modules/home/navigation/navigation.component.scss:1:8:
+Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+1 | @import 'theme';
+
+
+src\app\modules\home\navigation\navigation.component.scss 2:9  root stylesheet
+
+
+Warning: D:/Code/dev/blog-app/frontend/src/app/shared/components/article-card/article-card.component.scss exceeded maximum budget. Budget 2.00 kB was not met by 795 bytes with a total of 2.79 kB.
+
+[39m[22m
+[1m[31m
+Error: [96msrc/app/app.module.ts[0m:[93m21[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent AppComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m21[0m     AppComponent
+[7m  [0m [91m    ~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/app.module.ts[0m:[93m32[0m:[93m5[0m - [91merror[0m[90m NG6002: [0mThis import contains errors, which may affect components that depend on this NgModule.
+
+[7m32[0m     ComponentsModule,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/app.module.ts[0m:[93m38[0m:[93m5[0m - [91merror[0m[90m NG6002: [0mThis import contains errors, which may affect components that depend on this NgModule.
+
+[7m38[0m     ComponentsModule,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/articles/articles-list/articles-list.component.ts[0m:[93m15[0m:[93m23[0m - [91merror[0m[90m TS2304: [0mCannot find name 'EventEmitter'.
+
+[7m15[0m   @Output() rendered: EventEmitter<void> = new EventEmitter<void>();
+[7m  [0m [91m                      ~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/articles/articles-list/articles-list.component.ts[0m:[93m15[0m:[93m48[0m - [91merror[0m[90m TS2304: [0mCannot find name 'EventEmitter'.
+
+[7m15[0m   @Output() rendered: EventEmitter<void> = new EventEmitter<void>();
+[7m  [0m [91m                                               ~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/articles/articles.module.ts[0m:[93m27[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ArticlesListComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m27[0m     ArticlesListComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/articles/articles.module.ts[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ArticleContentComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m28[0m     ArticleContentComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/articles/articles.module.ts[0m:[93m43[0m:[93m5[0m - [91merror[0m[90m NG6002: [0mThis import contains errors, which may affect components that depend on this NgModule.
+
+[7m43[0m     ComponentsModule,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/home.module.ts[0m:[93m21[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent NavigationComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m21[0m     NavigationComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/home/home.module.ts[0m:[93m31[0m:[93m5[0m - [91merror[0m[90m NG6002: [0mThis import contains errors, which may affect components that depend on this NgModule.
+
+[7m31[0m     ComponentsModule,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/login/login.module.ts[0m:[93m20[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent LoginComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m20[0m     LoginComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/login/login.module.ts[0m:[93m21[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent RegisterComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m21[0m     RegisterComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/login/login.module.ts[0m:[93m22[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent TabsComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m22[0m     TabsComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/login/login.module.ts[0m:[93m44[0m:[93m5[0m - [91merror[0m[90m NG6004: [0mCan't be exported from this NgModule, as it must be imported first
+
+[7m44[0m     LoginComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/login/login/login.component.ts[0m:[93m14[0m:[93m3[0m - [91merror[0m[90m TS2564: [0mProperty 'loginForm' has no initializer and is not definitely assigned in the constructor.
+
+[7m14[0m   loginForm: FormGroup;
+[7m  [0m [91m  ~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile-edit/profile-edit.component.ts[0m:[93m80[0m:[93m24[0m - [91merror[0m[90m TS2531: [0mObject is possibly 'null'.
+
+[7m80[0m       .updateWithPhoto(this.userProfile._id, this.profileForm.value, this.file)
+[7m  [0m [91m                       ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile-edit/profile-edit.component.ts[0m:[93m80[0m:[93m70[0m - [91merror[0m[90m TS2345: [0mArgument of type 'File | null' is not assignable to parameter of type 'File'.
+  Type 'null' is not assignable to type 'File'.
+
+[7m80[0m       .updateWithPhoto(this.userProfile._id, this.profileForm.value, this.file)
+[7m  [0m [91m                                                                     ~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile.module.ts[0m:[93m16[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ProfileComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m16[0m     ProfileComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile.module.ts[0m:[93m17[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ProfileEditComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m17[0m     ProfileEditComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile.module.ts[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m NG6002: [0mThis import contains errors, which may affect components that depend on this NgModule.
+
+[7m28[0m     ComponentsModule,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/profile/profile/profile.component.ts[0m:[93m16[0m:[93m3[0m - [91merror[0m[90m TS2564: [0mProperty 'userProfile' has no initializer and is not definitely assigned in the constructor.
+
+[7m16[0m   userProfile: Profile;
+[7m  [0m [91m  ~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/modules/user-dashboard/user-dashboard.module.ts[0m:[93m18[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent AddArticleComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m18[0m     AddArticleComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/avatar/avatar.component.ts[0m:[93m11[0m:[93m10[0m - [91merror[0m[90m TS2564: [0mProperty 'photoUrl' has no initializer and is not definitely assigned in the constructor.
+
+[7m11[0m   public photoUrl: string;
+[7m  [0m [91m         ~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m19[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ListComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m19[0m     ListComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m20[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ArticleCardComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m20[0m     ArticleCardComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m21[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent CommentsComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m21[0m     CommentsComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m22[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent ProfileCardComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m22[0m     ProfileCardComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m23[0m:[93m5[0m - [91merror[0m[90m NG6008: [0mComponent AvatarComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?
+
+[7m23[0m     AvatarComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m37[0m:[93m5[0m - [91merror[0m[90m NG6004: [0mCan't be exported from this NgModule, as it must be imported first
+
+[7m37[0m     ListComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m38[0m:[93m5[0m - [91merror[0m[90m NG6004: [0mCan't be exported from this NgModule, as it must be imported first
+
+[7m38[0m     ArticleCardComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m39[0m:[93m5[0m - [91merror[0m[90m NG6004: [0mCan't be exported from this NgModule, as it must be imported first
+
+[7m39[0m     ProfileCardComponent,
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/components/components.module.ts[0m:[93m40[0m:[93m5[0m - [91merror[0m[90m NG6004: [0mCan't be exported from this NgModule, as it must be imported first
+
+[7m40[0m     AvatarComponent
+[7m  [0m [91m    ~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/services/authentication.service.ts[0m:[93m15[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'BehaviorSubject<null>' is not assignable to type 'BehaviorSubject<LoggedUser>'.
+  Types of property 'value' are incompatible.
+    Type 'null' is not assignable to type 'LoggedUser'.
+
+[7m15[0m   currentUserSubject: BehaviorSubject<LoggedUser> = new BehaviorSubject(null);
+[7m  [0m [91m  ~~~~~~~~~~~~~~~~~~[0m
+
+
+Error: [96msrc/app/shared/services/authentication.service.ts[0m:[93m100[0m:[93m34[0m - [91merror[0m[90m TS2345: [0mArgument of type 'null' is not assignable to parameter of type 'LoggedUser'.
+
+[7m100[0m     this.currentUserSubject.next(null);
+[7m   [0m [91m                                 ~~~~[0m
+
+
+[39m[22m

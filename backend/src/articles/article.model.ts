@@ -1,32 +1,97 @@
 
-import { Document, Schema, SchemaTypes } from 'mongoose';
+import { Document, Schema, SchemaTypes, Types } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 export const ArticleSchema = new Schema({
-  title: { type: String },
-  // description: { type: String },
-  content: { type: String, },
-  datePublished: { type: Date },
-  userId: { type: String },
-  filePath: { type: String },
-  likes: { type: Number },
-  author: { type: SchemaTypes.ObjectId, ref: 'User', required: false },
-  tags: { type: Array<String>(), default: [] },
-  image:
-  {
+  title: { 
+    type: String,
+    required: true 
+  },
+  description: { 
+    type: String,
+    default: ''
+  },
+  content: { 
+    type: String,
+    default: ''
+  },
+  chapters: [{
+    id: String,
+    title: String,
+    content: String,
+    order: Number
+  }],
+  status: {
+    type: String,
+    enum: ['draft', 'published'],
+    default: 'draft'
+  },
+  archived: {
+    type: Boolean,
+    default: false
+  },
+  datePublished: { 
+    type: Date,
+    default: null
+  },
+  userId: { 
+    type: SchemaTypes.ObjectId,
+    ref: 'User',
+    required: true 
+  },
+  author: { 
+    type: SchemaTypes.ObjectId,
+    ref: 'User',
+    required: true 
+  },
+  authorName: {
+    type: String,
+    required: false
+  },
+  coverImage: {
     data: Buffer,
-    contentType: String
+    contentType: String,
+  },
+  tags: { 
+    type: [String],
+    default: [] 
+  },
+  likes: { 
+    type: Number,
+    default: 0
+  },
+  likedBy: [{ type: SchemaTypes.ObjectId, ref: 'User', default: [] }],
+  views: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true });
 
 export interface Article extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   title: string;
-  // description: string;
+  description: string;
   content: string;
-  datePublished: number;
+  chapters: Array<{
+    id: string;
+    title: string;
+    content: string;
+    order: number;
+  }>;
+  status: 'draft' | 'published';
+  archived: boolean;
+  datePublished: Date;
   userId: string;
-  filePath: string;
-  image: File;
-  likes: number;
+  author: string;
+  authorName: string;
+  coverImage: {
+    data: Buffer;
+    contentType: string;
+  } | null;
   tags: string[];
+  likes: number;
+  likedBy: mongoose.Types.ObjectId[];
+  views: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

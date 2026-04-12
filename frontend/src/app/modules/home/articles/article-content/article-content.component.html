@@ -1,20 +1,113 @@
-<section
-  *ngIf="article"
-  class="content-container"
->
+<section *ngIf="article" class="content-container">
+
+
 
   <avatar
     class="avatar"
     [name]="getFullName()"
+    [photoUrl]="authorPhotoUrl"
+    (click)="visitAuthorProfile()"
+    role="button"
+    style="cursor: pointer;"
   ></avatar>
   <h1>{{article.title}}</h1>
+  <div class="article-author">
+    <span
+      class="author-name"
+      (click)="visitAuthorProfile()"
+      role="button"
+      style="cursor: pointer; color: #2196F3; text-decoration: underline;"
+    >
+      {{getFullName()}}
+    </span>
+  </div>
 
   <img
     class="photo"
-    src="{{article.filePath}}"
+    [src]="article.coverImage || article.filePath"
+    *ngIf="article.coverImage || article.filePath"
   >
-  <section class="article-content ">
+
+  <section class="article-content">
     <span [innerHtml]="article.content"></span>
+  </section>
+
+  <!-- Like & Comment action bar -->
+  <div class="action-bar">
+    <button
+      mat-button
+      class="like-btn"
+      [class.liked]="isLiked"
+      (click)="toggleLike()"
+      [disabled]="likeLoading"
+    >
+      <mat-icon>{{ isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
+      <span>{{ likesCount }} {{ likesCount === 1 ? 'like' : 'likes' }}</span>
+    </button>
+
+    <span class="comments-count-label">
+      <mat-icon>chat_bubble_outline</mat-icon>
+      {{ commentsCount }} {{ commentsCount === 1 ? 'comment' : 'comments' }}
+    </span>
+  </div>
+
+  <!-- Comments Section -->
+  <section class="comments-section">
+    <h3 class="comments-title">Comments</h3>
+
+    <!-- Add comment input -->
+    <div class="comment-input-row" *ngIf="isLogged; else loginPrompt">
+      <mat-form-field appearance="outline" class="comment-field">
+        <mat-label>Write a comment...</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="commentInput"
+          rows="3"
+          (keydown.control.enter)="onSendComment()"
+        ></textarea>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSendComment()"
+        [disabled]="!commentInput?.trim()"
+        class="send-btn"
+      >
+        <mat-icon>send</mat-icon> Post
+      </button>
+    </div>
+    <ng-template #loginPrompt>
+      <p class="login-prompt">
+        <a routerLink="/auth/login">Log in</a> to leave a comment.
+      </p>
+    </ng-template>
+
+    <!-- Comments list -->
+    <div class="comments-list" *ngIf="commentsList?.length > 0">
+      <div class="comment-item" *ngFor="let comment of commentsList">
+        <div class="comment-avatar">
+          {{ comment.author?.firstname?.charAt(0) }}{{ comment.author?.lastname?.charAt(0) }}
+        </div>
+        <div class="comment-body">
+          <span class="comment-author">{{comment.author?.firstname}} {{comment.author?.lastname}}</span>
+          <p class="comment-text">{{comment.content}}</p>
+        </div>
+      </div>
+
+      <button
+        mat-button
+        class="view-more-btn"
+        *ngIf="commentsList.length < commentsCount"
+        (click)="onViewMore()"
+        [disabled]="commentsLoading"
+      >
+        Load more ({{ commentsCount - commentsList.length }} remaining)
+      </button>
+    </div>
+
+    <p class="no-comments" *ngIf="commentsList?.length === 0 && !commentsLoading">
+      No comments yet. Be the first to comment!
+    </p>
   </section>
 
 </section>
