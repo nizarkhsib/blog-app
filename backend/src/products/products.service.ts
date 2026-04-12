@@ -11,15 +11,10 @@ export class ProductsService implements OnModuleInit {
   ) { }
 
   onModuleInit() {
-    console.log(`The module has been initialized.`);
-
   }
-
-  // addProduct with file "photo"
 
   async addProductWithPhoto(file, productDto: any): Promise<Product> {
     let parsedProdut = JSON.parse(productDto.product);
-    console.log('productDto', productDto.product);
 
     const newProduct = new this.productModel(parsedProdut);
     if (file) {

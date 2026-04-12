@@ -53,7 +53,6 @@
             <mat-icon>note_add</mat-icon>
             Write article
           </button>
-          <!-- #docregion mat-menu-trigger-for -->
           <button
             mat-mini-fab
             [matMenuTriggerFor]="profileMenu"
@@ -65,12 +64,10 @@
             <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="profile-fab-img" alt="Profile" />
             <mat-icon *ngIf="!profilePhotoUrl">person</mat-icon>
           </button>
-          <!-- #enddocregion mat-menu-trigger-for -->
           <mat-menu
             class="profile-menu"
             #profileMenu="matMenu"
           >
-            <!-- User info header -->
             <div class="menu-user-header" (click)="$event.stopPropagation()">
               <div class="menu-avatar">
                 <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="menu-avatar-img" alt="Profile" />

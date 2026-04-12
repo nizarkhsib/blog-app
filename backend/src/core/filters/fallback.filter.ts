@@ -5,7 +5,6 @@ import { Request, Response } from 'express';
 export class FallbackExceptionFilter implements ExceptionFilter{
 
     catch(exception: any, host: ArgumentsHost)  {
-       //  console.log("fallback exception handler triggered", JSON.stringify(exception));
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         const request = ctx.getRequest<Request>();

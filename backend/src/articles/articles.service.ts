@@ -13,7 +13,6 @@ export class ArticlesService implements OnModuleInit {
   ) { }
 
   onModuleInit() {
-    console.log(`The module has been initialized.`);
   }
 
   /**

@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Article } from '../../models/article';
-import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'article-card',
@@ -16,9 +14,7 @@ export class ArticleCardComponent implements OnInit {
 
   previewText = '';
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router) {
+  constructor() {
   }
 
   ngOnInit(): void {

@@ -8,10 +8,7 @@ export class SendEmailMiddleware {
 
     sendEmail(email: string, token: string, attachmentsArray) {
 
-        // in the case that we will communicate with front-end app 
-        // let link = `http://${this.configService.get('WEB_APP_URI')}/#/account?tokenVerifyEmail=${token}`;
-
-        // in this case that will return verifyEmail to true
+        // In this case that will return verifyEmail to true
         let link = `http://${this.configService.get('WEB_APP_URI')}/auth/verify/${token}`;
         let subjectObject = {
             subjectTitle: 'E-mail de confirmation compte "API"',
@@ -26,11 +23,8 @@ export class SendEmailMiddleware {
                 attachments: attachmentsArray,
             };
             this.mailerService.sendMail(mailOptions)
-                .then((info) => {
-                    console.log('email sent', info)
-                });
+                .then(() => {});
         } catch (error) {
-            console.log('error', error);
         }
     }
 }

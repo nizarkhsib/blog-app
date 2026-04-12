@@ -45,7 +45,6 @@ export class AuthService {
     });
 
     // Optionally send verification email here
-    // this.sendEmailMiddleware.sendEmail(createdUser.email, tokenVerifyEmail.tokenVerifyEmail, []);
   }
 
   async validateUserByPassword(authCredentialsDto: AuthCredentialsDto) {
@@ -113,7 +112,7 @@ export class AuthService {
           }
         });
     } catch (e) {
-      console.log('error', e);
+      return false;
     }
   }
 

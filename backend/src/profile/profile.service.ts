@@ -21,7 +21,6 @@ export class ProfileService implements OnModuleInit {
   ) { }
 
   onModuleInit() {
-    console.log(`The module has been initialized.`);
   }
 
   async getProfile(): Promise<Profile[]> {
@@ -35,7 +34,6 @@ export class ProfileService implements OnModuleInit {
     const findQuery = this.profileModel
       .find()
       .sort([['updatedAt', 'descending']])
-      // .sort({ _id: 1 })
       .skip(documentsToSkip);
 
     if (limitOfDocuments) {
@@ -152,7 +150,7 @@ export class ProfileService implements OnModuleInit {
       return populated;
 
     } catch (error) {
-      console.log('error', error);
+      throw error;
     }
   }
 
@@ -216,8 +214,5 @@ export class ProfileService implements OnModuleInit {
     }
   }
 
-}
-function documentsToSkip(documentsToSkip: any) {
-  throw new Error('Function not implemented.');
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Profile } from 'src/app/shared/models/profile';
@@ -11,7 +11,7 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
   styleUrls: ['./profile-edit.component.scss'],
   standalone: false
 })
-export class ProfileEditComponent implements OnInit {
+export class ProfileEditComponent {
   file: File | null = null;
   filePreviewUrl: string | ArrayBuffer | null = null;
   userProfile: Profile | null = null;
@@ -58,9 +58,6 @@ export class ProfileEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-  }
-
   onSelect(event: any) {
     const file: File | undefined = event.target.files?.[0];
     if (file) {
@@ -81,7 +78,6 @@ export class ProfileEditComponent implements OnInit {
   }
 
   save() {
-    console.log('save clicked');
     if (!this.userProfile?._id || !this.file) return;
     this.profileService
       .updateWithPhoto(this.userProfile._id, this.profileForm.value, this.file)

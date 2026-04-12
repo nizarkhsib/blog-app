@@ -7,7 +7,6 @@
 
 <form [formGroup]="profileForm" class="modal-body">
 
-  <!-- Avatar upload -->
   <div class="avatar-upload-section" (click)="fileInput.click()">
     <input type="file" hidden #fileInput accept="image/*" (change)="onSelect($event)" />
     <div class="avatar-circle">
@@ -29,7 +28,6 @@
     </button>
   </div>
 
-  <!-- Form fields -->
   <div class="form-row">
     <mat-form-field appearance="outline" class="half-field">
       <mat-label>First name</mat-label>

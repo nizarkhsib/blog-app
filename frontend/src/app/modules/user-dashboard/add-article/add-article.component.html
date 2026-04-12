@@ -1,6 +1,5 @@
 <div class="page-container">
 
-  <!-- Page header -->
   <div class="page-header">
     <div class="page-header-left">
       <button mat-icon-button class="back-btn" type="button" (click)="goBack()">
@@ -25,7 +24,6 @@
 
     <div class="form-main">
 
-      <!-- Title -->
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput required placeholder="Give your article a compelling title..." type="text" formControlName="title">
@@ -34,7 +32,6 @@
         <mat-error *ngIf="f.title.errors?.minlength">Title must be at least 5 characters</mat-error>
       </mat-form-field>
 
-      <!-- Description -->
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Description</mat-label>
         <textarea matInput required rows="2" placeholder="A short summary of your article..." formControlName="description"></textarea>
@@ -42,7 +39,6 @@
         <mat-error *ngIf="f.description.errors?.minlength">Description must be at least 10 characters</mat-error>
       </mat-form-field>
 
-      <!-- Tags -->
       <div class="field-group">
         <label class="field-label">Tags</label>
         <mat-chip-grid #chipList aria-label="Article tags" class="tags-chip-list">
@@ -62,7 +58,6 @@
         </mat-chip-grid>
       </div>
 
-      <!-- Editor -->
       <div class="field-group">
         <label class="field-label">Content</label>
         <div class="editor-wrapper NgxEditor__Wrapper">
@@ -83,10 +78,8 @@
 
     </div>
 
-    <!-- Sidebar -->
     <div class="form-sidebar">
 
-      <!-- Status -->
       <div class="sidebar-card">
         <h3 class="sidebar-card-title">
           <mat-icon>tune</mat-icon> Settings
@@ -100,7 +93,6 @@
         </mat-form-field>
       </div>
 
-      <!-- Cover image -->
       <div class="sidebar-card">
         <h3 class="sidebar-card-title">
           <mat-icon>image</mat-icon> Cover Image
@@ -120,7 +112,6 @@
         </div>
       </div>
 
-      <!-- Mobile actions -->
       <div class="sidebar-actions">
         <button type="button" mat-stroked-button (click)="saveDraft()" [disabled]="loading || articleForm.invalid" class="full-width draft-btn">
           <mat-icon>save_as</mat-icon> Save Draft

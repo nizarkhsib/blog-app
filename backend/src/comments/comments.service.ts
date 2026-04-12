@@ -17,7 +17,6 @@ export class CommentsService implements OnModuleInit {
   ) { }
 
   onModuleInit() {
-    console.log(`The module has been initialized.`);
   }
 
   /**
@@ -61,7 +60,6 @@ export class CommentsService implements OnModuleInit {
     const findQuery = this.commentModel
       .find({ article: id })
       .sort([['updatedAt', 'descending']])
-      // .sort({ _id: 1 })
       .skip(documentsToSkip)
       .populate('author', ['firstname', 'lastname']);
 
@@ -78,7 +76,6 @@ export class CommentsService implements OnModuleInit {
     const findQuery = this.commentModel
       .find()
       .sort([['updatedAt', 'descending']])
-      // .sort({ _id: 1 })
       .skip(documentsToSkip);
 
     if (limitOfDocuments) {

@@ -10,7 +10,6 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
-  // app.setGlobalPrefix('api');
   app.useGlobalFilters(
     new FallbackExceptionFilter(),
     new HttpExceptionFilter()
