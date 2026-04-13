@@ -1,0 +1,164 @@
+<div class="landing">
+  <!-- Hero Section -->
+  <section class="hero">
+    <nav class="landing-nav">
+      <div class="logo">
+        <mat-icon class="logo-icon">auto_stories</mat-icon>
+        <span class="logo-text">BlogApp</span>
+      </div>
+      <div class="nav-actions">
+        <button mat-stroked-button class="nav-btn" (click)="goToLogin()" *ngIf="!isLoggedIn">Sign In</button>
+        <button mat-flat-button class="nav-btn-primary" (click)="getStarted()">
+          {{ isLoggedIn ? 'Go to Dashboard' : 'Get Started' }}
+        </button>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <mat-icon>trending_up</mat-icon>
+        <span>Join thousands of writers worldwide</span>
+      </div>
+      <h1 class="hero-title">
+        Where <span class="gradient-text">great ideas</span><br>
+        find their audience
+      </h1>
+      <p class="hero-subtitle">
+        Create, share, and discover compelling stories. A modern blogging platform
+        built for writers who want their voice heard.
+      </p>
+      <div class="hero-actions">
+        <button mat-flat-button class="btn-hero-primary" (click)="startWriting()">
+          Start Writing
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <button mat-stroked-button class="btn-hero-secondary" (click)="getStarted()">
+          Explore Articles
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">10K+</span>
+          <span class="stat-text">Articles Published</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">5K+</span>
+          <span class="stat-text">Active Writers</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">50K+</span>
+          <span class="stat-text">Monthly Readers</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="floating-card card-1">
+        <div class="card-avatar"></div>
+        <div class="card-lines">
+          <div class="line line-long"></div>
+          <div class="line line-medium"></div>
+          <div class="line line-short"></div>
+        </div>
+        <div class="card-reactions">
+          <span>❤️ 243</span>
+          <span>💬 18</span>
+        </div>
+      </div>
+      <div class="floating-card card-2">
+        <div class="card-img-placeholder"></div>
+        <div class="card-lines">
+          <div class="line line-long"></div>
+          <div class="line line-medium"></div>
+        </div>
+      </div>
+      <div class="floating-card card-3">
+        <div class="mini-avatar-group">
+          <div class="mini-avatar a1"></div>
+          <div class="mini-avatar a2"></div>
+          <div class="mini-avatar a3"></div>
+        </div>
+        <div class="card-lines">
+          <div class="line line-short"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="section-header">
+      <h2>Everything you need to <span class="gradient-text">write & grow</span></h2>
+      <p>Powerful tools designed for modern writers and storytellers</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon blue">
+          <mat-icon>edit_note</mat-icon>
+        </div>
+        <h3>Rich Editor</h3>
+        <p>A powerful editor with formatting, images, code blocks, and more. Write beautifully without distractions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon purple">
+          <mat-icon>notifications_active</mat-icon>
+        </div>
+        <h3>Real-time Notifications</h3>
+        <p>Get instant notifications when someone likes, comments, or interacts with your articles.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon teal">
+          <mat-icon>group</mat-icon>
+        </div>
+        <h3>Community</h3>
+        <p>Follow your favorite writers, engage in discussions, and build your reader community.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon orange">
+          <mat-icon>dashboard</mat-icon>
+        </div>
+        <h3>Writer Dashboard</h3>
+        <p>Manage all your articles, track engagement, and organize your content in one place.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon pink">
+          <mat-icon>devices</mat-icon>
+        </div>
+        <h3>Fully Responsive</h3>
+        <p>Your articles look great on every device — desktop, tablet, or mobile.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green">
+          <mat-icon>bookmarks</mat-icon>
+        </div>
+        <h3>Tags & Discovery</h3>
+        <p>Tag your articles and help readers discover content that matters to them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Ready to share your story?</h2>
+      <p>Join our community of writers and start creating content that inspires.</p>
+      <button mat-flat-button class="btn-cta" (click)="startWriting()">
+        Start Writing — It's Free
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <mat-icon class="logo-icon">auto_stories</mat-icon>
+        <span class="logo-text">BlogApp</span>
+      </div>
+      <p class="footer-copy">&copy; 2026 BlogApp. Built with ❤️ for writers everywhere.</p>
+    </div>
+  </footer>
+</div>

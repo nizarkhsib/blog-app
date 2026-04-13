@@ -4,35 +4,38 @@ import { NavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'articles',
-  },
-  {
-    path: '',
+    path: 'articles',
     component: NavigationComponent,
     children: [
       {
-        path: 'articles',
+        path: '',
         loadChildren: () => import('./articles/articles.module')
           .then(m => m.ArticlesModule)
       },
+    ]
+  },
+  {
+    path: 'write-dashboard',
+    component: NavigationComponent,
+    children: [
       {
-        path: 'write-dashboard',
+        path: '',
         loadChildren: () => import('./write-dashboard/write-dashboard.module')
           .then(m => m.WriteDashboardModule)
       },
+    ]
+  },
+  {
+    path: 'profile',
+    component: NavigationComponent,
+    children: [
       {
-        path: 'profile',
+        path: '',
         loadChildren: () => import('./profile/profile.module')
           .then(m => m.ProfileModule)
       },
     ]
   },
-  {
-    path: 'auth',
-    loadChildren: () => import('../login/login.module').then(m => m.LoginModule)
-  }
 ];
 
 @NgModule({

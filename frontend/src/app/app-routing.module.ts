@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    loadComponent: () => import('./modules/landing/landing.component').then(m => m.LandingComponent),
+  },
+  {
+    path: '',
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
   },
   {

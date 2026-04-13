@@ -116,6 +116,7 @@
         mat-list-item
         routerLink="/profile"
         routerLinkActive="active-link"
+        *ngIf="isLogged"
       >
         <div style="display: flex; align-items: center; gap: 12px;">
           <mat-icon>account_circle</mat-icon>
