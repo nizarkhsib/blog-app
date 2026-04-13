@@ -3,9 +3,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -24,9 +21,6 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
     CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatTableModule,
-    MatChipsModule,
-    MatTooltipModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatDialogModule,
@@ -36,7 +30,6 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 export class UserArticlesComponent implements OnInit {
   articles: Article[] = [];
   loading = false;
-  displayedColumns: string[] = ['title', 'description', 'status', 'createdAt', 'actions'];
   pageIndex = 0;
   pageSize = 10;
   total = 0;

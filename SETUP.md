@@ -1,7 +1,7 @@
-# Medium-like Blog App - Setup & Deployment Guide
+# Medium-like Bloogy - Setup & Deployment Guide
 
 ## Overview
-This is a full-stack blog application similar to Medium, built with:
+This is a full-stack blogging platform called Bloogy, built with:
 - **Backend**: NestJS + MongoDB + Passport.js
 - **Frontend**: Angular 13 + Angular Material
 - **Features**: 

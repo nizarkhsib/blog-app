@@ -1,4 +1,4 @@
-# Blog App Architecture
+# Bloogy Architecture
 
 ## System Overview
 ```

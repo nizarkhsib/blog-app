@@ -1,8 +1,8 @@
-# Blog App Implementation Summary
+# Bloogy Implementation Summary
 
 ## ✅ What Has Been Implemented
 
-Your Medium-like blog application is now ready with all core features!
+Your Medium-like Bloogy application is now ready with all core features!
 
 ### Backend (NestJS + MongoDB)
 
@@ -423,7 +423,7 @@ Created (Draft)
 
 ---
 
-Congratulations! Your Medium-like blog application is ready! 🎉
+Congratulations! Your Medium-like Bloogy application is ready! 🎉
 
 For questions or issues, refer to the documentation files or the code comments.
 

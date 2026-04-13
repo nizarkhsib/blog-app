@@ -2,7 +2,7 @@
 
 ## ✅ Upgrade Completed
 
-Your blog application has been successfully upgraded to be compatible with Node.js 25.
+Your Bloogy app has been successfully upgraded to be compatible with Node.js 25.
 
 ## Version Changes
 
@@ -232,7 +232,7 @@ cd frontend && npm install
 
 ## Summary
 
-Your blog application is now **production-ready** with Node.js 25! 🚀
+Your Bloogy app is now **production-ready** with Node.js 25! 🚀
 
 - Modern technology stack
 - Improved performance

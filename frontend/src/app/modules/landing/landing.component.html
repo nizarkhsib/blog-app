@@ -1,11 +1,13 @@
+<div class="landing-logo-top" style="width:100%;display:flex;justify-content:center;align-items:center;margin-top:24px;margin-bottom:8px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <mat-icon class="logo-icon">auto_stories</mat-icon>
+    <span class="logo-text" style="font-size:2.5rem;">Bloogy</span>
+  </div>
+</div>
 <div class="landing">
   <!-- Hero Section -->
   <section class="hero">
     <nav class="landing-nav">
-      <div class="logo">
-        <mat-icon class="logo-icon">auto_stories</mat-icon>
-        <span class="logo-text">BlogApp</span>
-      </div>
       <div class="nav-actions">
         <button mat-stroked-button class="nav-btn" (click)="goToLogin()" *ngIf="!isLoggedIn">Sign In</button>
         <button mat-flat-button class="nav-btn-primary" (click)="getStarted()">
@@ -13,6 +15,21 @@
         </button>
       </div>
     </nav>
+
+    <!-- 3D Pencil Writing Animation -->
+    <div class="landing-pencil-scene">
+      <div class="pencil-shadow"></div>
+      <div class="landing-pencil">
+        <div class="landing-pencil-body">
+          <div class="landing-pencil-tip"></div>
+        </div>
+        <div class="landing-writing-lines">
+          <div class="writing-line-1"></div>
+          <div class="writing-line-2"></div>
+          <div class="writing-line-3"></div>
+        </div>
+      </div>
+    </div>
 
     <div class="hero-content">
       <div class="hero-badge">
@@ -156,9 +173,9 @@
     <div class="footer-content">
       <div class="footer-brand">
         <mat-icon class="logo-icon">auto_stories</mat-icon>
-        <span class="logo-text">BlogApp</span>
+        <span class="logo-text">Bloogy</span>
       </div>
-      <p class="footer-copy">&copy; 2026 BlogApp. Built with ❤️ for writers everywhere.</p>
+      <p class="footer-copy">&copy; 2026 Bloogy. Built with ❤️ for writers everywhere.</p>
     </div>
   </footer>
 </div>

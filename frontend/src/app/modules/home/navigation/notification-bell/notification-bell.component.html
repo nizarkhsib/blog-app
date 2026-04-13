@@ -29,19 +29,18 @@
         </div>
         <span class="unread-dot" *ngIf="!n.read"></span>
       </div>
+    </div>
 
-      <div class="see-more-wrapper">
-        <button
-          *ngIf="hasMore"
-          class="see-more-btn"
-          (click)="loadMore(); $event.stopPropagation()"
-          [disabled]="loadingMore"
-        >
-          <mat-icon *ngIf="!loadingMore">expand_more</mat-icon>
-          <div *ngIf="loadingMore" class="spinner"></div>
-          <span>{{ loadingMore ? 'Loading' : 'See more' }}</span>
-        </button>
-      </div>
+    <div class="see-more-wrapper" *ngIf="notifications.length > 0 && hasMore">
+      <button
+        class="see-more-btn"
+        (click)="loadMore(); $event.stopPropagation()"
+        [disabled]="loadingMore"
+      >
+        <mat-icon *ngIf="!loadingMore">expand_more</mat-icon>
+        <div *ngIf="loadingMore" class="spinner"></div>
+        <span>{{ loadingMore ? 'Loading' : 'See more' }}</span>
+      </button>
     </div>
 
     <ng-template #emptyState>

@@ -172,6 +172,141 @@
     padding: 0 16px;
 }
 
+/* ─── 3D PENCIL WRITING ANIMATION ─────────── */
+.pencil-scene {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+    width: 60px;
+    height: 40px;
+    perspective: 200px;
+    cursor: pointer;
+    z-index: 1;
+
+    @media (max-width: 599px) {
+        left: 56px;
+        transform: translateY(-50%) scale(0.7);
+    }
+}
+
+.pencil {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.pencil-body {
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    width: 36px;
+    height: 8px;
+    background: linear-gradient(180deg, #f7d84e 0%, #e8b830 40%, #d4a017 100%);
+    border-radius: 1px 3px 3px 1px;
+    transform: rotateX(15deg) rotateZ(-35deg);
+    transform-origin: right bottom;
+    animation: pencil-write 1.8s ease-in-out infinite;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+    /* Ferrule (metal band) */
+    &::before {
+        content: '';
+        position: absolute;
+        right: -2px;
+        top: -1px;
+        width: 7px;
+        height: 10px;
+        background: linear-gradient(180deg, #d4d4d4 0%, #a0a0a0 50%, #c0c0c0 100%);
+        border-radius: 0 1px 1px 0;
+    }
+
+    /* Eraser */
+    &::after {
+        content: '';
+        position: absolute;
+        right: -7px;
+        top: 0;
+        width: 5px;
+        height: 8px;
+        background: linear-gradient(180deg, #f28b9e 0%, #e05572 100%);
+        border-radius: 0 2px 2px 0;
+    }
+}
+
+.pencil-tip {
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-right: 10px solid #d4a017;
+
+    /* Graphite point */
+    &::after {
+        content: '';
+        position: absolute;
+        left: -4px;
+        top: -2px;
+        width: 0;
+        height: 0;
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid transparent;
+        border-right: 5px solid #333;
+    }
+}
+
+.writing-line {
+    position: absolute;
+    bottom: 6px;
+    left: 2px;
+    height: 2px;
+    width: 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 1px;
+    animation: line-write 1.8s ease-in-out infinite;
+    filter: blur(0.3px);
+}
+
+@keyframes pencil-write {
+    0%, 100% {
+        transform: rotateX(15deg) rotateZ(-35deg) translate(0, 0);
+    }
+    25% {
+        transform: rotateX(12deg) rotateZ(-30deg) translate(8px, 2px);
+    }
+    50% {
+        transform: rotateX(18deg) rotateZ(-38deg) translate(14px, -1px);
+    }
+    75% {
+        transform: rotateX(14deg) rotateZ(-32deg) translate(20px, 1px);
+    }
+}
+
+@keyframes line-write {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.6;
+    }
+    75% {
+        width: 40px;
+        opacity: 0.5;
+    }
+    100% {
+        width: 48px;
+        opacity: 0;
+    }
+}
+
 .sidenav-container {
     margin-top: 50px;
     height: calc(100% - 50px);

@@ -39,3 +39,86 @@ body {
     --mdc-snackbar-supporting-text-color: #c62828;
     --mat-snack-bar-button-color: #c62828;
 }
+
+// ─── GLOBAL BUTTON HOVER EFFECTS ────────────
+button,
+a[mat-button],
+a[mat-raised-button],
+a[mat-flat-button],
+a[mat-stroked-button] {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Raised & flat buttons — stronger lift + color shift
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mdc-fab {
+    &:hover:not(:disabled) {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18) !important;
+        filter: brightness(1.08) !important;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+        filter: brightness(0.95) !important;
+    }
+}
+
+// Stroked buttons — fill on hover
+.mat-mdc-outlined-button {
+    &:hover:not(:disabled) {
+        background-color: rgba(79, 70, 229, 0.06) !important;
+    }
+}
+
+// Icon buttons — subtle scale + tint
+.mat-mdc-icon-button {
+    &:hover:not(:disabled) {
+        transform: scale(1.1) !important;
+        box-shadow: none !important;
+        background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.95) !important;
+        background-color: rgba(0, 0, 0, 0.08) !important;
+    }
+}
+
+// Mini fab — lift + glow + brighten
+.mat-mdc-mini-fab {
+    &:hover:not(:disabled) {
+        transform: translateY(-2px) scale(1.05) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+        filter: brightness(1.1) !important;
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0) scale(1) !important;
+        filter: brightness(0.95) !important;
+    }
+}
+
+// Menu items — slide + bg highlight
+.mat-mdc-menu-item {
+    transition: background-color 0.15s ease, padding-left 0.15s ease !important;
+
+    &:hover {
+        padding-left: 20px !important;
+        transform: none !important;
+        box-shadow: none !important;
+        background-color: rgba(79, 70, 229, 0.06) !important;
+    }
+}

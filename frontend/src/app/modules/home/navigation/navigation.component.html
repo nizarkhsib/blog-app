@@ -1,4 +1,14 @@
 <mat-toolbar class="header">
+  <!-- 3D Pencil Writing Animation -->
+  <div class="pencil-scene" routerLink="/articles">
+    <div class="pencil">
+      <div class="pencil-body">
+        <div class="pencil-tip"></div>
+      </div>
+      <div class="writing-line"></div>
+    </div>
+  </div>
+
   <button
     type="button"
     aria-label="Toggle sidenav"
@@ -24,12 +34,12 @@
     </button>
 
     <button
-      *ngIf="isLogged"
+      *ngIf="isLogged && !(isHandset$ | async)"
       mat-raised-button
       (click)="navigateToWriteArticle()"
     >
       <mat-icon>note_add</mat-icon>
-      Write article
+      Write
     </button>
     <app-notification-bell *ngIf="isLogged"></app-notification-bell>
     <button
