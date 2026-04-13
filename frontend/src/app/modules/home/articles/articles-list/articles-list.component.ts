@@ -19,7 +19,7 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
   pageSize = 4;
   count = 0;
   articles: Article[] = [];
-  gridColumns = 1;
+  gridColumns = 3;
   isLoading = true;
   searchQuery = '';
 

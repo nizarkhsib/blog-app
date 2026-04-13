@@ -1,4 +1,12 @@
 <div class="content">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1>Discover Stories</h1>
+      <p>Explore the latest articles from our community of writers</p>
+    </div>
+  </div>
+
   <!-- Search bar -->
   <div class="search-bar">
     <mat-icon class="search-icon">search</mat-icon>
@@ -31,26 +39,27 @@
     [ngStyle]="{'grid-template-columns': 'repeat(' + gridColumns + ', minmax(0, 1fr))'}"
   >
     <div
-      class="article-grid-item d-flex justify-content-center"
+      class="article-grid-item"
       *ngFor="let article of articles; let index = index;"
     >
       <article-card
         (click)="articleClicked(article)"
         class="article-card"
         [article]="article"
-        [index]="index"
       ></article-card>
     </div>
   </div>
 
   <!-- Loading spinner -->
-  <div class="center" *ngIf="isLoading">
-    <mat-spinner diameter="40"></mat-spinner>
+  <div class="loading-state" *ngIf="isLoading">
+    <mat-spinner diameter="36"></mat-spinner>
+    <span>Loading articles...</span>
   </div>
 
   <!-- End-of-list message -->
   <div class="end-of-list" *ngIf="!isLoading && articles.length >= count && articles.length > 0">
-    You've reached the end
+    <mat-icon>check_circle_outline</mat-icon>
+    <span>You've seen all articles</span>
   </div>
 
   <!-- Sentinel element observed for infinite scroll -->

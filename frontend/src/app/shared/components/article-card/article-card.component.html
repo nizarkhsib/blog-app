@@ -1,28 +1,40 @@
-<div class="blog-card" [ngClass]="{ 'alt': index % 2 === 0 }" *ngIf="article">
-  <div class="meta" *ngIf="article.coverImage || article.filePath">
-    <div
-      class="photo"
-      [style.background-image]="'url(' + (article.coverImage || article.filePath || '') + ')'"
-    ></div>
-    <ul class="details">
-      <li class="author"><a>{{article?.author?.firstname}}&nbsp;{{article?.author?.lastname}}</a></li>
-      <li class="date">{{article.createdAt | date}}</li>
-      <li *ngIf="article?.tags?.length > 0" class="tags">
-        <ul><li *ngFor="let tag of article.tags"><a>#{{tag}}</a></li></ul>
-      </li>
-    </ul>
+<div class="blog-card" *ngIf="article">
+  <!-- Cover Image -->
+  <div class="card-cover" *ngIf="article.coverImage || article.filePath">
+    <img
+      [src]="article.coverImage || article.filePath"
+      alt=""
+      class="cover-img"
+    />
   </div>
-  <div class="description">
-    <div class="article-meta-row" *ngIf="!article.coverImage && !article.filePath">
-      <span class="author-name">{{article?.author?.firstname}}&nbsp;{{article?.author?.lastname}}</span>
-      <span class="article-date">{{article.createdAt | date}}</span>
+  <div class="card-cover card-cover-placeholder" *ngIf="!article.coverImage && !article.filePath">
+    <mat-icon class="placeholder-icon">article</mat-icon>
+  </div>
+
+  <!-- Card Body -->
+  <div class="card-body">
+    <!-- Tags -->
+    <div class="tags-row" *ngIf="article?.tags?.length > 0">
+      <span class="tag" *ngFor="let tag of article.tags | slice:0:3">#{{tag}}</span>
     </div>
-    <h1>{{article.title}}</h1>
-    <h2>{{article?.description}}</h2>
-    <p class="preview-text">{{previewText}}</p>
-    <div class="card-footer">
-      <span class="likes-hint"><mat-icon class="hint-icon">favorite_border</mat-icon> {{article.likes || 0}}</span>
-      <p class="read-more"><a>Read More</a></p>
+
+    <h3 class="card-title">{{article.title}}</h3>
+    <p class="card-description">{{article?.description}}</p>
+
+    <!-- Author & Meta -->
+    <div class="card-meta">
+      <div class="author-info">
+        <div class="author-avatar">
+          {{article?.author?.firstname?.[0]}}{{article?.author?.lastname?.[0]}}
+        </div>
+        <div class="author-details">
+          <span class="author-name">{{article?.author?.firstname}} {{article?.author?.lastname}}</span>
+          <span class="article-date">{{article.createdAt | date:'mediumDate'}}</span>
+        </div>
+      </div>
+      <div class="card-stats">
+        <span class="stat"><mat-icon>favorite_border</mat-icon> {{article.likes || 0}}</span>
+      </div>
     </div>
   </div>
 </div>
