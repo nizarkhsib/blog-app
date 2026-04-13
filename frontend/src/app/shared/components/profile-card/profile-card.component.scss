@@ -19,8 +19,22 @@ body {
 }
 
 .profile-card {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-    background-color: whitesmoke;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #3a3a5e, #6c6c8a);
+    }
 }
 
 .profile-card-content {
@@ -44,12 +58,14 @@ body {
 }
 
 .profile-name {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.3px;
 }
 
 .text-secondary {
-    color: #718096;
+    color: #94a3b8;
     font-size: 14px;
 }
 
@@ -80,28 +96,35 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    gap: 4px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.2s ease;
 
     &.clickable {
         cursor: pointer;
-        transition: background-color 0.15s ease;
 
         &:hover {
-            background-color: rgba(0, 0, 0, 0.04);
+            background: #f0f0f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 26, 46, 0.1);
         }
     }
 }
 
 .stat-value {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
 }
 
 .stat-label {
-    font-size: 14px;
-    color: #718096;
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 @media (max-width: 768px) {
@@ -156,10 +179,11 @@ body {
 }
 
 .profile-image {
-    border-radius: 75px;
+    border-radius: 50%;
     display: block;
-    max-width: 150px;
-    max-height: 150px;
-    width: auto;
-    height: auto;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 16px rgba(26, 26, 46, 0.15);
 }

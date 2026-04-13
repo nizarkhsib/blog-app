@@ -13,6 +13,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { UserArticlesListComponent } from './user-articles-list/user-articles-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressSpinnerModule,
     MatInputModule,
     ComponentsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

@@ -8,9 +8,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Article } from 'src/app/shared/models/article';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-articles',
@@ -26,6 +29,8 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
     MatTooltipModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSnackBarModule,
   ]
 })
 export class UserArticlesComponent implements OnInit {
@@ -39,7 +44,9 @@ export class UserArticlesComponent implements OnInit {
   constructor(
     private articlesService: ArticlesService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -75,18 +82,28 @@ export class UserArticlesComponent implements OnInit {
    * Archive an article
    */
   archiveArticle(articleId: string): void {
-    if (confirm('Are you sure you want to archive this article?')) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Archive Article',
+        message: 'Are you sure you want to archive this article?',
+        confirmText: 'Archive',
+        icon: 'archive',
+        color: 'primary'
+      }
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
       this.articlesService.archiveArticle(articleId).subscribe(
         () => {
-          alert('Article archived successfully');
+          this.snackBar.open('Article archived successfully', 'Close', { duration: 3000 });
           this.loadUserArticles();
         },
         error => {
           console.error('Error archiving article', error);
-          alert('Error archiving article');
+          this.snackBar.open('Error archiving article', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
         }
       );
-    }
+    });
   }
 
   /**
@@ -95,12 +112,12 @@ export class UserArticlesComponent implements OnInit {
   unarchiveArticle(articleId: string): void {
     this.articlesService.unarchiveArticle(articleId).subscribe(
       () => {
-        alert('Article unarchived successfully');
+        this.snackBar.open('Article unarchived successfully', 'Close', { duration: 3000 });
         this.loadUserArticles();
       },
       error => {
         console.error('Error unarchiving article', error);
-        alert('Error unarchiving article');
+        this.snackBar.open('Error unarchiving article', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
       }
     );
   }
@@ -109,18 +126,28 @@ export class UserArticlesComponent implements OnInit {
    * Delete an article permanently
    */
   deleteArticle(articleId: string): void {
-    if (confirm('Are you sure you want to permanently delete this article? This action cannot be undone.')) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Article',
+        message: 'Are you sure you want to permanently delete this article? This action cannot be undone.',
+        confirmText: 'Delete',
+        icon: 'delete_forever',
+        color: 'warn'
+      }
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
       this.articlesService.deleteArticle(articleId).subscribe(
         () => {
-          alert('Article deleted successfully');
+          this.snackBar.open('Article deleted successfully', 'Close', { duration: 3000 });
           this.loadUserArticles();
         },
         error => {
           console.error('Error deleting article', error);
-          alert('Error deleting article');
+          this.snackBar.open('Error deleting article', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
         }
       );
-    }
+    });
   }
 
   /**

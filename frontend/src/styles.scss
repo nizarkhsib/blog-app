@@ -33,3 +33,9 @@ body {
 .modern-dialog .mat-mdc-dialog-container {
     padding: 0 !important;
 }
+
+.snackbar-error {
+    --mdc-snackbar-container-color: #fce4ec;
+    --mdc-snackbar-supporting-text-color: #c62828;
+    --mat-snack-bar-button-color: #c62828;
+}

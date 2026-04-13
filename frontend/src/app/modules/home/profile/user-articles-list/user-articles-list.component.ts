@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { Article } from 'src/app/shared/models/article';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-articles-list',
@@ -21,7 +24,9 @@ export class UserArticlesListComponent implements OnInit, OnChanges {
   constructor(
     private articlesService: ArticlesService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -101,12 +106,27 @@ export class UserArticlesListComponent implements OnInit, OnChanges {
 
   deleteArticle(article: Article): void {
     if (!article._id) return;
-    if (!confirm(`Delete "${article.title}"? This action cannot be undone.`)) return;
-    this.articlesService.deleteArticle(article._id).subscribe({
-      next: () => {
-        this.userArticles = this.userArticles.filter(a => a._id !== article._id);
-      },
-      error: (err) => console.error('Failed to delete article:', err)
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Article',
+        message: `Delete "${article.title}"? This action cannot be undone.`,
+        confirmText: 'Delete',
+        icon: 'delete_forever',
+        color: 'warn'
+      }
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+      this.articlesService.deleteArticle(article._id!).subscribe({
+        next: () => {
+          this.userArticles = this.userArticles.filter(a => a._id !== article._id);
+          this.snackBar.open('Article deleted successfully', 'Close', { duration: 3000 });
+        },
+        error: (err) => {
+          console.error('Failed to delete article:', err);
+          this.snackBar.open('Failed to delete article', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
+        }
+      });
     });
   }
 

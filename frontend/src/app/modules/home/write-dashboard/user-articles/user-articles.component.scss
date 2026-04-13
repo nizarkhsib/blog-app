@@ -94,9 +94,38 @@
     align-items: flex-start;
   }
 
+  .mat-column-description,
+  .mat-column-createdAt {
+    display: none !important;
+  }
+
+  .mat-column-actions {
+    min-width: 100px;
+    justify-content: flex-end;
+
+    button {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+
+      .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .mat-column-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .mat-cell,
   .mat-header-cell {
-    padding: 12px 8px;
-    font-size: 12px;
+    padding: 8px 6px;
+    font-size: 13px;
   }
 }

@@ -125,12 +125,20 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     width: 32px;
     height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
 
     mat-icon {
         font-size: 18px;
         width: 18px;
         height: 18px;
         line-height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 

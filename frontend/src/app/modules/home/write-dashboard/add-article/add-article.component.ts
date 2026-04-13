@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-article',
@@ -50,7 +51,8 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private articlesService: ArticlesService
+    private articlesService: ArticlesService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -108,7 +110,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
    */
   saveArticle(): void {
     if (this.articleForm.invalid) {
-      alert('Please fill all required fields and ensure content is at least 50 characters');
+      this.snackBar.open('Please fill all required fields and ensure content is at least 50 characters', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
       return;
     }
 
@@ -130,13 +132,13 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     request.subscribe(
       () => {
         this.loading = false;
-        alert('Article saved successfully!');
+        this.snackBar.open('Article saved successfully!', 'Close', { duration: 3000 });
         this.router.navigate(['/write-dashboard/articles']);
       },
       error => {
         this.loading = false;
         console.error('Error saving article', error);
-        alert('Error saving article');
+        this.snackBar.open('Error saving article', 'Close', { duration: 4000, panelClass: 'snackbar-error' });
       }
     );
   }
