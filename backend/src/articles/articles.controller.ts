@@ -9,11 +9,15 @@ import { PaginationParams } from 'src/pagination-params';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { imageFileFilter } from '../core/middleware/file-management.middleware';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Controller('articles')
 @ApiTags('Article')
 export class ArticlesController {
-  constructor(private readonly articlesService: ArticlesService) { }
+  constructor(
+    private readonly articlesService: ArticlesService,
+    private readonly notificationsService: NotificationsService,
+  ) { }
 
   /**
    * Create a new article
@@ -107,7 +111,25 @@ export class ArticlesController {
     const authUser = req.user['user'] || req.user;
     const userId = authUser['id'] || authUser['_id'];
     if (!userId) throw new BadRequestException('User not authenticated');
-    return this.articlesService.toggleLike(articleId, userId);
+    const result = await this.articlesService.toggleLike(articleId, userId);
+
+    // Send notification to article author on like
+    if (result.liked) {
+      const article = await this.articlesService.getArticleById(articleId);
+      if (article) {
+        const authorId = (article.author as any)?._id?.toString() || article.userId?.toString();
+        const senderName = authUser['firstname'] || 'Someone';
+        this.notificationsService.create({
+          recipient: authorId,
+          sender: userId,
+          type: 'like',
+          article: articleId,
+          message: `${senderName} liked your article "${article.title}"`,
+        }).catch(() => {});
+      }
+    }
+
+    return result;
   }
 
   /**

@@ -1,0 +1,57 @@
+<div class="notification-wrapper">
+  <div class="bell-btn" (click)="togglePanel()">
+    <mat-icon>notifications_outlined</mat-icon>
+    <span class="notif-badge" *ngIf="unreadCount > 0">{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
+  </div>
+
+  <div class="notification-panel" *ngIf="showPanel" @panelAnimation>
+    <div class="panel-header">
+      <span class="panel-title">Notifications</span>
+      <button (click)="onMarkAllRead()" *ngIf="unreadCount > 0" class="mark-all-btn">
+        <mat-icon>done_all</mat-icon>
+        Mark all read
+      </button>
+    </div>
+
+    <div class="panel-body" *ngIf="notifications.length > 0; else emptyState">
+      <div
+        *ngFor="let n of notifications; let last = last"
+        class="notification-item"
+        [class.unread]="!n.read"
+        (click)="onClickNotification(n)"
+      >
+        <div class="notif-icon-wrap" [ngClass]="getIconClass(n.type)">
+          <mat-icon>{{ getIcon(n.type) }}</mat-icon>
+        </div>
+        <div class="notif-content">
+          <p class="notif-message">{{ n.message }}</p>
+          <span class="notif-time">{{ getTimeAgo(n.createdAt) }}</span>
+        </div>
+        <span class="unread-dot" *ngIf="!n.read"></span>
+      </div>
+
+      <div class="see-more-wrapper">
+        <button
+          *ngIf="hasMore"
+          class="see-more-btn"
+          (click)="loadMore(); $event.stopPropagation()"
+          [disabled]="loadingMore"
+        >
+          <mat-icon *ngIf="!loadingMore">expand_more</mat-icon>
+          <div *ngIf="loadingMore" class="spinner"></div>
+          <span>{{ loadingMore ? 'Loading' : 'See more' }}</span>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <div class="empty-icon-wrap">
+          <mat-icon>notifications_none</mat-icon>
+        </div>
+        <p>You're all caught up!</p>
+        <span class="empty-sub">No new notifications</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -35,7 +35,7 @@
         <span class="spacer"></span>
 
         <section
-          class="d-flex align-items-center gap-2"
+          class="d-flex align-items-center gap-3"
           [ngClass]="{ 'user-logged': !(isHandset$ | async)  }"
         >
           <button
@@ -55,12 +55,12 @@
             <mat-icon>note_add</mat-icon>
             Write article
           </button>
+          <app-notification-bell *ngIf="isLogged"></app-notification-bell>
           <button
             mat-mini-fab
             [matMenuTriggerFor]="profileMenu"
             *ngIf="isLogged"
             color="basic"
-            [style.marginLeft.px]="10"
             class="profile-fab"
           >
             <img [src]="profilePhotoUrl || '/assets/default-avatar.svg'" class="profile-fab-img" alt="Profile" />

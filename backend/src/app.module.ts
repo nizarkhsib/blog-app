@@ -8,6 +8,7 @@ import * as winston from 'winston';
 import { ArticlesModule } from './articles/articles.module';
 import { CommentsModule } from './comments/comments.module';
 import { ProfileModule } from './profile/profile.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ProfileModule } from './profile/profile.module';
     ProductsModule,
     ArticlesModule,
     CommentsModule,
-    ProfileModule
+    ProfileModule,
+    NotificationsModule
   ],
   controllers: [],
   providers: [],

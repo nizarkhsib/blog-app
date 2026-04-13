@@ -99,6 +99,12 @@ export class CommentsService implements OnModuleInit {
     await this.commentModel.deleteOne({ _id: prodId })
   }
 
+  async getDistinctCommenters(articleId: string): Promise<string[]> {
+    const id = new mongoose.Types.ObjectId(articleId);
+    const results = await this.commentModel.distinct('author', { article: id });
+    return results.map((r: any) => r.toString());
+  }
+
 }
 
 function documentsToSkip(documentsToSkip: any) {

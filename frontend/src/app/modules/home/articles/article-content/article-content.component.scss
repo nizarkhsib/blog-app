@@ -4,6 +4,7 @@
     max-width: 780px;
     margin-left: auto;
     margin-right: auto;
+    overflow-x: hidden;
 
     .avatar {
         margin-bottom: 20px;
@@ -24,10 +25,13 @@ img {
 }
 
 .photo {
-    max-width: 600px;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
     margin-left: auto !important;
     margin-right: auto !important;
     margin-bottom: 24px !important;
+    box-sizing: border-box;
 }
 
 .article-content {
@@ -44,6 +48,12 @@ img {
     font-style: normal;
     letter-spacing: -0.004em;
     line-height: 1.6;
+
+    ::ng-deep img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
 }
 
 /* Action bar */

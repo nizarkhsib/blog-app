@@ -10,15 +10,18 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ComponentsModule } from 'src/app/shared/components/components.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
+import { NotificationBellComponent } from './navigation/notification-bell/notification-bell.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
-    NavigationComponent
+    NavigationComponent,
+    NotificationBellComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCardModule,
     MatSliderModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatBadgeModule
   ],
   providers: [
 

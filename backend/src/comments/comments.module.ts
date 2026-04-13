@@ -5,13 +5,19 @@ import { AppLogger } from '../core/services/logger.service';
 import { CommentSchema } from './comment.model';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
+import { NotificationsModule } from '../notifications/notifications.module';
+import { ArticleSchema } from '../articles/article.model';
 
 @Module({
   imports: [
     MulterModule.register({
       dest: './uploads',
     }),
-    MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }])
+    MongooseModule.forFeature([
+      { name: 'Comment', schema: CommentSchema },
+      { name: 'Article', schema: ArticleSchema }
+    ]),
+    NotificationsModule
   ],
   controllers: [CommentsController],
   providers: [CommentsService, AppLogger],
