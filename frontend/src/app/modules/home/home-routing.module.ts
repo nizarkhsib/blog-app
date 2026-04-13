@@ -18,13 +18,13 @@ const routes: Routes = [
           .then(m => m.ArticlesModule)
       },
       {
-        path: 'user-dashboard',
-        loadChildren: () => import('../user-dashboard/user-dashboard.module')
-          .then(m => m.UserDashboardModule)
+        path: 'write-dashboard',
+        loadChildren: () => import('./write-dashboard/write-dashboard.module')
+          .then(m => m.WriteDashboardModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module')
+        loadChildren: () => import('./profile/profile.module')
           .then(m => m.ProfileModule)
       },
     ]

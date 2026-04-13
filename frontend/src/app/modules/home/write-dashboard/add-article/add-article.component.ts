@@ -131,7 +131,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
       () => {
         this.loading = false;
         alert('Article saved successfully!');
-        this.router.navigate(['/user-dashboard/articles']);
+        this.router.navigate(['/write-dashboard/articles']);
       },
       error => {
         this.loading = false;
@@ -227,6 +227,6 @@ export class AddArticleComponent implements OnInit, OnDestroy {
    * Navigate back to articles list
    */
   goBack(): void {
-    this.router.navigate(['user-dashboard/articles']);
+    this.router.navigate(['write-dashboard/articles']);
   }
 }

@@ -72,7 +72,7 @@ export class UserArticlesListComponent implements OnInit, OnChanges {
   }
 
   editArticle(articleId: string): void {
-    this.router.navigate(['/user-dashboard/articles/edit', articleId]);
+    this.router.navigate(['/write-dashboard/articles/edit', articleId]);
   }
 
   unpublishArticle(article: Article): void {

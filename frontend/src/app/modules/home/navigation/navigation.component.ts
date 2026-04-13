@@ -58,7 +58,7 @@ export class NavigationComponent implements OnDestroy, AfterViewInit {
   }
 
   navigateToWriteArticle() {
-    this.router.navigate(['user-dashboard']);
+    this.router.navigate(['write-dashboard']);
   }
 
   navigateToProfile() {

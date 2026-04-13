@@ -68,7 +68,7 @@ export class UserArticlesComponent implements OnInit {
    * Edit an article
    */
   editArticle(articleId: string): void {
-    this.router.navigate([`user-dashboard/articles/edit/${articleId}`]);
+    this.router.navigate([`write-dashboard/articles/edit/${articleId}`]);
   }
 
   /**
@@ -127,7 +127,7 @@ export class UserArticlesComponent implements OnInit {
    * Create new article
    */
   createNewArticle(): void {
-    this.router.navigate(['user-dashboard/articles/new']);
+    this.router.navigate(['write-dashboard/articles/new']);
   }
 
   /**
