@@ -1,105 +1,50 @@
-<div class="container form-container">
-  <form
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <mat-icon matPrefix>email</mat-icon>
+    <input matInput type="text" formControlName="email" placeholder="Enter your email">
+    <mat-error *ngIf="submitted && f.email.errors?.required">Email is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Password</mat-label>
+    <mat-icon matPrefix>lock</mat-icon>
+    <input matInput type="password" formControlName="password" placeholder="Enter your password">
+    <mat-error *ngIf="submitted && f.password.errors?.required">Password is required</mat-error>
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    class="submit-btn"
+    [disabled]="loading || loginForm.invalid"
   >
+    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+    Sign In
+  </button>
 
-    <mat-form-field
-      class="row"
-      appearance="outline"
-      style="display:block;"
-    >
-      <mat-label for="email">Email</mat-label>
-      <input
-        matInput
-        placeholder="email"
-        type="text"
-        formControlName="email"
-        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-      >
-      <div
-        *ngIf="submitted && f.email.errors"
-        class="invalid-feedback"
-      >
-        <div *ngIf="f.email.errors.required">Email is required</div>
-      </div>
-    </mat-form-field>
+  <mat-error *ngIf="error" class="error-msg">
+    Bad email or password!
+  </mat-error>
 
-    <mat-form-field
-      class="row"
-      appearance="outline"
-    >
-      <mat-label for="password">Password</mat-label>
-      <input
-        matInput
-        appearance="outline"
-        placeholder="Password"
-        type="password"
-        formControlName="password"
-        [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-      >
-      <div
-        *ngIf="submitted && f.password.errors"
-        class="invalid-feedback"
-      >
-        <div *ngIf="f.password.errors.required">Password is required</div>
-      </div>
-    </mat-form-field>
+  <div class="divider">
+    <span>or continue with</span>
+  </div>
 
-    <button
-      class="button"
-      mat-raised-button
-      [disabled]="loading || loginForm.invalid"
-      color="secondary"
-    >
-      <span
-        *ngIf="loading"
-        class="spinner-border spinner-border-sm mr-1"
-      ></span>
-      Login
+  <div class="social-buttons">
+    <button type="button" mat-stroked-button class="social-btn" (click)="loginWithGoogle()">
+      <mat-icon>mail</mat-icon>
+      Google
     </button>
+    <button type="button" mat-stroked-button class="social-btn" (click)="loginWithFacebook()">
+      <mat-icon>facebook</mat-icon>
+      Facebook
+    </button>
+  </div>
 
-    <mat-error
-      *ngIf="error"
-      style="text-align: center;"
-    >
-      <b>Bad email or password !</b>
-    </mat-error>
-
-    <hr style="margin: 20px 0;">
-
-    <div class="social-auth-section">
-      <p style="text-align: center; margin-bottom: 15px;">Or continue with</p>
-      
-      <button
-        type="button"
-        mat-raised-button
-        color="primary"
-        (click)="loginWithGoogle()"
-        style="width: 100%; margin-bottom: 10px;"
-      >
-        <mat-icon style="margin-right: 10px;">mail</mat-icon>
-        Google
-      </button>
-
-      <button
-        type="button"
-        mat-raised-button
-        style="width: 100%;"
-        (click)="loginWithFacebook()"
-      >
-        <mat-icon style="margin-right: 10px;">facebook</mat-icon>
-        Facebook
-      </button>
-    </div>
-
-    <hr style="margin: 20px 0;">
-
-    <p style="text-align: center;">
-      Don't have an account?
-      <a (click)="navigateToRegister()" style="cursor: pointer; color: #1976d2;">
-        Register here
-      </a>
-    </p>
-  </form>
-</div>
+  <p class="footer-link">
+    Don't have an account?
+    <a (click)="navigateToRegister()">Register here</a>
+  </p>
+</form>

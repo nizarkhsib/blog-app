@@ -1,26 +1,82 @@
 :host {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+}
 
-    .tab-group {
-        max-width: 500px;
-        background-color: revert;
-        margin: 0 auto;
-        margin-top: 50px;
-        margin-bottom: 100px;
-        height: 370px;
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 24px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.auth-header {
+    text-align: center;
+    padding: 36px 32px 20px;
+
+    .auth-logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+
+        mat-icon {
+            color: #fff;
+            font-size: 28px;
+            width: 28px;
+            height: 28px;
+        }
     }
 
-    ::ng-deep .mat-form-field {
-        display: block !important;
+    h1 {
+        margin: 0 0 6px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
     }
 
-    .register-button {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+    p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #888;
+    }
+}
+
+.auth-tabs {
+    ::ng-deep .mat-mdc-tab-link {
+        flex: 1;
+    }
+}
+
+.auth-body {
+    padding: 24px 32px 32px;
+}
+
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 0;
+        align-items: flex-start;
     }
 
-    ::ng-deep .mat-tab-link {
-        width: 50%;
+    .auth-card {
+        border-radius: 0;
+        min-height: 100vh;
+        box-shadow: none;
     }
-
 }

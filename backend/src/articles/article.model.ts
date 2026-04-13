@@ -67,6 +67,11 @@ export const ArticleSchema = new Schema({
   }
 }, { timestamps: true });
 
+ArticleSchema.index(
+  { title: 'text', description: 'text', content: 'text', tags: 'text' },
+  { weights: { title: 10, tags: 5, description: 3, content: 1 } }
+);
+
 export interface Article extends Document {
   _id: Types.ObjectId;
   title: string;

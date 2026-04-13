@@ -116,6 +116,14 @@ export class ArticlesService implements OnModuleInit {
     return article;
   }
 
+  async getArticleCoverImage(articleId: string): Promise<{ data: Buffer; contentType: string } | null> {
+    const article = await this.articleModel.findById(articleId).select('coverImage');
+    if (!article?.coverImage?.data) {
+      return null;
+    }
+    return { data: article.coverImage.data, contentType: article.coverImage.contentType || 'image/jpeg' };
+  }
+
   /**
    * Update an article
    */
@@ -229,37 +237,34 @@ export class ArticlesService implements OnModuleInit {
    * Search articles by title or tags
    */
   async searchArticles(query: string, documentsToSkip = 0, limitOfDocuments = 10) {
-    const findQuery = this.articleModel
-      .find({
-        $and: [
-          { 
-            $or: [
-              { title: { $regex: query, $options: 'i' } },
-              { description: { $regex: query, $options: 'i' } },
-              { tags: { $in: [new RegExp(query, 'i')] } }
-            ] 
-          },
-          { status: 'published', archived: false }
-        ]
-      })
+    const trimmed = query.trim();
+    if (!trimmed) {
+      return this.getPublishedArticles(documentsToSkip, limitOfDocuments);
+    }
+
+    const escaped = trimmed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'i');
+
+    const filter = {
+      $or: [
+        { title: { $regex: regex } },
+        { description: { $regex: regex } },
+        { content: { $regex: regex } },
+        { tags: { $regex: regex } },
+        { authorName: { $regex: regex } },
+      ],
+      status: 'published',
+      archived: false
+    };
+
+    const results = await this.articleModel
+      .find(filter)
       .sort([['datePublished', 'descending']])
       .skip(documentsToSkip)
       .limit(limitOfDocuments)
       .populate('author', ['firstname', 'lastname', 'profileImage']);
 
-    const results = await findQuery;
-    const count = await this.articleModel.countDocuments({
-      $and: [
-        { 
-          $or: [
-            { title: { $regex: query, $options: 'i' } },
-            { description: { $regex: query, $options: 'i' } },
-            { tags: { $in: [new RegExp(query, 'i')] } }
-          ] 
-        },
-        { status: 'published', archived: false }
-      ]
-    });
+    const count = await this.articleModel.countDocuments(filter);
 
     return { results, count };
   }

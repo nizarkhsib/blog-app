@@ -6,6 +6,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 import { Article } from 'src/app/shared/models/article';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { environment } from 'src/environments/environment';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -94,6 +95,9 @@ export class AddArticleComponent implements OnInit, OnDestroy {
           status: article.status
         });
         this.tags = article.tags || [];
+        if (article.coverImage) {
+          this.coverImagePreviewUrl = `${environment.apiUrl}articles/${articleId}/cover`;
+        }
       },
       error => console.error('Error loading article', error)
     );

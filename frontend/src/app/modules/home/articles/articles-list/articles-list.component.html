@@ -1,4 +1,30 @@
 <div class="content">
+  <!-- Search bar -->
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search articles by title, content, or tags..."
+      [value]="searchQuery"
+      (input)="onSearchInput($event)"
+    />
+    <button
+      *ngIf="searchQuery"
+      mat-icon-button
+      class="clear-btn"
+      (click)="clearSearch()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- No results -->
+  <div class="empty-state" *ngIf="!isLoading && articles.length === 0 && searchQuery">
+    <mat-icon class="empty-icon">search_off</mat-icon>
+    <p>No articles found for "<b>{{ searchQuery }}</b>"</p>
+  </div>
+
   <div
     class="articles-grid"
     *ngIf="articles.length > 0"

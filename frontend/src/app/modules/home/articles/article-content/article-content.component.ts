@@ -40,11 +40,14 @@ export class ArticleContentComponent implements OnInit {
     private profileService: ProfileService,
     private route: ActivatedRoute) {
 
+    this.isLogged = !!this.authService.currentUserSubject.getValue();
+
     const articleFromState = this.router.getCurrentNavigation()?.extras?.state?.article;
 
     if (articleFromState) {
       this.article = articleFromState;
       this.loadAuthorPhoto();
+      this.initInteractions();
     } else {
       this.route.params
         .pipe(switchMap((params) => this.articleService.get(params.id)))
@@ -52,6 +55,7 @@ export class ArticleContentComponent implements OnInit {
           (article) => {
             this.article = article;
             this.loadAuthorPhoto();
+            this.initInteractions();
           },
           () => this.router.navigate([''])
         );
@@ -60,10 +64,6 @@ export class ArticleContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogged = !!this.authService.currentUserSubject.getValue();
-    // Re-init interactions here to ensure isLogged is set properly
-    if (this.article?._id) {
-      this.initInteractions();
-    }
   }
 
   private loadAuthorPhoto(): void {

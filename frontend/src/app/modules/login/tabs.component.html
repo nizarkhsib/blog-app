@@ -1,13 +1,14 @@
-<section class="tab-group">
-  <mat-card>
-    <mat-toolbar
-      class="d-flex flex-wrap justify-content-center align-items-center"
-      color="basic"
-    >
-      <div>Login or create an account</div>
-    </mat-toolbar>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <mat-icon>edit_note</mat-icon>
+      </div>
+      <h1>Welcome</h1>
+      <p>Sign in to continue to your account</p>
+    </div>
 
-    <nav mat-tab-nav-bar>
+    <nav mat-tab-nav-bar class="auth-tabs" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         *ngFor="let tabItem of tabs"
@@ -20,6 +21,10 @@
       </a>
     </nav>
 
-    <router-outlet></router-outlet>
-  </mat-card>
-</section>
+    <div class="auth-body">
+      <mat-tab-nav-panel #tabPanel>
+        <router-outlet></router-outlet>
+      </mat-tab-nav-panel>
+    </div>
+  </div>
+</div>

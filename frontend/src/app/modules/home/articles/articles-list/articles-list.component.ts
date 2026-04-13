@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, switchMap } from 'rxjs/operators';
 import { Article } from 'src/app/shared/models/article';
 import { ArticlesService } from 'src/app/shared/services/articles.service';
 import { PaginatedResult } from 'src/app/shared/services/paginated-result';
@@ -14,12 +15,15 @@ import { PaginatedResult } from 'src/app/shared/services/paginated-result';
 export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Output() rendered: EventEmitter<void> = new EventEmitter<void>();
-  skip = 0; // how many elements to skip
-  pageSize = 4; // page size
-  count = 0; // all articles number
+  skip = 0;
+  pageSize = 4;
+  count = 0;
   articles: Article[] = [];
   gridColumns = 1;
   isLoading = true;
+  searchQuery = '';
+
+  private searchSubject = new Subject<string>();
 
   @ViewChild('sentinel', { read: ElementRef, static: false }) sentinel!: ElementRef;
 
@@ -30,6 +34,14 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.searchSubject.pipe(
+      debounceTime(350),
+      distinctUntilChanged()
+    ).subscribe(query => {
+      this.searchQuery = query;
+      this.resetAndFetch();
+    });
+
     this.fetchArticlesList();
   }
 
@@ -52,6 +64,24 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.observer) {
       this.observer.disconnect();
     }
+    this.searchSubject.complete();
+  }
+
+  onSearchInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(value.trim());
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.searchSubject.next('');
+  }
+
+  private resetAndFetch(): void {
+    this.skip = 0;
+    this.articles = [];
+    this.count = 0;
+    this.fetchArticlesList();
   }
 
   sliderChange(event: any) {
@@ -60,14 +90,20 @@ export class ArticlesListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fetchArticlesList() {
     this.isLoading = true;
-    this.articlesBackendService
-      .getPaginatedList(this.pageSize, this.skip)
-      .pipe(
-        finalize(() => this.isLoading = false)
-      )
+
+    const request$ = this.searchQuery
+      ? this.articlesBackendService.searchArticles(this.searchQuery, this.skip / this.pageSize, this.pageSize)
+      : this.articlesBackendService.getPaginatedList(this.pageSize, this.skip);
+
+    request$
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe(
         (res: PaginatedResult<Article>) => {
-          this.articles.push(...res.results);
+          if (this.skip === 0) {
+            this.articles = res.results;
+          } else {
+            this.articles.push(...res.results);
+          }
           this.count = res.count;
         }
       );

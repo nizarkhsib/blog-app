@@ -1,10 +1,10 @@
-import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query, Req, BadRequestException, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query, Req, Res, BadRequestException, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { ArticleDto } from './dto/article.dto';
 import { Article } from './article.model';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { PaginationParams } from 'src/pagination-params';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
@@ -91,9 +91,9 @@ export class ArticlesController {
    * Search articles
    */
   @ApiOperation({ summary: 'Search articles' })
-  @Get('search/:query')
-  async searchArticles(@Param('query') query: string, @Query() { skip = 0, limit = 10 }: PaginationParams) {
-    return this.articlesService.searchArticles(query, Number(skip), Number(limit));
+  @Get('search')
+  async searchArticles(@Query('q') query: string, @Query() { skip = 0, limit = 10 }: PaginationParams) {
+    return this.articlesService.searchArticles(query || '', Number(skip), Number(limit));
   }
 
   /**
@@ -122,6 +122,21 @@ export class ArticlesController {
     const userId = authUser['id'] || authUser['_id'];
     if (!userId) throw new BadRequestException('User not authenticated');
     return this.articlesService.isLikedBy(articleId, userId);
+  }
+
+  /**
+   * Get article cover image
+   */
+  @ApiOperation({ summary: 'Get article cover image' })
+  @Get(':id/cover')
+  async getArticleCover(@Param('id') articleId: string, @Res() res: Response) {
+    const cover = await this.articlesService.getArticleCoverImage(articleId);
+    if (!cover?.data) {
+      return res.status(404).send('No cover image found');
+    }
+    res.setHeader('Content-Type', cover.contentType);
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.send(cover.data);
   }
 
   /**

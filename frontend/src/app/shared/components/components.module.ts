@@ -14,6 +14,8 @@ import { CommentsComponent } from './article-card/comments/comments.component';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AvatarComponent } from './avatar/avatar.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FollowersModalComponent } from './followers-modal/followers-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { AvatarComponent } from './avatar/avatar.component';
     ArticleCardComponent,
     CommentsComponent,
     ProfileCardComponent,
-    AvatarComponent
+    AvatarComponent,
+    FollowersModalComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +36,8 @@ import { AvatarComponent } from './avatar/avatar.component';
     MatIconModule,
     FormsModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   exports: [
     ListComponent,

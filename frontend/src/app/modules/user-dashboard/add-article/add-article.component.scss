@@ -194,6 +194,11 @@
         color: #fff;
         width: 28px !important;
         height: 28px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
 
         mat-icon {
             font-size: 16px;

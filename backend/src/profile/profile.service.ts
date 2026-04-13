@@ -164,6 +164,40 @@ export class ProfileService implements OnModuleInit {
     await this.profileModel.deleteOne({ _id: prodId })
   }
 
+  async getFollowers(userId: string): Promise<{ _id: string; firstname: string; lastname: string; email: string; photoUrl: string | null }[]> {
+    const id = new mongoose.Types.ObjectId(userId);
+    const profile = await this.profileModel.findOne({ user: id });
+    if (!profile || !profile.followers?.length) return [];
+
+    const followerProfiles = await this.profileModel.find({ user: { $in: profile.followers } })
+      .populate('user', this.populateUser);
+
+    return followerProfiles.map(p => ({
+      _id: (p.user as any)._id.toString(),
+      firstname: (p.user as any).firstname,
+      lastname: (p.user as any).lastname,
+      email: (p.user as any).email,
+      photoUrl: p.profilePhoto?.data ? `Profile/${p._id}/photo` : null,
+    }));
+  }
+
+  async getFollowing(userId: string): Promise<{ _id: string; firstname: string; lastname: string; email: string; photoUrl: string | null }[]> {
+    const id = new mongoose.Types.ObjectId(userId);
+    const profile = await this.profileModel.findOne({ user: id });
+    if (!profile || !profile.following?.length) return [];
+
+    const followingProfiles = await this.profileModel.find({ user: { $in: profile.following } })
+      .populate('user', this.populateUser);
+
+    return followingProfiles.map(p => ({
+      _id: (p.user as any)._id.toString(),
+      firstname: (p.user as any).firstname,
+      lastname: (p.user as any).lastname,
+      email: (p.user as any).email,
+      photoUrl: p.profilePhoto?.data ? `Profile/${p._id}/photo` : null,
+    }));
+  }
+
   async followUser(loggedInUserId: string, targetUserId: string): Promise<{ message: string }> {
     try {
       const loggedInId = new mongoose.Types.ObjectId(loggedInUserId);

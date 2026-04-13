@@ -49,11 +49,11 @@
             <div class="stat-value"><b>{{articlesCount}}</b></div>
             <div class="stat-label">Articles</div>
           </div>
-          <div class="stat-item">
+          <div class="stat-item clickable" (click)="openFollowersModal()">
             <div class="stat-value"><b>{{followersCount}}</b></div>
             <div class="stat-label">Followers</div>
           </div>
-          <div class="stat-item">
+          <div class="stat-item clickable" (click)="openFollowingModal()">
             <div class="stat-value"><b>{{followingCount}}</b></div>
             <div class="stat-label">Following</div>
           </div>

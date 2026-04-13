@@ -68,7 +68,7 @@ export class UserArticlesComponent implements OnInit {
    * Edit an article
    */
   editArticle(articleId: string): void {
-    this.router.navigate([`user-dashboard/articles/${articleId}/edit`]);
+    this.router.navigate([`user-dashboard/articles/edit/${articleId}`]);
   }
 
   /**
@@ -134,7 +134,7 @@ export class UserArticlesComponent implements OnInit {
    * View article
    */
   viewArticle(articleId: string): void {
-    this.router.navigate([`article/${articleId}`]);
+    this.router.navigate([`articles/${articleId}`]);
   }
 
   /**

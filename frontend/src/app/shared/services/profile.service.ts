@@ -12,6 +12,14 @@ export interface ProfileStats {
   followingCount: number;
 }
 
+export interface FollowerUser {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  photoUrl: string | null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,11 +35,13 @@ export class ProfileService extends ResourceService<Profile>{
     return this.httpClient.get<Profile>(`${this.API}/${userId}`).pipe(
       map(
         profile => {
-          profile.photoPath = `${environment.apiUrl}${profile.photoPath}`
+          if (profile.photoPath) {
+            profile.photoPath = `${environment.apiUrl}${profile.photoPath}`;
+          }
           return { ...profile };
         }
       )
-    );;
+    );
   }
 
   getProfileStats(userId: string): Observable<ProfileStats> {
@@ -48,6 +58,24 @@ export class ProfileService extends ResourceService<Profile>{
 
   unfollow(userId: string): Observable<any> {
     return this.httpClient.post(`${this.API}/${userId}/unfollow`, {});
+  }
+
+  getFollowers(userId: string): Observable<FollowerUser[]> {
+    return this.httpClient.get<FollowerUser[]>(`${this.API}/${userId}/followers`).pipe(
+      map(users => users.map(u => ({
+        ...u,
+        photoUrl: u.photoUrl ? `${environment.apiUrl}${u.photoUrl}` : null
+      })))
+    );
+  }
+
+  getFollowing(userId: string): Observable<FollowerUser[]> {
+    return this.httpClient.get<FollowerUser[]>(`${this.API}/${userId}/following`).pipe(
+      map(users => users.map(u => ({
+        ...u,
+        photoUrl: u.photoUrl ? `${environment.apiUrl}${u.photoUrl}` : null
+      })))
+    );
   }
 
   updateWithPhoto(

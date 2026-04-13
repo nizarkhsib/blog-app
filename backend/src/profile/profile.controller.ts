@@ -33,6 +33,18 @@ export class ProfileController {
     return this.profileService.isFollowing(userId, targetUserId);
   }
 
+  @ApiOperation({ summary: 'Get list of followers for a user' })
+  @Get(':userId/followers')
+  async getFollowers(@Param('userId') userId: string) {
+    return this.profileService.getFollowers(userId);
+  }
+
+  @ApiOperation({ summary: 'Get list of users a user is following' })
+  @Get(':userId/following')
+  async getFollowing(@Param('userId') userId: string) {
+    return this.profileService.getFollowing(userId);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Follow a user' })

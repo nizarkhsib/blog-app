@@ -1,0 +1,29 @@
+<div class="followers-modal">
+  <div class="modal-header">
+    <h2>{{ data.title }}</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngIf="data.users.length === 0" class="empty-state">
+      <mat-icon class="empty-icon">people_outline</mat-icon>
+      <p>No {{ data.title.toLowerCase() }} yet</p>
+    </div>
+
+    <div class="user-list">
+      <div *ngFor="let user of data.users" class="user-item">
+        <img
+          [src]="user.photoUrl || getDefaultAvatar()"
+          alt="avatar"
+          class="user-avatar"
+        />
+        <div class="user-info">
+          <span class="user-name">{{ user.firstname }} {{ user.lastname }}</span>
+          <span class="user-email">{{ user.email }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

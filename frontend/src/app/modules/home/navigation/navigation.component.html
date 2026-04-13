@@ -23,7 +23,7 @@
       <mat-toolbar-row class="box header">
 
         <button
-          type=" button"
+          type="button"
           aria-label="Toggle sidenav"
           mat-icon-button
           (click)="drawer.toggle()"
@@ -31,6 +31,8 @@
         >
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
+
+        <span class="spacer"></span>
 
         <section
           class="d-flex align-items-center gap-2"
@@ -61,8 +63,7 @@
             [style.marginLeft.px]="10"
             class="profile-fab"
           >
-            <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="profile-fab-img" alt="Profile" />
-            <mat-icon *ngIf="!profilePhotoUrl">person</mat-icon>
+            <img [src]="profilePhotoUrl || '/assets/default-avatar.svg'" class="profile-fab-img" alt="Profile" />
           </button>
           <mat-menu
             class="profile-menu"
@@ -70,8 +71,7 @@
           >
             <div class="menu-user-header" (click)="$event.stopPropagation()">
               <div class="menu-avatar">
-                <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" class="menu-avatar-img" alt="Profile" />
-                <span *ngIf="!profilePhotoUrl" class="menu-avatar-initials">{{ getUserInitials() }}</span>
+                <img [src]="profilePhotoUrl || '/assets/default-avatar.svg'" class="menu-avatar-img" alt="Profile" />
               </div>
               <div class="menu-user-info">
                 <span class="menu-user-name">{{ loggedUser?.firstname }} {{ loggedUser?.lastname }}</span>

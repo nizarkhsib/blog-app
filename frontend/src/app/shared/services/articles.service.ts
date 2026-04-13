@@ -69,10 +69,11 @@ export class ArticlesService extends ResourceService<Article> {
    */
   searchArticles(query: string, pageIndex: number = 0, pageSize: number = 10): Observable<PaginatedResult<Article>> {
     let params = new HttpParams()
+      .set('q', query)
       .set('skip', (pageIndex * pageSize).toString())
       .set('limit', pageSize.toString());
 
-    return this.httpClient.get<PaginatedResult<Article>>(`${this.API}/search/${query}?${params.toString()}`);
+    return this.httpClient.get<PaginatedResult<Article>>(`${this.API}/search`, { params });
   }
 
   /**

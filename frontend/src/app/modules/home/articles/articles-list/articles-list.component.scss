@@ -8,6 +8,78 @@ mat-toolbar {
     width: 100%;
 }
 
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus-within {
+        border-color: #3949ab;
+        box-shadow: 0 0 0 2px rgba(57, 73, 171, 0.12);
+    }
+}
+
+.search-icon {
+    color: #9e9e9e;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background: transparent;
+    color: #1a1a2e;
+    min-width: 0;
+
+    &::placeholder {
+        color: #bdbdbd;
+    }
+}
+
+.clear-btn {
+    flex-shrink: 0;
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+
+    mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #9e9e9e;
+    }
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
+    color: #888;
+
+    .empty-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 12px;
+        color: #ccc;
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.95rem;
+    }
+}
+
 .content>mat-card {
     margin-bottom: 16px;
 }

@@ -4,6 +4,8 @@ import { ProfileService } from '../../services/profile.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { FollowersModalComponent } from '../followers-modal/followers-modal.component';
 
 @Component({
   selector: 'profile-card',
@@ -16,7 +18,7 @@ export class ProfileCardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() profile!: Profile;
   @Input() isOwnProfile = true;
   @Output() onEdit = new EventEmitter<boolean>();
-  photoPath = 'https://bootdey.com/img/Content/avatar/avatar7.png';
+  photoPath = '/assets/default-avatar.svg';
   articlesCount = 0;
   followersCount = 0;
   followingCount = 0;
@@ -28,7 +30,8 @@ export class ProfileCardComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private profileService: ProfileService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog
   ) {
     // Check if user is logged in
     this.isLoggedIn = !!this.authenticationService.currentUserSubject.getValue();
@@ -133,6 +136,28 @@ export class ProfileCardComponent implements OnInit, OnChanges, OnDestroy {
         }
       );
     }
+  }
+
+  openFollowersModal(): void {
+    if (!this.profile?.user?._id) return;
+    this.profileService.getFollowers(this.profile.user._id).subscribe(users => {
+      this.dialog.open(FollowersModalComponent, {
+        width: '420px',
+        panelClass: 'modern-dialog',
+        data: { title: 'Followers', users }
+      });
+    });
+  }
+
+  openFollowingModal(): void {
+    if (!this.profile?.user?._id) return;
+    this.profileService.getFollowing(this.profile.user._id).subscribe(users => {
+      this.dialog.open(FollowersModalComponent, {
+        width: '420px',
+        panelClass: 'modern-dialog',
+        data: { title: 'Following', users }
+      });
+    });
   }
 
 }
