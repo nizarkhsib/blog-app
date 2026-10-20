@@ -16,9 +16,11 @@ import { NotificationsModule } from './notifications/notifications.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb://127.0.0.1:27017/${configService.get('DB_NAME')}`
+        uri:
+          configService.get('MONGODB_URI') ||
+          `mongodb://127.0.0.1:27017/${configService.get('DB_NAME')}`,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     AuthModule,
     ProductsModule,
