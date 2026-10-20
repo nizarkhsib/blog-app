@@ -7,7 +7,7 @@ import { ConfigModule } from '../core/config/config.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
-import { FacebookStrategy } from './strategies/facebook.strategy';
+// import { FacebookStrategy } from './strategies/facebook.strategy';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '../core/config/config.service';
 import { SendEmailMiddleware } from '../core/middleware/send-email.middleware';
@@ -44,7 +44,12 @@ import { ProfileSchema } from '../profile/profile.model';
     }),
     ConfigModule,
   ],
-  providers: [AuthService, JwtStrategy, FacebookStrategy, SendEmailMiddleware],
+  providers: [
+    AuthService, 
+    JwtStrategy, 
+    // FacebookStrategy, 
+    SendEmailMiddleware
+  ],
   controllers: [AuthController]
 })
 export class AuthModule { }
