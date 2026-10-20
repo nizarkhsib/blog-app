@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Get, Param, Put, Delete, UseGuards, Query, UseInterceptors, UploadedFile, Req, Res } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { PaginationParams } from 'src/pagination-params';
+import { PaginationParams } from '../pagination-params';
 import { ProfileService } from './profile.service';
 import { memoryStorage } from 'multer';
-import { imageFileFilter } from 'src/core/middleware/file-management.middleware';
+import { imageFileFilter } from '../core/middleware/file-management.middleware';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Profile } from './profile.model';
 import { ProfileDto } from './dto/profile.dto';

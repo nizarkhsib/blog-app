@@ -3,7 +3,7 @@ import { Comment } from './comment.model';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { from, Observable } from 'rxjs';
-import { PaginationParams } from 'src/pagination-params';
+import { PaginationParams } from '../pagination-params';
 import { CommentDto } from './dto/comment.dto';
 import { CommentsService } from './comments.service';
 import { Request } from 'express';

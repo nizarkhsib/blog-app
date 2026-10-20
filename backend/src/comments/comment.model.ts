@@ -1,6 +1,7 @@
 import { Connection, Document, Model, Schema, SchemaTypes } from 'mongoose';
-import { Article } from 'src/articles/article.model';
-import { User } from 'src/auth/user.model';
+import { Article } from '../articles/article.model';
+import { User } from '../auth/user.model';
+
 
 export const CommentSchema = new Schema({
   content: { type: String, },

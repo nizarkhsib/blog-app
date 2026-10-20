@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';
-import { UserSchema } from 'src/auth/user.model';
+import { UserSchema } from '../auth/user.model';
 import { AppLogger } from '../core/services/logger.service';
 import { ProfileController } from './profile.controller';
 import { ProfileSchema } from './profile.model';
 import { ProfileService } from './profile.service';
-import { ArticleSchema } from 'src/articles/article.model';
+import { ArticleSchema } from '../articles/article.model';
 
 @Module({
   imports: [

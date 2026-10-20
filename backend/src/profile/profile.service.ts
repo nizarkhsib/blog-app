@@ -3,10 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AppLogger } from '../core/services/logger.service';
 import * as mongoose from 'mongoose';
-import { User } from 'src/auth/user.model';
+import { User } from '../auth/user.model';
 import { Profile } from './profile.model';
 import { ProfileDto } from './dto/profile.dto';
-import { Article } from 'src/articles/article.model';
+import { Article } from '../articles/article.model';
 
 @Injectable()
 export class ProfileService implements OnModuleInit {
@@ -249,4 +249,3 @@ export class ProfileService implements OnModuleInit {
   }
 
 }
-

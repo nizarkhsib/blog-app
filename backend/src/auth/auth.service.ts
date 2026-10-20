@@ -9,7 +9,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { SendEmailMiddleware } from './../core/middleware/send-email.middleware';
 import { RegisterDto } from './dto/register.dto';
 import { LoggedUserDto } from './dto/logged-user.dto';
-import { Profile } from 'src/profile/profile.model';
+import { Profile } from '../profile/profile.model';
 
 @Injectable()
 export class AuthService {

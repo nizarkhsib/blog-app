@@ -5,7 +5,7 @@ import { Article } from './article.model';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
-import { PaginationParams } from 'src/pagination-params';
+import { PaginationParams } from '../pagination-params';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { imageFileFilter } from '../core/middleware/file-management.middleware';

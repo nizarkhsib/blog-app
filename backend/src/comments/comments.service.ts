@@ -6,7 +6,7 @@ import { AppLogger } from '../core/services/logger.service';
 import { Comment } from './comment.model';
 import { CommentDto } from './dto/comment.dto';
 import * as mongoose from 'mongoose';
-import { User } from 'src/auth/user.model';
+import { User } from '../auth/user.model';
 
 @Injectable()
 export class CommentsService implements OnModuleInit {
@@ -110,4 +110,3 @@ export class CommentsService implements OnModuleInit {
 function documentsToSkip(documentsToSkip: any) {
   throw new Error('Function not implemented.');
 }
-

@@ -3,7 +3,7 @@ import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { NotificationsService } from './notifications.service';
-import { PaginationParams } from 'src/pagination-params';
+import { PaginationParams } from '../pagination-params';
 
 @Controller('notifications')
 @ApiTags('Notifications')

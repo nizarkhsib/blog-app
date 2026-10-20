@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Document, Schema, SchemaTypes } from 'mongoose';
-import { User } from 'src/auth/user.model';
+import { User } from '../auth/user.model';
 
 export const ProfileSchema = new Schema({
   description: { type: String, default: '' },
