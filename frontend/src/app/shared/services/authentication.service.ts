@@ -29,7 +29,7 @@ export class AuthenticationService {
 
   signIn(email: string, password: string): Observable<LoggedUser> {
     return this.http
-      .post<LoggedUser>(`${this.url}auth/signin`, { email, password })
+      .post<LoggedUser>(`${this.url}/auth/signin`, { email, password })
       .pipe(
         map(user => {
           // store user details and jwt token in local storage 
