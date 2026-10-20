@@ -9,7 +9,7 @@ import { AppLogger } from '../core/services/logger.service';
 @Module({
   imports: [
     MulterModule.register({
-      dest: './uploads',
+      dest: '/tmp',
     }),
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }])
   ],

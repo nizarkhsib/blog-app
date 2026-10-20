@@ -19,7 +19,7 @@ export class ProductsController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './uploads',
+        destination: '/tmp',
         filename: editFileName,
       }),
       fileFilter: imageFileFilter,

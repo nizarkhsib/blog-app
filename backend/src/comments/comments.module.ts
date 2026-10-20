@@ -11,7 +11,7 @@ import { ArticleSchema } from '../articles/article.model';
 @Module({
   imports: [
     MulterModule.register({
-      dest: './uploads',
+      dest: '/tmp',
     }),
     MongooseModule.forFeature([
       { name: 'Comment', schema: CommentSchema },

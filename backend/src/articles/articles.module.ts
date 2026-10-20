@@ -10,7 +10,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 @Module({
   imports: [
     MulterModule.register({
-      dest: './uploads',
+      dest: '/tmp',
     }),
     MongooseModule.forFeature([{ name: 'Article', schema: ArticleSchema }]),
     NotificationsModule
