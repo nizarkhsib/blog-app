@@ -11,7 +11,7 @@ import { FacebookStrategy } from './strategies/facebook.strategy';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '../core/config/config.service';
 import { SendEmailMiddleware } from '../core/middleware/send-email.middleware';
-import { ProfileSchema } from 'src/profile/profile.model';
+import { ProfileSchema } from '../profile/profile.model';
 
 @Module({
   imports: [
