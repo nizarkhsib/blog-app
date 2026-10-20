@@ -4,6 +4,7 @@ import { ConfigModule } from './core/config/config.module';
 import { ConfigService } from './core/config/config.service';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
+import { HelloController } from './hello.controller';
 import * as winston from 'winston';
 import { ArticlesModule } from './articles/articles.module';
 import { CommentsModule } from './comments/comments.module';
@@ -29,7 +30,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     ProfileModule,
     NotificationsModule
   ],
-  controllers: [],
+  controllers: [HelloController],
   providers: [],
 })
 
