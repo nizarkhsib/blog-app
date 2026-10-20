@@ -42,7 +42,7 @@ export class AuthenticationService {
   }
 
   signUp(user: UserSignupDto): Observable<UserSignupDto> {
-    return this.http.post<User>(`${this.url}auth/signup`, user);
+    return this.http.post<User>(`${this.url}/auth/signup`, user);
   }
 
   /**
