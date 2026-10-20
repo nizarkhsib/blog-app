@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: '/api'
+  apiUrl: 'https://blog-app-nu-ochre-86.vercel.app/'
 };
